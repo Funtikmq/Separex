@@ -1,0 +1,93 @@
+body{
+    background-color: #1B263B;
+    color: wheat;
+    padding: 0;
+    margin: 0;
+}
+
+h4{
+    padding: 10px;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    padding: 50px;
+}
+
+.inputContainer{
+    max-width: 300px;
+    margin: 0 200px;
+}
+
+.showDoorContainer {
+    background-color: wheat;
+    margin-right: 100px;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 10px;
+}
+
+.imgContainer {
+    min-height: 300px;
+    height: 500px;
+    width: 600px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    border: 1px dashed #999;
+}
+
+.infoContainer{
+    height: 50px;
+    width: 600px;
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+    border: 1px dashed #999;
+}
+
+
+.inputForm{
+    width: 250px;
+    height: 30px;
+    border: 2px solid wheat;
+    border-radius: 20px;
+}
+
+button.inputForm{
+    background-color: wheat;
+    cursor: pointer;
+}
+
+.door{
+    margin: 50px 50px;
+    width: 200px;
+    height: 400px;
+    background: radial-gradient(#fff,#777);
+    display: block;
+    border: 5.5px solid #000;
+    position: relative;
+}
+
+.horizontalLine {
+  position: absolute;
+  width: 100%;
+  height: 1.5%;
+  background-color: #000;
+}
+
+.horizontalLine:nth-child(1) {
+  height: 10px;
+  top: -16px;
+  width: 205%;
+  left: -5px;
+}
+.horizontalLine:nth-child(2) {
+  top: 66%;
+}
+
+.horizontalLine:nth-child(3) {
+  top: 33%;
+}

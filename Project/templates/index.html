@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/stylesheet.css">
+  <title>Custumizare</title>
+</head>
+<body>
+  <div class="container">
+  <div class="inputContainer">
+    <h1>Selectați opțiunile</h1>
+    <form action="/genereaza" id="doorForm" method="POST">
+      <h4>Înălțime</h4>
+      <input type="text" name="inaltime"  id ="inaltime" class="inputForm" required>
+
+      <h4>Lățime</h4>
+      <input type="text" name="latime" id ="latime" class="inputForm" required>
+
+      <h4>Categorie</h4>
+      <select name="categorie" id ="categorie" class="inputForm">
+        <option value="">Selectează o categorie</option>
+        <option value="option1">Otpiunea 1</option>
+        <option value="option2">Optiunea 2</option>
+        <option value="option3">Optiunea 3</option>
+      </select>
+
+      <h4>Model</h4>
+       <select name="model" id ="model" class="inputForm">
+        <option value="">Selectează un model</option>
+        <option value="option1">Otpiunea 1</option>
+        <option value="option2">Optiunea 2</option>
+        <option value="option3">Optiunea 3</option>
+      </select>
+
+      <h4>Culoare Profil</h4>
+      <select name="culoareProfil" id ="culoareProfil" class="inputForm">
+        <option value="">Selectează o culoare</option>
+        <option value="option1">Otpiunea 1</option>
+        <option value="option2">Optiunea 2</option>
+        <option value="option3">Optiunea 3</option>
+      </select>
+
+
+      <h4>Culoare Sticla</h4>
+      <select name="culoareaSticla" id ="culoareSticla" class="inputForm">
+        <option value="">Selectează o culoare</option>
+        <option value="option1">Otpiunea 1</option>
+        <option value="option2">Optiunea 2</option>
+        <option value="option3">Optiunea 3</option>
+      </select>
+
+      <br><br>
+      <button type="submit" class="inputForm">Confirma</button>
+    </form>
+  </div>
+  <div class="showDoorContainer">
+    <div class="imgContainer">
+    <div class="door" id="door">
+      <div class="horizontalLine"></div>
+      <div class="horizontalLine"></div>
+      <div class="horizontalLine"></div>
+    </div>
+    </div>
+    <div class="infoContainer">
+      <h4 style="color: black;">Suma totala :</h4>
+    </div>
+  </div>
+  </div>
+  <script src="../static/script.js"></script>
+</body>
+</html>
