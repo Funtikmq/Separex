@@ -1,0 +1,57 @@
+.navigationPanel {
+  position: absolute;
+  left: 7.5%;
+  z-index: 3;
+  border: 1px solid #ccc;
+  background-color: #ffffcc; 
+  width: 21vw;
+  height: calc(100vh - 10.4vh); 
+  text-align: center;
+  overflow-y: auto;
+}
+
+.navigationPanelList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Card {
+  cursor: pointer;
+  width: 10vw;
+  height: 19vh;
+  margin: 5vh auto;
+  position: relative;
+  background-color: #ffffe0; 
+}
+
+.cardTitle {
+  position: absolute;
+  bottom: 1vh;
+  left: 20%;
+  font-size: 1rem;
+  color: #333;
+}
+
+.mountTypeToggle {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+}
+
+.toggleButton {
+  padding: 0.5rem 1rem;
+  background-color: #ffffcc; 
+  color: #000;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.toggleButton:hover {
+  background-color: #e7d857; 
+  transform: scale(1.05);
+}
+

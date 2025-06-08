@@ -1,0 +1,25 @@
+function TopBar({ category, mountType,scaledWidth,selectedType,borderPx }) {
+if (category === "Sliding Doors") {
+  const isOnWall = mountType === "On wall";
+  
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: `${isOnWall ? -borderPx/16 : (-(borderPx * 2.2)) /16}rem`,
+        left: selectedType === "1-Part Element" && !isOnWall ? "0%" : "50%",
+        transform: "translateX(-50%)",
+        height: `${(2 * borderPx) / 16}rem`,
+        width: `${isOnWall ? scaledWidth / 16 : (scaledWidth * 2) / 16}rem`,
+        background: "linear-gradient(225deg, rgb(0, 0, 0) 20%, rgba(0, 0, 0, 0.66) 100%)",
+        zIndex: 2,
+      }}
+    />
+  );
+  
+}
+return null;
+
+}
+
+export default TopBar;

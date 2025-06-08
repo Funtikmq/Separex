@@ -1,0 +1,149 @@
+.constructor {
+  position: absolute;
+  top: 10%;
+  left: 7.5%;
+  z-index: 1;
+  width: 92.4%;
+  height: calc(100vh - 10.4vh);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #000;
+  overflow: hidden;
+  
+}
+
+.constructorContent {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: #fff;
+  position: relative;
+}
+
+.constructorContainer{
+  display: flex;
+  justify-content: center; 
+  align-items:flex-end;
+  width: 100%;
+  padding-bottom:8vh;
+}
+
+.doorConture{
+  border: .5vw solid #999;
+  border-bottom: none;
+  z-index: 2;
+}
+
+.constructorDoor {
+  display: flex;
+  margin: auto;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+.doorSection {
+  flex: 1;
+  height: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.constructorInfo {
+  height: 14vh;
+  background: #000; 
+  flex-shrink: 0;
+  border-top: 1px solid #000;
+}
+
+.constructorFloor{
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 15vh;
+   background-color: #ddd;
+   z-index: 0;
+}
+
+/*Axele*/
+
+.AxisX {
+  height: 0.1vh;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.AxisX::before,
+.AxisX::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 0.6vh solid transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.AxisX::before {
+  border-right: 8px solid black;
+  left: -0.8vw;
+}
+
+.AxisX::after {
+  border-left: 8px solid black;
+  right: -0.8vw;
+}
+
+.AxisY {
+  width: 0.1vh;
+  background-color: #000;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.AxisY::before,
+.AxisY::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 0.6vh solid transparent;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.AxisY::before {
+  border-bottom: 8px solid black;
+  top: -1.7vh;
+}
+
+.AxisY::after {
+  border-top: 8px solid black;
+  bottom: -0.5vh;
+}
+
+.AxisLabel {
+  padding: 0.2vh;
+  background: #cccbcb;
+  color: #4d5396;
+  margin-left: 0.37vw;
+  margin-top: 0.1vh;
+  font-size: 0.9rem;
+}
+
+#yAxisLabel{
+  background-color: #ccc;
+}
+
+#xAxisLabel{
+  background-color: #ddd;
+}
