@@ -7,7 +7,7 @@
   height: calc(100vh - 10.4vh);
   display: flex;
   flex-direction: column;
-  border: 1px solid #000;
+  border: 1px solid #e0e0e0;
   overflow: hidden;
   
 }
@@ -51,6 +51,44 @@
   position: relative;
 }
 
+
+.doorSection::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translateX(-50%) translateY(50%);
+  width: 1.2vw;
+  height: .2vh;
+  background-color: #333;
+  border-radius: 1px;
+  opacity: 0;
+  transition: ease-in-out .1s;
+}
+
+
+.doorSection::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translateX(-50%) translateY(50%);
+  width: .2vh;
+  height: 1.2vw;
+  background-color: #333;
+  border-radius: 1px;
+  opacity: 0;
+  transition: ease-in-out 0.1s;
+}
+
+
+.doorSection:hover::before,
+.doorSection:hover::after {
+  opacity: 1;
+} 
+
+
+
 .constructorInfo {
   height: 14vh;
   background: #000; 
@@ -64,7 +102,7 @@
    left: 0;
    width: 100%;
    height: 15vh;
-   background-color: #ddd;
+   background-color: #ccc;
    z-index: 0;
 }
 
@@ -133,7 +171,6 @@
 
 .AxisLabel {
   padding: 0.2vh;
-  background: #cccbcb;
   color: #4d5396;
   margin-left: 0.37vw;
   margin-top: 0.1vh;
@@ -141,9 +178,9 @@
 }
 
 #yAxisLabel{
-  background-color: #ccc;
+  background-color: #ddd;
 }
 
 #xAxisLabel{
-  background-color: #ddd;
+  background-color: #ccc;
 }

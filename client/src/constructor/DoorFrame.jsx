@@ -34,7 +34,8 @@ function DoorFrame({
     position: "relative",
     zIndex: 1,
     border: `${scaled.borderPx}px solid #222`,
-    background: `linear-gradient(225deg, rgba(85, 83, 83, 0.3) 30%, rgba(255, 253, 253, 0.2) 100%)`,
+    backdropFilter: "blur(2px)",
+    background: `linear-gradient(225deg, rgba(0, 0, 0, 0.4) 30%, rgba(255, 253, 253, 0.2) 100%)`,
     boxSizing: "border-box",
     transition: "0.3s"
   };
@@ -64,7 +65,8 @@ function DoorFrame({
       selectedCategory === "Swing Doors"
         ? `${scaled.borderPx}px solid #111`
         : undefined,
-    zIndex: 3
+    zIndex: 3,
+    boxShadow: "2px 2px 5px 1px rgba(0, 0, 0)"
   };
 
   return (

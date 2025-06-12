@@ -39,7 +39,7 @@ function NavigationPanel({
       );
     case "Model":
       return <ModelPanel />;
-    case "Handles":
+    case "Handle":
       return <HandlePanel selectedCategory={selectedCategory} />;
     case "Color":
       return <ColorPanel />;

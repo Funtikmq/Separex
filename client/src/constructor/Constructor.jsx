@@ -63,7 +63,7 @@ function Constructor({
             className="constructorWall"
             style={{
               clipPath: wallClipPath,
-              backgroundColor: "#ccc",
+              backgroundColor: "#ddd",
               position: "absolute",
               width: "100%",
               height: "calc(100% - 8vh)",
