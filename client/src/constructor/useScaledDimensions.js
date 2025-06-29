@@ -8,7 +8,7 @@ export function useScaledDimensions(height, width) {
       const vh = window.innerHeight;
       const vw = window.innerWidth;
 
-      const maxHeight = vh * 0.65; 
+      const maxHeight = vh * 0.6; 
       const maxWidth = vw * 0.4;  
 
       const heightRatio = maxHeight / height;

@@ -14,7 +14,14 @@ function NavigationPanel({
   setSectionCount,
   slidingMountType,
   setSlidingMountType,
-  setSelectedType
+  setSelectedType,
+  sectionModels,
+  setSectionModels,
+  sectionColors,
+  setSectionColors,
+  selectedHandle,
+  setSelectedHandle,
+  selectedIndex
 }) {
   if (!activeItem) return null;
   switch (activeItem) {
@@ -38,11 +45,18 @@ function NavigationPanel({
         />
       );
     case "Model":
-      return <ModelPanel />;
+      return <ModelPanel setSectionModels={setSectionModels} 
+                         sectionModels={sectionModels} 
+                         selectedIndex={selectedIndex}/>;
     case "Handle":
-      return <HandlePanel selectedCategory={selectedCategory} />;
+      return <HandlePanel selectedCategory={selectedCategory}
+                          selectedHandle={selectedHandle}
+                          setSelectedHandle={setSelectedHandle}
+                          selectedIndex={selectedIndex}/>;
     case "Color":
-      return <ColorPanel />;
+      return <ColorPanel sectionColors={sectionColors} 
+                         setSectionColors={setSectionColors}
+                         selectedIndex={selectedIndex}/>;
 
     default:
       return null;

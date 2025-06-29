@@ -1,10 +1,7 @@
-function Section({ style, onClick }) {
+function Section({ style, onClick, children }) {
     return (
         <div
-            className="doorSection"
-            style={style}
-            onClick={onClick}
-        ></div>
+            className="doorSection" style={style} onClick={onClick}>{children}</div>
     );
 }
 

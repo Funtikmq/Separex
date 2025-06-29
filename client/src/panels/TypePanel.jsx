@@ -16,6 +16,14 @@ function TypePanel({
       (type) => type.startsWith("1-Part") || type.startsWith("2-Part")
     );
   }
+  else if (selectedCategory === "Sliding Doors" && slidingMountType === "On wall") {
+    filteredTypes = filteredTypes.filter(
+  (type) => 
+    type.startsWith("2-Part") || 
+    type.startsWith("3-Part") || 
+    type.startsWith("4-Part")
+);
+  }
 
   return (
     <div className="navigationPanel">
@@ -41,12 +49,11 @@ function TypePanel({
             <li
               className="panelItem"
               key={index}
-              onClick={() => {
+            >
+              <Card title={type} onClick={() => {
                 setSectionCount(parts);
                 setSelectedType(type);
-              }}
-            >
-              <Card title={type} />
+              }}/>
             </li>
           );
         })}

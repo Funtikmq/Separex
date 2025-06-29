@@ -1,7 +1,7 @@
-function Card({title}) {
+function Card({title, onClick,img}) {
     return (
-        <div className="Card">
-            <img className="cardImage" src="https://placehold.co/150x150" alt="" />
+        <div className="Card" onClick={onClick}>
+            <img className="cardImage" src={img}/>
             <h2 className="cardTitle">{title}</h2>
         </div>
     );

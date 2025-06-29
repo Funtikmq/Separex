@@ -1,11 +1,11 @@
 export const MODELS = [
   "Aero", "Line", "Double Line", "Triple Line", "Simetry", "Trio", "Quatro",
-  "Five", "Diez", "Geometry", "Nordic", "Geos", "Trend", "Modern",
-  "Punto", "Altus", "Loft", "Nimbus", "Star"
+  "Five","Trend","Nordic","Punto","Geos","Geometry","Star","Diez", 
+    "Loft", "Nimbus","Modern","Altus", 
 ];
 
 export const COLORS = [
-  "Clear", "Frosted", "Grey", "Bronze", "Dark Grey", "Lacobel", "Canelata"
+  "Clear", "Frosted", "Grey", "Dark Grey","Bronze", "Lacobel", "Canelata"
 ];
 
 export const HANDLES = {
@@ -38,8 +38,8 @@ export const TYPES = {
 };
 
 export const DIMENSION_LIMITS = {
-  MIN_HEIGHT: 1800,
-  MAX_HEIGHT: 4000,
-  MIN_WIDTH: 500,
+  MIN_HEIGHT: 100,
+  MAX_HEIGHT: 10000,
+  MIN_WIDTH: 100,
   MAX_WIDTH: 10000
 };

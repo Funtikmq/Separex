@@ -29,18 +29,12 @@
   padding-bottom:8vh;
 }
 
-.doorConture{
-  border: .5vw solid #999;
-  border-bottom: none;
-  z-index: 2;
-}
-
 .constructorDoor {
   display: flex;
   margin: auto;
   box-sizing: border-box;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .doorSection {
@@ -87,13 +81,21 @@
   opacity: 1;
 } 
 
-
-
 .constructorInfo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   height: 14vh;
-  background: #000; 
+  background: #fff; 
   flex-shrink: 0;
   border-top: 1px solid #000;
+}
+
+.constructorInfoText{
+  padding: .5vh 2vw;
+  margin: 0.3vh;
+  font-size: 1rem;
+  width: 35%;
 }
 
 .constructorFloor{
@@ -102,7 +104,7 @@
    left: 0;
    width: 100%;
    height: 15vh;
-   background-color: #ccc;
+   background: linear-gradient(190deg, rgba(0, 0, 0, 0.4) 20%, rgba(255, 253, 253, 0.2) 100%);
    z-index: 0;
 }
 
@@ -178,7 +180,7 @@
 }
 
 #yAxisLabel{
-  background-color: #ddd;
+  background-color: #F4F4F6;
 }
 
 #xAxisLabel{

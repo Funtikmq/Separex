@@ -7,18 +7,20 @@ function Constructor({
   sectionCount,
   selectedCategory,
   slidingMountType,
-  selectedType
+  selectedIndex,
+  setSelectedIndex,
+  selectedType,
+  sectionColors,
+  sectionModels,
+  selectedHandle,
+  doorFrameRef 
 }) {
-  // === Extrage dimensiuni inițiale ===
   const { height, width } = doorDimensions;
-  const [selectedIndex, setSelectedIndex] = useState(null);
-
-  // === Calculează dimensiuni scalate ale ușii ===
   const scaled = useScaledDimensions(height, width);
 
-  // === Ref și dimensiuni pentru container ===
   const containerRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const [selectionVisible, setSelectionVisible] = useState(false);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -27,9 +29,19 @@ function Constructor({
     }
   }, [scaled]);
 
-  // === Poziționare ușă în container ===
-  const { width: containerWidth, height: containerHeight } = containerSize;
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (doorFrameRef.current && !doorFrameRef.current.contains(event.target)) {
+      setSelectionVisible(false); // Ascunde evidențierea, dar păstrează selecția
+    }
+  };
 
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, [doorFrameRef]);
+
+
+  const { width: containerWidth, height: containerHeight } = containerSize;
   const doorWidth = scaled.scaledWidth;
   const doorHeight = scaled.scaledHeight;
 
@@ -38,20 +50,21 @@ function Constructor({
   const doorBottom = containerHeight;
   const doorTop = doorBottom - doorHeight;
 
-  // === ClipPath pentru peretele decupat ===
+  const wallPadding = scaled.borderPx *2;
+  
   const wallClipPath =
-    containerWidth && containerHeight
-      ? `polygon(
-          0% 0%,
-          100% 0%,
-          100% 100%,
-          calc(${doorRight}px + 0.4vw) 100%,
-          calc(${doorRight}px + 0.4vw) calc(${doorTop}px - 7vh),
-          calc(${doorLeft}px - 0.4vw) calc(${doorTop}px - 7vh),
-          calc(${doorLeft}px - 0.4vw) 100%,
-          0% 100%
-        )`
-      : "none";
+  containerWidth && containerHeight
+    ? `polygon(
+        0% 0%,
+        100% 0%,
+        100% 100%,
+        ${(doorRight + wallPadding)/15.9}rem 100%,
+        ${(doorRight + wallPadding)/15.9}rem ${doorTop -0.1 * containerHeight}px,
+        ${(doorLeft - wallPadding)/16.15}rem ${doorTop  -0.1 * containerHeight}px,
+        ${(doorLeft - wallPadding)/16.15}rem 100%,
+        0% 100%
+      )`
+    : "none";
 
   return (
     <div className="constructor">
@@ -63,19 +76,22 @@ function Constructor({
             className="constructorWall"
             style={{
               clipPath: wallClipPath,
-              backgroundColor: "#ddd",
+              backgroundColor: "#f4f4f6",
+              backgroundSize:"cover",
               position: "absolute",
               width: "100%",
               height: "calc(100% - 8vh)",
               top: 0,
               left: 0,
               zIndex: 2,
-              pointerEvents: "none"
+              pointerEvents: "none",
+              borderBottom: ".2vh solid #555",
             }}
-          />
+            />
         )}
 
         <DoorFrame
+          ref={doorFrameRef} 
           scaled={scaled}
           width={width}
           height={height}
@@ -84,11 +100,23 @@ function Constructor({
           selectedType={selectedType}
           sectionCount={sectionCount}
           selectedIndex={selectedIndex}
+          sectionModels={sectionModels}
+          sectionColors={sectionColors}
+          selectionVisible={selectionVisible}
+          setSelectionVisible={setSelectionVisible}
+          selectedHandle={selectedHandle}
           onClick={setSelectedIndex}
         />
       </div>
 
-      <div className="constructorInfo"></div>
+      <div className="constructorInfo">
+        <h4 className="constructorInfoText">Category: {selectedCategory}</h4>
+        <h4 className="constructorInfoText">Handles: </h4>
+        <h4 className="constructorInfoText">Size: {width} x {height} </h4>
+        <h4 className="constructorInfoText">Models: {sectionModels}</h4>
+        <h4 className="constructorInfoText">Type: {selectedType}</h4>
+        <h4 className="constructorInfoText">Colors: {sectionColors}</h4>
+      </div>
     </div>
   );
 }

@@ -1,18 +1,24 @@
+import { forwardRef } from "react";
 import TopBar from "./TopBar.jsx";
 import Axis from "./Axis.jsx";
 import SectionRenderer from "./SectionRender.jsx";
 
-function DoorFrame({
+const DoorFrame = forwardRef(({
   scaled,
-  width,
-  height,
   selectedCategory,
   slidingMountType,
   selectedType,
   sectionCount,
   selectedIndex,
-  onClick
-}) {
+  sectionModels,
+  sectionColors,
+  selectionVisible,
+  setSelectionVisible,
+  selectedHandle,
+  width,
+  height,
+  onClick},ref) =>{
+  
   const doorPadding = `${1 / 16}rem`;
   const isOnWall = slidingMountType === "On wall";
 
@@ -30,12 +36,12 @@ function DoorFrame({
             : scaled.scaledHeight / 16}rem`
         : `${scaled.scaledHeight / 16}rem`,
 
-    width: `${scaled.scaledWidth / 16}rem`,
+    width: `${scaled.scaledWidth / 15}rem`,
     position: "relative",
     zIndex: 1,
     border: `${scaled.borderPx}px solid #222`,
     backdropFilter: "blur(2px)",
-    background: `linear-gradient(225deg, rgba(0, 0, 0, 0.4) 30%, rgba(255, 253, 253, 0.2) 100%)`,
+    background: `linear-gradient(225deg, rgba(103, 102, 102, 0.4) 30%, rgba(255, 253, 253, 0.2) 100%)`,
     boxSizing: "border-box",
     transition: "0.3s"
   };
@@ -69,10 +75,36 @@ function DoorFrame({
     boxShadow: "2px 2px 5px 1px rgba(0, 0, 0)"
   };
 
+const doorContureStyle = {
+  borderTop: `${scaled.borderPx / 8}rem solid #c3c2c2`,
+  borderLeft: `${scaled.borderPx / 8}rem solid #c3c2c2`,
+  borderRight: `${scaled.borderPx / 8}rem solid #c3c2c2`,
+  position: "relative",
+  zIndex: 2,
+  boxSizing: "border-box"
+};
+ 
+const wallContourThickness = scaled.borderPx / 16;
+
+const wallContureStyle = {
+  position: "absolute",
+  top: `-${wallContourThickness * 2}rem`,
+  left: `-${wallContourThickness*2}rem`,
+  width: `calc(100% + ${wallContourThickness * 4}rem)`,
+  height: `calc(100% + ${wallContourThickness * 2}rem)`,
+  pointerEvents: "none",
+  borderTop: `${wallContourThickness/2}rem solid #fff`,
+  borderLeft: `${wallContourThickness/2}rem solid #fff`,
+  borderRight: `${wallContourThickness/2}rem solid #fff`,
+  zIndex: 1,
+  boxSizing: "border-box"
+};
+
   return (
     <div className="constructorContainer">
-      <div className="doorConture">
-        <div className="doorContainer" style={doorContainerStyle}>
+      <div  className="doorConture" style={doorContureStyle}>
+        <div style={wallContureStyle}></div>
+        <div className="doorContainer" style={doorContainerStyle} ref={ref}>
           <TopBar
             category={selectedCategory}
             mountType={slidingMountType}
@@ -81,27 +113,32 @@ function DoorFrame({
             borderPx={scaled.borderPx}
           />
 
-          <div className="constructorDoor" style={doorStyle}>
+          <div className="constructorDoor" style={doorStyle} ref={ref}>
             <SectionRenderer
+              selectedCategory={selectedCategory}
               selectedType={selectedType}
               scaled={scaled}
               sectionCount={sectionCount}
               selectedIndex={selectedIndex}
+              sectionModels={sectionModels}
+              sectionColors={sectionColors}
+              selectionVisible={selectionVisible}
+              setSelectionVisible={setSelectionVisible}
+              selectedHandle={selectedHandle}
               onClick={onClick}
             />
           </div>
 
           <Axis
-            width={scaled.scaledWidth + (1 / 16) * 2}
-            height={scaled.scaledHeight}
             realWidth={width}
             realHeight={height}
             borderPx = {scaled.borderPx}
+            scaled= {scaled}
           />
         </div>
       </div>
     </div>
-  );
-}
+  );  
+});
 
 export default DoorFrame;

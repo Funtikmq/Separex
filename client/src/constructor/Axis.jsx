@@ -1,14 +1,14 @@
-function Axis({ width, height, realWidth, realHeight,borderPx }) {
+function Axis({ realWidth, realHeight,borderPx,scaled }) {
   
   return (
     <>
       <div
         className="AxisX"
         style={{
-          width: `${(width-2*borderPx)/16}rem`,
+          width: `${(scaled.scaledWidth)/15}rem`,
           position: "absolute",
-          bottom: `${-(30)/16}rem`,
-          left:borderPx,
+          bottom: `${-30/16}rem`,
+          left:0,
         }}
       >
         <span id="xAxisLabel" className="AxisLabel">{realWidth}</span>
@@ -16,9 +16,9 @@ function Axis({ width, height, realWidth, realHeight,borderPx }) {
       <div
         className="AxisY"
         style={{
-          height: `${(height-2*borderPx)/16}rem`,
+          height: `${(scaled.scaledHeight-2*borderPx)/16}rem`,
           position: "absolute",
-          left: `${(width + 70)/16}rem`,
+          left: `${(scaled.scaledWidth*1.3)/16}rem`,
           bottom:0
         }}
       >
