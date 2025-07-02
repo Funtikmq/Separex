@@ -12,6 +12,7 @@ function NavigationBar({
     doorDimensions,
     setDoorDimensions,
     setSectionCount,
+    sectionCount,
     slidingMountType,
     setSlidingMountType,
     selectedCategory,
@@ -24,7 +25,10 @@ function NavigationBar({
     sectionColors,
     selectedHandle,
     setSelectedHandle,
-    doorFrameRef 
+    doorFrameRef,
+    sectionDimensions,
+    setSectionDimensions,
+    orientation
 }) {
     const [activeItem, setActiveItem] = useState(null);
     const wrapperRef = useRef(null);
@@ -76,6 +80,7 @@ function NavigationBar({
                 doorDimensions={doorDimensions}
                 setDoorDimensions={setDoorDimensions}
                 setSectionCount={setSectionCount}
+                sectionCount={sectionCount}
                 slidingMountType={slidingMountType}
                 setSlidingMountType={setSlidingMountType}
                 setSelectedType={setSelectedType}
@@ -86,6 +91,9 @@ function NavigationBar({
                 selectedHandle={selectedHandle}
                 setSelectedHandle={setSelectedHandle}
                 selectedIndex={selectedIndex}
+                sectionDimensions={sectionDimensions}
+                setSectionDimensions={setSectionDimensions}
+                orientation={orientation}
             />
         </div>
     );

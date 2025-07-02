@@ -13,7 +13,8 @@ function Constructor({
   sectionColors,
   sectionModels,
   selectedHandle,
-  doorFrameRef 
+  doorFrameRef,
+  sectionDimensions
 }) {
   const { height, width } = doorDimensions;
   const scaled = useScaledDimensions(height, width);
@@ -106,6 +107,7 @@ useEffect(() => {
           setSelectionVisible={setSelectionVisible}
           selectedHandle={selectedHandle}
           onClick={setSelectedIndex}
+          sectionDimensions={sectionDimensions}
         />
       </div>
 

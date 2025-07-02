@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import TopBar from "./TopBar.jsx";
 import Axis from "./Axis.jsx";
-import SectionRenderer from "./SectionRender.jsx";
+import SectionRenderer from "./section/SectionRender.jsx";
 
 const DoorFrame = forwardRef(({
   scaled,
@@ -17,7 +17,8 @@ const DoorFrame = forwardRef(({
   selectedHandle,
   width,
   height,
-  onClick},ref) =>{
+  onClick,
+  sectionDimensions},ref) =>{
   
   const doorPadding = `${1 / 16}rem`;
   const isOnWall = slidingMountType === "On wall";
@@ -126,6 +127,7 @@ const wallContureStyle = {
               setSelectionVisible={setSelectionVisible}
               selectedHandle={selectedHandle}
               onClick={onClick}
+              sectionDimensions={sectionDimensions}
             />
           </div>
 

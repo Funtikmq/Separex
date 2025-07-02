@@ -12,6 +12,7 @@ function NavigationPanel({
   doorDimensions,
   setDoorDimensions,
   setSectionCount,
+  sectionCount,
   slidingMountType,
   setSlidingMountType,
   setSelectedType,
@@ -21,7 +22,10 @@ function NavigationPanel({
   setSectionColors,
   selectedHandle,
   setSelectedHandle,
-  selectedIndex
+  selectedIndex,
+  sectionDimensions,
+  setSectionDimensions,
+  orientation
 }) {
   if (!activeItem) return null;
   switch (activeItem) {
@@ -42,6 +46,10 @@ function NavigationPanel({
         <DimensionsPanel
           doorDimensions={doorDimensions}
           setDoorDimensions={setDoorDimensions}
+          sectionCount={sectionCount}
+          sectionDimensions={sectionDimensions}
+          setSectionDimensions={setSectionDimensions}
+          orientation={orientation}
         />
       );
     case "Model":

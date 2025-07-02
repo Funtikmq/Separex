@@ -10,6 +10,7 @@
   overflow-y: auto;
 }
 
+
 .navigationPanelList {
   list-style: none;
   padding: 0;
@@ -122,4 +123,11 @@
 .inputWithButtons button:hover {
   background-color: #d48806;
   transform: scale(1.05);
+}
+
+.sectionDimensions{
+  margin: 4vh auto;
+  padding: 1rem 3vw;
+  border: #f4a621 1px solid;
+  border-radius: 2vh;
 }

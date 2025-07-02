@@ -16,20 +16,28 @@ function App() {
   const [sectionModels,setSectionModels] = useState([]);
   const [sectionColors,setSectionColors] = useState([]);
   const [selectedHandle,setSelectedHandle] = useState([]);
+  const [sectionDimensions, setSectionDimensions] = useState([100]);
 
   const doorFrameRef = useRef(null)
 
-  useEffect(() => {
-  setSectionModels(Array(sectionCount).fill("Aero"));
-}, [sectionCount]);
+  const getOrientation = () => {
+    if (selectedType === "2-Part Element O" || selectedType === "4-Part Element O") {
+      return "vertical";
+    }
+    if (/^\d+-Part Element A$/.test(selectedType)) {
+      return "horizontal";
+    }
+    return "vertical";
+  };
+  const orientation = getOrientation();
 
   useEffect(() => {
-  setSectionColors(Array(sectionCount).fill("Clear"));
-}, [sectionCount]);
-  
-  useEffect(() => {
-  setSelectedHandle(Array(sectionCount).fill(""));
-}, [sectionCount]);
+    const count = Math.max(sectionCount, 1);
+    setSectionModels(Array(count).fill("Aero"));
+    setSectionColors(Array(count).fill("Clear"));
+    setSelectedHandle(Array(count).fill(""));
+    setSectionDimensions(Array(count).fill(50));
+  }, [sectionCount]);
 
   return (
   <>
@@ -38,6 +46,7 @@ function App() {
     <NavigationBar doorDimensions={doorDimensions} 
                     setDoorDimensions={setDoorDimensions}
                     setSectionCount={setSectionCount}
+                    sectionCount={sectionCount}
                     slidingMountType={slidingMountType}
                     setSlidingMountType={setSlidingMountType}
                     selectedCategory={selectedCategory}
@@ -51,6 +60,9 @@ function App() {
                     selectedHandle={selectedHandle}
                     setSelectedHandle={setSelectedHandle}
                     doorFrameRef={doorFrameRef}
+                    sectionDimensions={sectionDimensions}
+                    setSectionDimensions={setSectionDimensions}
+                    orientation={orientation}
                     />
 
     <Constructor doorDimensions={doorDimensions} 
@@ -62,6 +74,7 @@ function App() {
                  selectedType={selectedType}
                  sectionModels={sectionModels}
                  sectionColors={sectionColors}
+                 sectionDimensions={sectionDimensions}
                  selectedHandle={selectedHandle}
                  doorFrameRef={doorFrameRef}
                  />
