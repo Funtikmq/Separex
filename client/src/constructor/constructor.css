@@ -45,7 +45,6 @@
   position: relative;
 }
 
-
 .doorSection::before {
   content: "";
   position: absolute;
@@ -185,4 +184,24 @@
 
 #xAxisLabel{
   background-color: #ccc;
+}
+
+.sectionTypeInput{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff3f;
+  top: 2vh;
+  left: .5vw;
+  width: 3vw;
+  height: 12vh;
+  border-radius: 6px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  accent-color: red;
+}
+
+.sectionTypeInput input[type="radio"] {
+  width: 1.2em;
+  height: 1.2em;
 }

@@ -1,3 +1,4 @@
+
 import React from "react";
 import Section from "./Section.jsx";
 import { getSectionColor, modelComponents } from "./sectionRenderUtils.js";
@@ -8,7 +9,7 @@ export function getModelOverlay(modelName, scaled) {
   return Component ? <Component scaled={scaled} /> : null;
 }
 
-export function TwoPartElementO({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, handleVerticalResizeStart, selectedCategory }) {
+export function TwoPartElementO({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, handleVerticalResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
   return (
     <div id="sections-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
       {[0, 1].map((i) => (
@@ -29,9 +30,12 @@ export function TwoPartElementO({ dimensions, scaled, sectionColors, sectionMode
               ? "rgba(105, 200, 255, 0.6)"
               : getSectionColor(sectionColors, i)?.backgroundColor || "transparent",
             cursor: "pointer",
+            overflow: "visible"
           }}
-          children={getModelOverlay(sectionModels[i], scaled)}
-        />
+        >
+          {getModelOverlay(sectionModels[i], scaled)}
+          {renderSectionTypeRadio && renderSectionTypeRadio(i)}
+        </Section>
       ))}
       {selectedCategory !== 'Sliding Doors' && (
         <div
@@ -51,7 +55,7 @@ export function TwoPartElementO({ dimensions, scaled, sectionColors, sectionMode
   );
 }
 
-export function FourPartElementO({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, handleVerticalResizeStart, handleHorizontalResizeStart, selectedCategory }) {
+export function FourPartElementO({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, handleVerticalResizeStart, handleHorizontalResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
   return (
     <div id="sections-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
       {[...Array(4).keys()].map((i) => {
@@ -75,9 +79,12 @@ export function FourPartElementO({ dimensions, scaled, sectionColors, sectionMod
                 ? "rgba(105, 200, 255, 0.6)"
                 : getSectionColor(sectionColors, i)?.backgroundColor || "transparent",
               cursor: "pointer",
+              overflow: "visible"
             }}
-            children={getModelOverlay(sectionModels[i], scaled)}
-          />
+          >
+            {getModelOverlay(sectionModels[i], scaled)}
+            {renderSectionTypeRadio && renderSectionTypeRadio(i)}
+          </Section>
         );
       })}
       {selectedCategory !== 'Sliding Doors' && (
@@ -112,7 +119,7 @@ export function FourPartElementO({ dimensions, scaled, sectionColors, sectionMod
   );
 }
 
-export function XPartElementA({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, sectionCount, resizingIndex, isResizing, handleSectionResizeStart, handleTopSectionResizeStart, selectedCategory }) {
+export function XPartElementA({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, sectionCount, resizingIndex, isResizing, handleSectionResizeStart, handleTopSectionResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
   const total = sectionCount;
   const rest = total - 1;
   const widths = dimensions.widths || Array(rest).fill(100 / rest);
@@ -134,45 +141,35 @@ export function XPartElementA({ dimensions, scaled, sectionColors, sectionModels
             ? "rgba(105, 200, 255, 0.6)"
             : getSectionColor(sectionColors, 0)?.backgroundColor || "transparent",
           cursor: "pointer",
+          overflow: "visible"
         }}
-        children={getModelOverlay(sectionModels[0], scaled)}
-      />
+      >
+        {getModelOverlay(sectionModels[0], scaled)}
+        {renderSectionTypeRadio && renderSectionTypeRadio(0)}
+      </Section>
       {[...Array(rest).keys()].map((i) => (
-        <React.Fragment key={i + 1}>
-          <Section
-            index={i + 1}
-            total={total}
-            onClick={() => { onClick(i + 1); setSelectionVisible(true); }}
-            style={{
-              position: "absolute",
-              top: `${dimensions.topHeight}%`,
-              left: `${widths.slice(0, i).reduce((a, b) => a + b, 0)}%`,
-              width: `${widths[i]}%`,
-              height: `${100 - dimensions.topHeight}%`,
-              borderRight: i < rest - 1 ? `${scaled.borderPx}px solid #222` : "0",
-              background: isSelected(i + 1)
-                ? "rgba(105, 200, 255, 0.6)"
-                : getSectionColor(sectionColors, i + 1)?.backgroundColor || "transparent",
-              cursor: "pointer",
-            }}
-            children={getModelOverlay(sectionModels[i + 1], scaled)}
-          />
-          {i < rest - 1 && selectedCategory !== 'Sliding Doors' && (
-            <div
-              style={{
-                position: 'absolute',
-                top: `${dimensions.topHeight}%`,
-                left: `${widths.slice(0, i + 1).reduce((a, b) => a + b, 0) - 3}%`,
-                width: '6px',
-                height: `${100 - dimensions.topHeight}%`,
-                cursor: 'col-resize',
-                backgroundColor: isResizing && resizingIndex === i ? 'rgba(0,0,0,0.2)' : 'transparent',
-                zIndex: 10,
-              }}
-              onMouseDown={(e) => handleSectionResizeStart(e, i)}
-            />
-          )}
-        </React.Fragment>
+        <Section
+          key={i + 1}
+          index={i + 1}
+          total={total}
+          onClick={() => { onClick(i + 1); setSelectionVisible(true); }}
+          style={{
+            position: "absolute",
+            top: `${dimensions.topHeight}%`,
+            left: `${widths.slice(0, i).reduce((a, b) => a + b, 0)}%`,
+            width: `${widths[i]}%`,
+            height: `${100 - dimensions.topHeight}%`,
+            borderRight: i < rest - 1 ? `${scaled.borderPx}px solid #222` : "0",
+            background: isSelected(i + 1)
+              ? "rgba(105, 200, 255, 0.6)"
+              : getSectionColor(sectionColors, i + 1)?.backgroundColor || "transparent",
+            cursor: "pointer",
+            overflow: "visible"
+          }}
+        >
+          {getModelOverlay(sectionModels[i + 1], scaled)}
+          {renderSectionTypeRadio && renderSectionTypeRadio(i + 1)}
+        </Section>
       ))}
       {selectedCategory !== 'Sliding Doors' && (
         <div
@@ -192,7 +189,7 @@ export function XPartElementA({ dimensions, scaled, sectionColors, sectionModels
   );
 }
 
-export function DefaultSectionLayout({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, sectionCount, isResizing, resizingIndex, handleSectionResizeStart, selectedCategory }) {
+export function DefaultSectionLayout({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, sectionCount, isResizing, resizingIndex, handleSectionResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
   const widths = dimensions.widths || Array(sectionCount).fill(100 / sectionCount);
   return (
     <div 
@@ -206,29 +203,25 @@ export function DefaultSectionLayout({ dimensions, scaled, sectionColors, sectio
       }}
     >
       {[...Array(sectionCount).keys()].map((i) => (
-        <div
+        <Section
           key={i}
+          index={i}
+          total={sectionCount}
+          onClick={() => { onClick(i); setSelectionVisible(true); }}
           style={{
-            position: 'relative',
             width: `${widths[i]}%`,
             height: '100%',
             borderRight: i < sectionCount - 1 ? `${scaled.borderPx}px solid #222` : "0",
             background: isSelected(i)
               ? "rgba(105, 200, 255, 0.6)"
               : getSectionColor(sectionColors, i)?.backgroundColor || "transparent",
+            position: 'relative',
+            overflow: 'visible',
+            cursor: 'pointer',
           }}
         >
-          <Section
-            index={i}
-            total={sectionCount}
-            onClick={() => { onClick(i); setSelectionVisible(true); }}
-            style={{
-              width: '100%',
-              height: '100%',
-              cursor: 'pointer',
-            }}
-            children={getModelOverlay(sectionModels[i], scaled)}
-          />
+          {getModelOverlay(sectionModels[i], scaled)}
+          {renderSectionTypeRadio && renderSectionTypeRadio(i)}
           {i < sectionCount - 1 && selectedCategory !== 'Sliding Doors' && (
             <div
               style={{
@@ -244,8 +237,8 @@ export function DefaultSectionLayout({ dimensions, scaled, sectionColors, sectio
               onMouseDown={(e) => handleSectionResizeStart(e, i)}
             />
           )}
-        </div>
+        </Section>
       ))}
     </div>
   );
-} 
+}

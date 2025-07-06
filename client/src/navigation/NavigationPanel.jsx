@@ -16,6 +16,7 @@ function NavigationPanel({
   slidingMountType,
   setSlidingMountType,
   setSelectedType,
+  selectedType,
   sectionModels,
   setSectionModels,
   sectionColors,
@@ -25,7 +26,7 @@ function NavigationPanel({
   selectedIndex,
   sectionDimensions,
   setSectionDimensions,
-  orientation
+  orientation,
 }) {
   if (!activeItem) return null;
   switch (activeItem) {
@@ -50,6 +51,8 @@ function NavigationPanel({
           sectionDimensions={sectionDimensions}
           setSectionDimensions={setSectionDimensions}
           orientation={orientation}
+          selectedCategory={selectedCategory}
+          selectedType={selectedType}
         />
       );
     case "Model":

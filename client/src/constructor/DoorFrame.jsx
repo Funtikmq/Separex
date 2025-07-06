@@ -18,7 +18,10 @@ const DoorFrame = forwardRef(({
   width,
   height,
   onClick,
-  sectionDimensions},ref) =>{
+  sectionDimensions,
+  sectionTypes,
+  setSectionTypes,
+}, ref) => {
   
   const doorPadding = `${1 / 16}rem`;
   const isOnWall = slidingMountType === "On wall";
@@ -128,15 +131,18 @@ const wallContureStyle = {
               selectedHandle={selectedHandle}
               onClick={onClick}
               sectionDimensions={sectionDimensions}
+              doorDimensions={{ width, height }}
+              orientation={selectedCategory === "Fixed Wall" ? "horizontal" : "vertical"}
+              sectionTypes={sectionTypes}
+              setSectionTypes={setSectionTypes}
+            />
+            <Axis
+              realWidth={width}
+              realHeight={height}
+              borderPx = {scaled.borderPx}
+              scaled= {scaled}
             />
           </div>
-
-          <Axis
-            realWidth={width}
-            realHeight={height}
-            borderPx = {scaled.borderPx}
-            scaled= {scaled}
-          />
         </div>
       </div>
     </div>

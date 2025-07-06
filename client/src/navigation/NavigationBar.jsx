@@ -19,6 +19,7 @@ function NavigationBar({
     selectedIndex,
     setSelectedCategory,
     setSelectedType,
+    selectedType,
     setSectionModels,
     sectionModels,
     setSectionColors,
@@ -84,6 +85,7 @@ function NavigationBar({
                 slidingMountType={slidingMountType}
                 setSlidingMountType={setSlidingMountType}
                 setSelectedType={setSelectedType}
+                selectedType={selectedType}
                 setSectionModels={setSectionModels}
                 sectionModels={sectionModels}
                 setSectionColors={setSectionColors}

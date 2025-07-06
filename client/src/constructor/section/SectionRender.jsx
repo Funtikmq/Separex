@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { TwoPartElementO, FourPartElementO, XPartElementA, DefaultSectionLayout } from "./SectionLayouts";
 
+// Tipuri posibile pentru fiecare secțiune
+const SECTION_TYPE_OPTIONS = ["fixed", "mobil"];
+
 function SectionRenderer({
   selectedCategory,
   selectedType,
@@ -12,35 +15,66 @@ function SectionRenderer({
   selectionVisible,
   setSelectionVisible,
   onClick,
-  sectionDimensions
+  sectionDimensions,
+  doorDimensions,
+  sectionTypes,
+  setSectionTypes,
 }) {
+  // Handler pentru schimbarea tipului (fixed/mobil) pe secțiune
+  const handleSectionTypeChange = (idx, value) => {
+    setSectionTypes((prev) => prev.map((v, i) => (i === idx ? value : v)));
+  };
   const getDimensionsFromInput = () => {
     if (sectionCount === 1) {
       return { widths: [100] };
     }
+    
+    // Dimensiunea totala in mm (latime pentru toate sectiunile)
+    const total = doorDimensions.width;
+    
     if (selectedType === "2-Part Element O") {
+      const totalHeight = doorDimensions.height;
+      const h1 = Number(sectionDimensions[0]) || totalHeight / 2;
+      const h2 = Number(sectionDimensions[1]) || totalHeight / 2;
+      const ph1 = (h1 / totalHeight) * 100;
+      const ph2 = (h2 / totalHeight) * 100;
       return {
-        height: Number(sectionDimensions[0]) || 50,
-        secondHeight: Number(sectionDimensions[1]) || 50
+        height: ph1,
+        secondHeight: ph2
       };
     }
     if (selectedType === "4-Part Element O") {
+      const totalHeight = doorDimensions.height;
+      const h1 = Number(sectionDimensions[0]) || totalHeight / 2;
+      const h2 = Number(sectionDimensions[1]) || totalHeight / 2;
+      const w1 = Number(sectionDimensions[2]) || doorDimensions.width / 2;
+      const w2 = Number(sectionDimensions[3]) || doorDimensions.width / 2;
+      const ph1 = (h1 / totalHeight) * 100;
+      const ph2 = (h2 / totalHeight) * 100;
+      const pw1 = (w1 / doorDimensions.width) * 100;
+      const pw2 = (w2 / doorDimensions.width) * 100;
       return {
-        height: Number(sectionDimensions[0]) || 50,
-        secondHeight: Number(sectionDimensions[1]) || 50,
-        width: Number(sectionDimensions[2]) || 50,
-        secondWidth: Number(sectionDimensions[3]) || 50
+        height: ph1,
+        secondHeight: ph2,
+        width: pw1,
+        secondWidth: pw2
       };
     }
     if (/^\d+-Part Element A$/.test(selectedType)) {
       const total = parseInt(selectedType.match(/^(\d+)-Part/)[1], 10);
       const rest = total - 1;
+      const topHeightMM = Number(sectionDimensions[0]) || 0;
+      const widthsMM = sectionDimensions.slice(1, total).map(v => Number(v) || 0);
+      const topHeightPercent = (topHeightMM / doorDimensions.height) * 100;
+      const widthsPercent = widthsMM.map(w => (w / doorDimensions.width) * 100);
       return {
-        topHeight: Number(sectionDimensions[0]) || 30,
-        widths: sectionDimensions.slice(1, total).map(v => Number(v) || 0)
+        topHeight: topHeightPercent,
+        widths: widthsPercent
       };
     }
-    return { widths: (sectionDimensions || []).map(v => Number(v) || 0) };
+    const values = (sectionDimensions || []).map(v => Number(v) || 0);
+    const pvalues = values.map(v => (v / total) * 100);
+    return { widths: pvalues };
   };
 
   const [dimensions, setDimensions] = useState(getDimensionsFromInput);
@@ -51,6 +85,39 @@ function SectionRenderer({
   const [startDimensions, setStartDimensions] = useState(null);
 
   const isSelected = (i) => selectedIndex === i && selectionVisible;
+
+  // Render radio input pentru secțiunea selectată
+  const renderSectionTypeRadio = (idx) => {
+    if (
+      !selectionVisible ||
+      selectedIndex !== idx ||
+      !["Sliding Doors", "Swing Doors"].includes(selectedCategory)
+    ) return null;
+    return (
+      <div className="sectionTypeInput">
+        <label style={{ marginRight: 8 }}>
+          <input
+            type="radio"
+            name={`section-type-${idx}`}
+            value="fixed"
+            checked={sectionTypes[idx] === "fixed"}
+            onChange={() => handleSectionTypeChange(idx, "fixed")}
+          />
+          Fixed
+        </label>
+        <label>
+          <input
+            type="radio"
+            name={`section-type-${idx}`}
+            value="mobil"
+            checked={sectionTypes[idx] === "mobil"}
+            onChange={() => handleSectionTypeChange(idx, "mobil")}
+          />
+          Mobile
+        </label>
+      </div>
+    );
+  };
 
   const handleVerticalResizeStart = (e) => {
     if (selectedCategory === 'Sliding Doors') return;
@@ -181,7 +248,6 @@ function SectionRenderer({
     setDimensions(getDimensionsFromInput());
   }, [selectedType, sectionCount, selectedCategory, sectionDimensions]);
 
-  // Selectează layout-ul potrivit
   if (selectedType === "2-Part Element O") {
     return (
       <TwoPartElementO
@@ -194,6 +260,7 @@ function SectionRenderer({
         setSelectionVisible={setSelectionVisible}
         handleVerticalResizeStart={handleVerticalResizeStart}
         selectedCategory={selectedCategory}
+        renderSectionTypeRadio={renderSectionTypeRadio}
       />
     );
   }
@@ -210,6 +277,7 @@ function SectionRenderer({
         handleVerticalResizeStart={handleVerticalResizeStart}
         handleHorizontalResizeStart={handleHorizontalResizeStart}
         selectedCategory={selectedCategory}
+        renderSectionTypeRadio={renderSectionTypeRadio}
       />
     );
   }
@@ -229,6 +297,7 @@ function SectionRenderer({
         handleSectionResizeStart={handleSectionResizeStart}
         handleTopSectionResizeStart={handleTopSectionResizeStart}
         selectedCategory={selectedCategory}
+        renderSectionTypeRadio={renderSectionTypeRadio}
       />
     );
   }
@@ -247,6 +316,7 @@ function SectionRenderer({
       resizingIndex={resizingIndex}
       handleSectionResizeStart={handleSectionResizeStart}
       selectedCategory={selectedCategory}
+      renderSectionTypeRadio={renderSectionTypeRadio}
     />
   );
 }

@@ -14,7 +14,9 @@ function Constructor({
   sectionModels,
   selectedHandle,
   doorFrameRef,
-  sectionDimensions
+  sectionDimensions,
+  sectionTypes,
+  setSectionTypes
 }) {
   const { height, width } = doorDimensions;
   const scaled = useScaledDimensions(height, width);
@@ -33,7 +35,7 @@ function Constructor({
 useEffect(() => {
   const handleClickOutside = (event) => {
     if (doorFrameRef.current && !doorFrameRef.current.contains(event.target)) {
-      setSelectionVisible(false); // Ascunde evidențierea, dar păstrează selecția
+      setSelectionVisible(false);
     }
   };
 
@@ -92,7 +94,7 @@ useEffect(() => {
         )}
 
         <DoorFrame
-          ref={doorFrameRef} 
+          ref={doorFrameRef}
           scaled={scaled}
           width={width}
           height={height}
@@ -108,6 +110,8 @@ useEffect(() => {
           selectedHandle={selectedHandle}
           onClick={setSelectedIndex}
           sectionDimensions={sectionDimensions}
+          sectionTypes={sectionTypes}
+          setSectionTypes={setSectionTypes}
         />
       </div>
 
@@ -115,9 +119,9 @@ useEffect(() => {
         <h4 className="constructorInfoText">Category: {selectedCategory}</h4>
         <h4 className="constructorInfoText">Handles: </h4>
         <h4 className="constructorInfoText">Size: {width} x {height} </h4>
-        <h4 className="constructorInfoText">Models: {sectionModels}</h4>
+        <h4 className="constructorInfoText">Models: {Array.isArray(sectionModels) ? sectionModels.join(' ') : sectionModels}</h4>
         <h4 className="constructorInfoText">Type: {selectedType}</h4>
-        <h4 className="constructorInfoText">Colors: {sectionColors}</h4>
+        <h4 className="constructorInfoText">Colors: {Array.isArray(sectionColors) ? sectionColors.join(' ') : sectionColors}</h4>
       </div>
     </div>
   );
