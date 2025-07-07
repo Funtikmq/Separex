@@ -25,17 +25,6 @@ function App() {
     setSectionTypes(Array(sectionCount).fill("fixed"));
   }, [sectionCount, selectedType, selectedCategory]);
 
-  const getOrientation = () => {
-    if (selectedType === "2-Part Element O" || selectedType === "4-Part Element O") {
-      return "vertical";
-    }
-    if (/^\d+-Part Element A$/.test(selectedType)) {
-      return "horizontal";
-    }
-    return "vertical";
-  };
-  const orientation = getOrientation();
-
   useEffect(() => {
     const count = Math.max(sectionCount, 1);
     setSectionModels(Array(count).fill("Aero"));
@@ -83,7 +72,6 @@ function App() {
                     doorFrameRef={doorFrameRef}
                     sectionDimensions={sectionDimensions}
                     setSectionDimensions={setSectionDimensions}
-                    orientation={orientation}
                     />
 
     <Constructor doorDimensions={doorDimensions} 
@@ -96,6 +84,7 @@ function App() {
                  sectionModels={sectionModels}
                  sectionColors={sectionColors}
                  sectionDimensions={sectionDimensions}
+                 setSectionDimensions={setSectionDimensions}
                  selectedHandle={selectedHandle}
                  doorFrameRef={doorFrameRef}
                  sectionTypes={sectionTypes}

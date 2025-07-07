@@ -16,11 +16,12 @@ function SectionRenderer({
   setSelectionVisible,
   onClick,
   sectionDimensions,
+  setSectionDimensions,
   doorDimensions,
   sectionTypes,
   setSectionTypes,
 }) {
-  // Handler pentru schimbarea tipului (fixed/mobil) pe secțiune
+  // Handler pentru schimbarea tipului  pe secțiune
   const handleSectionTypeChange = (idx, value) => {
     setSectionTypes((prev) => prev.map((v, i) => (i === idx ? value : v)));
   };
@@ -28,9 +29,6 @@ function SectionRenderer({
     if (sectionCount === 1) {
       return { widths: [100] };
     }
-    
-    // Dimensiunea totala in mm (latime pentru toate sectiunile)
-    const total = doorDimensions.width;
     
     if (selectedType === "2-Part Element O") {
       const totalHeight = doorDimensions.height;
@@ -72,8 +70,13 @@ function SectionRenderer({
         widths: widthsPercent
       };
     }
-    const values = (sectionDimensions || []).map(v => Number(v) || 0);
-    const pvalues = values.map(v => (v / total) * 100);
+    const values = (sectionDimensions || []).map(v => Number(v) || 1);
+    const total = doorDimensions.width || values.reduce((a, b) => a + b, 0) || 1;
+    let pvalues = values.map(v => (v / total) * 100);
+    const sumP = pvalues.reduce((a, b) => a + b, 0);
+    if (pvalues.length > 0 && Math.abs(sumP - 100) > 0.01) {
+      pvalues[pvalues.length - 1] += (100 - sumP);
+    }
     return { widths: pvalues };
   };
 
@@ -173,6 +176,13 @@ function SectionRenderer({
               height: newHeight,
               secondHeight: 100 - newHeight
             }));
+            // Sincronizează și cu sectionDimensions dacă există setter
+            if (typeof setSectionDimensions === 'function') {
+              const totalHeight = doorDimensions.height;
+              const h1 = Math.round((newHeight / 100) * totalHeight);
+              const h2 = Math.round(((100 - newHeight) / 100) * totalHeight);
+              setSectionDimensions([h1, h2]);
+            }
           }
         }
         break;
@@ -188,6 +198,14 @@ function SectionRenderer({
               width: newWidth,
               secondWidth: 100 - newWidth
             }));
+            // Sincronizează și cu sectionDimensions dacă există setter
+            if (typeof setSectionDimensions === 'function') {
+              const totalWidth = doorDimensions.width;
+              const w1 = Math.round((newWidth / 100) * totalWidth);
+              const w2 = Math.round(((100 - newWidth) / 100) * totalWidth);
+              // Pentru 4-Part Element O, sectionDimensions[2] și [3] sunt lățimile
+              setSectionDimensions([sectionDimensions[0] || 0, sectionDimensions[1] || 0, w1, w2]);
+            }
           }
         }
         break;
@@ -201,25 +219,53 @@ function SectionRenderer({
             ...prev,
             topHeight: newTopHeight
           }));
+          // Sincronizează și cu sectionDimensions dacă există setter
+          if (typeof setSectionDimensions === 'function') {
+            const totalHeight = doorDimensions.height;
+            const h = Math.round((newTopHeight / 100) * totalHeight);
+            // Pentru XPartElementA, sectionDimensions[0] este topHeight
+            const restVals = sectionDimensions.slice(1);
+            setSectionDimensions([h, ...restVals]);
+          }
         }
         break;
       }
-      default: {
+default: {
         if (typeof resizingIndex === 'number' && startDimensions.widths) {
           const deltaX = e.clientX - startX;
           const deltaXPercentage = (deltaX / containerRect.width) * 100;
-          const newWidths = [...startDimensions.widths];
-          const minWidth = 15;
+          let newWidths = [...startDimensions.widths];
+          const minWidth = 5;
           if (resizingIndex < newWidths.length - 1) {
-            const newWidth1 = startDimensions.widths[resizingIndex] + deltaXPercentage;
-            const newWidth2 = startDimensions.widths[resizingIndex + 1] - deltaXPercentage;
-            if (newWidth1 >= minWidth && newWidth2 >= minWidth) {
-              newWidths[resizingIndex] = newWidth1;
-              newWidths[resizingIndex + 1] = newWidth2;
-              setDimensions(prev => ({
-                ...prev,
-                widths: newWidths
-              }));
+            let newWidth1 = startDimensions.widths[resizingIndex] + deltaXPercentage;
+            let newWidth2 = startDimensions.widths[resizingIndex + 1] - deltaXPercentage;
+            // Limitează la minWidth
+            if (newWidth1 < minWidth) {
+              newWidth2 -= (minWidth - newWidth1);
+              newWidth1 = minWidth;
+            }
+            if (newWidth2 < minWidth) {
+              newWidth1 -= (minWidth - newWidth2);
+              newWidth2 = minWidth;
+            }
+            newWidths[resizingIndex] = newWidth1;
+            newWidths[resizingIndex + 1] = newWidth2;
+            // Normalizează la 100%
+            const total = newWidths.reduce((a, b) => a + b, 0);
+            newWidths = newWidths.map(w => (w / total) * 100);
+            setDimensions(prev => ({
+              ...prev,
+              widths: newWidths
+            }));
+            if (typeof setSectionDimensions === 'function') {
+              const totalWidth = doorDimensions.width;
+              let newSectionDimensions = newWidths.map(p => Math.round((p / 100) * totalWidth));
+
+              const sum = newSectionDimensions.reduce((a, b) => a + b, 0);
+              if (newSectionDimensions.length > 0 && sum !== totalWidth) {
+                newSectionDimensions[newSectionDimensions.length - 1] += (totalWidth - sum);
+              }
+              setSectionDimensions(newSectionDimensions);
             }
           }
         }

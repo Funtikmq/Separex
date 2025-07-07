@@ -19,6 +19,7 @@ const DoorFrame = forwardRef(({
   height,
   onClick,
   sectionDimensions,
+  setSectionDimensions,
   sectionTypes,
   setSectionTypes,
 }, ref) => {
@@ -131,6 +132,7 @@ const wallContureStyle = {
               selectedHandle={selectedHandle}
               onClick={onClick}
               sectionDimensions={sectionDimensions}
+              setSectionDimensions={setSectionDimensions}
               doorDimensions={{ width, height }}
               orientation={selectedCategory === "Fixed Wall" ? "horizontal" : "vertical"}
               sectionTypes={sectionTypes}

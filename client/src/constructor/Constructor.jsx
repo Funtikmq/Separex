@@ -15,6 +15,7 @@ function Constructor({
   selectedHandle,
   doorFrameRef,
   sectionDimensions,
+  setSectionDimensions,
   sectionTypes,
   setSectionTypes
 }) {
@@ -110,6 +111,7 @@ useEffect(() => {
           selectedHandle={selectedHandle}
           onClick={setSelectedIndex}
           sectionDimensions={sectionDimensions}
+          setSectionDimensions={setSectionDimensions}
           sectionTypes={sectionTypes}
           setSectionTypes={setSectionTypes}
         />

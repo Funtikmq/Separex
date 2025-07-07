@@ -189,8 +189,30 @@ export function XPartElementA({ dimensions, scaled, sectionColors, sectionModels
   );
 }
 
-export function DefaultSectionLayout({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, sectionCount, isResizing, resizingIndex, handleSectionResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
-  const widths = dimensions.widths || Array(sectionCount).fill(100 / sectionCount);
+export function DefaultSectionLayout({ 
+  dimensions, 
+  scaled, 
+  sectionColors, 
+  sectionModels, 
+  isSelected, 
+  onClick, 
+  setSelectionVisible, 
+  sectionCount, 
+  isResizing, 
+  resizingIndex, 
+  handleSectionResizeStart, 
+  selectedCategory, 
+  renderSectionTypeRadio = () => null 
+}) {
+  // Ensure widths are properly initialized and sum to 100%
+  const widths = React.useMemo(() => {
+    if (dimensions.widths && dimensions.widths.length === sectionCount) {
+      return dimensions.widths;
+    }
+    // Default to equal widths
+    return Array(sectionCount).fill(100 / sectionCount);
+  }, [dimensions.widths, sectionCount]);
+
   return (
     <div 
       id="sections-container" 
@@ -209,7 +231,7 @@ export function DefaultSectionLayout({ dimensions, scaled, sectionColors, sectio
           total={sectionCount}
           onClick={() => { onClick(i); setSelectionVisible(true); }}
           style={{
-            width: `${widths[i]}%`,
+            flex: `0 0 ${widths[i]}%`, // Use flex instead of width
             height: '100%',
             borderRight: i < sectionCount - 1 ? `${scaled.borderPx}px solid #222` : "0",
             background: isSelected(i)
