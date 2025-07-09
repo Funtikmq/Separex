@@ -1,7 +1,6 @@
-
 import React from "react";
 import Section from "./Section.jsx";
-import { getSectionColor, modelComponents } from "./sectionRenderUtils.js";
+import { getSectionColor, modelComponents } from "./utils/sectionRenderUtils.js";
 
 export function getModelOverlay(modelName, scaled) {
   if (!modelName || modelName === "Aero") return null;
@@ -56,37 +55,62 @@ export function TwoPartElementO({ dimensions, scaled, sectionColors, sectionMode
 }
 
 export function FourPartElementO({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, handleVerticalResizeStart, handleHorizontalResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
+  // Calculăm dimensiunile pentru fiecare secțiune
+  const sections = [
+    { // Top Left
+      top: 0,
+      left: 0,
+      width: dimensions.width,
+      height: dimensions.height
+    },
+    { // Top Right
+      top: 0,
+      left: dimensions.width,
+      width: 100 - dimensions.width,
+      height: dimensions.height
+    },
+    { // Bottom Left
+      top: dimensions.height,
+      left: 0,
+      width: dimensions.width,
+      height: 100 - dimensions.height
+    },
+    { // Bottom Right
+      top: dimensions.height,
+      left: dimensions.width,
+      width: 100 - dimensions.width,
+      height: 100 - dimensions.height
+    }
+  ];
+
   return (
     <div id="sections-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {[...Array(4).keys()].map((i) => {
-        const row = Math.floor(i / 2);
-        const col = i % 2;
-        return (
-          <Section
-            key={i}
-            index={i}
-            total={4}
-            onClick={() => { onClick(i); setSelectionVisible(true); }}
-            style={{
-              position: "absolute",
-              top: `${row === 0 ? 0 : dimensions.height}%`,
-              left: `${col === 0 ? 0 : dimensions.width}%`,
-              width: `${col === 0 ? dimensions.width : dimensions.secondWidth}%`,
-              height: `${row === 0 ? dimensions.height : dimensions.secondHeight}%`,
-              borderRight: col === 0 ? `${scaled.borderPx}px solid #222` : "0",
-              borderBottom: row === 0 ? `${scaled.borderPx}px solid #222` : "0",
-              background: isSelected(i)
-                ? "rgba(105, 200, 255, 0.6)"
-                : getSectionColor(sectionColors, i)?.backgroundColor || "transparent",
-              cursor: "pointer",
-              overflow: "visible"
-            }}
-          >
-            {getModelOverlay(sectionModels[i], scaled)}
-            {renderSectionTypeRadio && renderSectionTypeRadio(i)}
-          </Section>
-        );
-      })}
+      {sections.map((section, i) => (
+        <Section
+          key={i}
+          index={i}
+          total={4}
+          onClick={() => { onClick(i); setSelectionVisible(true); }}
+          style={{
+            position: "absolute",
+            top: `${section.top}%`,
+            left: `${section.left}%`,
+            width: `${section.width}%`,
+            height: `${section.height}%`,
+            borderRight: i % 2 === 0 ? `${scaled.borderPx}px solid #222` : "0",
+            borderBottom: i < 2 ? `${scaled.borderPx}px solid #222` : "0",
+            background: isSelected(i)
+              ? "rgba(105, 200, 255, 0.6)"
+              : getSectionColor(sectionColors, i)?.backgroundColor || "transparent",
+            cursor: "pointer",
+            overflow: "visible"
+          }}
+        >
+          {getModelOverlay(sectionModels[i], scaled)}
+          {renderSectionTypeRadio && renderSectionTypeRadio(i)}
+        </Section>
+      ))}
+
       {selectedCategory !== 'Sliding Doors' && (
         <>
           <div
@@ -119,12 +143,30 @@ export function FourPartElementO({ dimensions, scaled, sectionColors, sectionMod
   );
 }
 
-export function XPartElementA({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, sectionCount, resizingIndex, isResizing, handleSectionResizeStart, handleTopSectionResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
+export function XPartElementA({ 
+  dimensions, 
+  scaled, 
+  sectionColors, 
+  sectionModels, 
+  isSelected, 
+  onClick, 
+  setSelectionVisible, 
+  sectionCount, 
+  resizingIndex, 
+  isResizing, 
+  handleSectionResizeStart, // Add this back
+  handleVerticalResizeStart,
+  handleTopSectionResizeStart, 
+  selectedCategory, 
+  renderSectionTypeRadio = () => null 
+}) {
   const total = sectionCount;
   const rest = total - 1;
   const widths = dimensions.widths || Array(rest).fill(100 / rest);
+  
   return (
     <div id="sections-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {/* Top section remains the same */}
       <Section
         key={0}
         index={0}
@@ -147,6 +189,8 @@ export function XPartElementA({ dimensions, scaled, sectionColors, sectionModels
         {getModelOverlay(sectionModels[0], scaled)}
         {renderSectionTypeRadio && renderSectionTypeRadio(0)}
       </Section>
+
+      {/* Bottom sections with both resize handlers */}
       {[...Array(rest).keys()].map((i) => (
         <Section
           key={i + 1}
@@ -169,8 +213,27 @@ export function XPartElementA({ dimensions, scaled, sectionColors, sectionModels
         >
           {getModelOverlay(sectionModels[i + 1], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i + 1)}
+          
+          {/* Horizontal resize handle */}
+          {i < rest - 1 && selectedCategory !== 'Sliding Doors' && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: -3,
+                width: 6,
+                height: '100%',
+                cursor: 'col-resize',
+                backgroundColor: isResizing && resizingIndex === i ? 'rgba(0,0,0,0.2)' : 'transparent',
+                zIndex: 10,
+              }}
+              onMouseDown={(e) => handleSectionResizeStart(e, i)}
+            />
+          )}
         </Section>
       ))}
+
+      {/* Top section resize handle */}
       {selectedCategory !== 'Sliding Doors' && (
         <div
           style={{

@@ -20,7 +20,6 @@ function App() {
 
   const doorFrameRef = useRef(null);
 
-  // Reset sectionTypes to all "fixed" when sectionCount, selectedType, or selectedCategory changes
   useEffect(() => {
     setSectionTypes(Array(sectionCount).fill("fixed"));
   }, [sectionCount, selectedType, selectedCategory]);
@@ -30,23 +29,35 @@ function App() {
     setSectionModels(Array(count).fill("Aero"));
     setSectionColors(Array(count).fill("Clear"));
     setSelectedHandle(Array(count).fill(""));
-    if (selectedType === "2-Part Element O") {
-      setSectionDimensions(Array(count).fill(doorDimensions.height / count));
+    const dimensions = {
+      "2-Part Element O": [
+        doorDimensions.height / 2,
+        doorDimensions.height / 2
+      ],
+      "4-Part Element O": [
+        doorDimensions.height / 2,
+        doorDimensions.height / 2,
+        doorDimensions.width / 2,
+        doorDimensions.width / 2
+      ]
+    };
+    // Functie pentru a imparti width in numere naturale care insumeaza width
+    function splitNatural(total, parts) {
+      const base = Math.floor(total / parts);
+      const remainder = total - base * parts;
+      return Array(parts).fill(base).map((v, i) => i < remainder ? v + 1 : v);
     }
-    else if(selectedType === "4-Part Element O") {
-      setSectionDimensions([doorDimensions.height / 2, doorDimensions.height / 2]);
-    }
-    else if (/^\d+-Part Element A$/.test(selectedType)) {
-      setSectionDimensions(prev => {
-      const firstElement = prev[0] ?? height / 2;
-      const restElements = Array(count - 1).fill(doorDimensions.width / (count - 1));
-      return [firstElement, ...restElements];
-    });
-    }
-    else {
-      setSectionDimensions(Array(count).fill(doorDimensions.width/count));
-    }
-  }, [sectionCount]);
+    setSectionDimensions(
+      dimensions[selectedType] || 
+      (/^\d+-Part Element A$/.test(selectedType) 
+        ? [
+            sectionDimensions[0] ?? Math.round(doorDimensions.height/2),
+            ...splitNatural(doorDimensions.width, count - 1)
+          ]
+        : splitNatural(doorDimensions.width, count))
+    );
+    
+}, [sectionCount, selectedType, doorDimensions]);
 
   return (
   <>

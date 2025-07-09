@@ -1,5 +1,5 @@
 
-function Section({ style, onClick, children, axisStyle }) {
+function Section({ style, onClick, children}) {
     let overlay = null;
     let radio = null;
     if (Array.isArray(children)) {
