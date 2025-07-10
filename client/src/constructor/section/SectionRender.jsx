@@ -21,7 +21,9 @@ function SectionRenderer({
   doorDimensions,
   sectionTypes,
   setSectionTypes,
+  selectedHandle,
 }) {
+
   const [isResizing, setIsResizing] = useState(false);
   const [resizingIndex, setResizingIndex] = useState(null);
   const [startX, setStartX] = useState(0);
@@ -127,11 +129,21 @@ function SectionRenderer({
             <input
               type="radio"
               name={`section-type-${idx}`}
-              value="mobil"
-              checked={sectionTypes[idx] === "mobil"}
-              onChange={() => handleSectionTypeChange(idx, "mobil")}
+              value="left"
+              checked={sectionTypes[idx] === "left"}
+              onChange={() => handleSectionTypeChange(idx, "left")}
             />
-            Mobile
+            To Left
+          </label>
+          <label>
+            <input
+              type="radio"
+              name={`section-type-${idx}`}
+              value="right"
+              checked={sectionTypes[idx] === "right"}
+              onChange={() => handleSectionTypeChange(idx, "right")}
+            />
+            To Right
           </label>
         </div>
       );
@@ -152,13 +164,13 @@ function SectionRenderer({
   const renderLayout = () => {
     switch(selectedType) {
       case SECTION_TYPES.TWO_PART:
-        return <layouts.TwoPartElementO {...layoutProps} selectedType={selectedType} />;
+        return <layouts.TwoPartElementO {...layoutProps} selectedType={selectedType} doorDimensions={doorDimensions} sectionDimensions={sectionDimensions} selectedHandle={selectedHandle}/>;
       case SECTION_TYPES.FOUR_PART:
-        return <layouts.FourPartElementO {...layoutProps} selectedType={selectedType} />;
+        return <layouts.FourPartElementO {...layoutProps} selectedType={selectedType} doorDimensions={doorDimensions} sectionDimensions={sectionDimensions} selectedHandle={selectedHandle}/>;
       case (selectedType.match(/^\d+-Part Element A$/) || {}).input:
-        return <layouts.XPartElementA {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} />;
+        return <layouts.XPartElementA {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} doorDimensions={doorDimensions} sectionDimensions={sectionDimensions} selectedHandle={selectedHandle} />;
       default:
-        return <layouts.DefaultSectionLayout {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} />;
+        return <layouts.DefaultSectionLayout {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} doorDimensions={doorDimensions} sectionDimensions={sectionDimensions} selectedHandle={selectedHandle}/>;
     }
   };
 

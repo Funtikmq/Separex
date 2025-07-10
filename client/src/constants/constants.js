@@ -10,15 +10,15 @@ export const COLORS = [
 
 export const HANDLES = {
   "Swing Doors": [
-    "Handle with Lock",
-    "Pull Handle 160 mm",
-    "Pull Handle 288 mm",
-    "Pull Handle 448 mm"
+    "HandleWithLock",
+    "PullHandle160",
+    "PullHandle288",
+    "PullHandle448"
   ],
   "Sliding Doors": [
-    "Pull Handle 160 mm",
-    "Pull Handle 288 mm",
-    "Pull Handle 448 mm"
+    "PullHandle160",
+    "PullHandle288",
+    "PullHandle448"
   ]
 };
 
