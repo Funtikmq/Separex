@@ -57,7 +57,7 @@ function App() {
         : splitNatural(doorDimensions.width, count))
     );
     
-}, [sectionCount, selectedType, doorDimensions]);
+}, [sectionCount, selectedType, doorDimensions,selectedCategory]);
 
   return (
   <>

@@ -8,7 +8,18 @@ export function getModelOverlay(modelName, scaled) {
   return Component ? <Component scaled={scaled} /> : null;
 }
 
-export function TwoPartElementO({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, handleVerticalResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
+
+export function TwoPartElementO({ dimensions, 
+                                  scaled,
+                                  sectionColors, 
+                                  sectionModels, 
+                                  isSelected, 
+                                  onClick, 
+                                  setSelectionVisible,
+                                  handleVerticalResizeStart, 
+                                  selectedCategory,
+                                  selectedType,
+                                  renderSectionTypeRadio = () => null }) {
   return (
     <div id="sections-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
       {[0, 1].map((i) => (
@@ -31,6 +42,7 @@ export function TwoPartElementO({ dimensions, scaled, sectionColors, sectionMode
             cursor: "pointer",
             overflow: "visible"
           }}
+          selectedType={selectedType}
         >
           {getModelOverlay(sectionModels[i], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
@@ -54,7 +66,18 @@ export function TwoPartElementO({ dimensions, scaled, sectionColors, sectionMode
   );
 }
 
-export function FourPartElementO({ dimensions, scaled, sectionColors, sectionModels, isSelected, onClick, setSelectionVisible, handleVerticalResizeStart, handleHorizontalResizeStart, selectedCategory, renderSectionTypeRadio = () => null }) {
+export function FourPartElementO({ dimensions, 
+                                   scaled, 
+                                   sectionColors,
+                                   sectionModels, 
+                                   isSelected, 
+                                   onClick, 
+                                   setSelectionVisible, 
+                                   handleVerticalResizeStart, 
+                                   handleHorizontalResizeStart,
+                                   selectedType, 
+                                   selectedCategory,
+                                    renderSectionTypeRadio = () => null }) {
   // Calculăm dimensiunile pentru fiecare secțiune
   const sections = [
     { // Top Left
@@ -105,6 +128,7 @@ export function FourPartElementO({ dimensions, scaled, sectionColors, sectionMod
             cursor: "pointer",
             overflow: "visible"
           }}
+          selectedType={selectedType}
         >
           {getModelOverlay(sectionModels[i], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
@@ -154,10 +178,10 @@ export function XPartElementA({
   sectionCount, 
   resizingIndex, 
   isResizing, 
-  handleSectionResizeStart, // Add this back
-  handleVerticalResizeStart,
+  handleSectionResizeStart, 
   handleTopSectionResizeStart, 
   selectedCategory, 
+  selectedType,
   renderSectionTypeRadio = () => null 
 }) {
   const total = sectionCount;
@@ -185,6 +209,7 @@ export function XPartElementA({
           cursor: "pointer",
           overflow: "visible"
         }}
+        selectedType={selectedType}
       >
         {getModelOverlay(sectionModels[0], scaled)}
         {renderSectionTypeRadio && renderSectionTypeRadio(0)}
@@ -210,6 +235,7 @@ export function XPartElementA({
             cursor: "pointer",
             overflow: "visible"
           }}
+          selectedType={selectedType}
         >
           {getModelOverlay(sectionModels[i + 1], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i + 1)}
@@ -264,7 +290,8 @@ export function DefaultSectionLayout({
   isResizing, 
   resizingIndex, 
   handleSectionResizeStart, 
-  selectedCategory, 
+  selectedCategory,
+  selectedType, 
   renderSectionTypeRadio = () => null 
 }) {
   // Ensure widths are properly initialized and sum to 100%
@@ -284,7 +311,7 @@ export function DefaultSectionLayout({
         width: '100%', 
         height: '100%', 
         display: 'flex',
-        overflow: 'hidden'
+        overflow: 'visible'
       }}
     >
       {[...Array(sectionCount).keys()].map((i) => (
@@ -304,6 +331,7 @@ export function DefaultSectionLayout({
             overflow: 'visible',
             cursor: 'pointer',
           }}
+          selectedType={selectedType}
         >
           {getModelOverlay(sectionModels[i], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}

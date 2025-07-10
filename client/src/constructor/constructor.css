@@ -43,6 +43,7 @@
   cursor: pointer;
   box-sizing: border-box;
   position: relative;
+  overflow: visible;
 }
 
 .doorSection::before {
@@ -186,22 +187,55 @@
   background-color: #ccc;
 }
 
-.sectionTypeInput{
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  background: #ffffff3f;
-  top: 2vh;
-  left: .5vw;
-  width: 3vw;
-  height: 12vh;
-  border-radius: 6px;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-  accent-color: red;
+ /*Axele Sectiunilor*/
+ 
+.sectionAxis {
+  pointer-events: none;
 }
 
-.sectionTypeInput input[type="radio"] {
-  width: 1.2em;
-  height: 1.2em;
+.sectionAxisHorizontal {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 0;
+  width: 100%;
+  height: .2vh;
+  background-color: #ff0000;
+  z-index: 10;
 }
+
+.sectionAxisVertical {
+  position: absolute;
+  top: 0;
+  left: -2rem;
+  width: .2vh;
+  height: 100%;
+  background-color: #ff0000;
+  z-index: 10;
+}
+
+.sectionTypeInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; 
+  position: absolute;
+  align-items: flex-start;    
+  top: 5%;
+  left: 5%;
+  z-index: 10;
+  height: auto;            
+  width: auto;
+  padding: 1vh;             
+  background: #ffffff88;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);              
+}
+
+.sectionTypeInput label {
+  color: #222;
+  display: flex;
+  align-items: center;       
+  gap: 0.5em;              
+  font-size: 0.75em;   
+  width: 100%;            
+}
+

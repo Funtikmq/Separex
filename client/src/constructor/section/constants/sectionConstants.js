@@ -16,5 +16,6 @@ export const SECTION_CATEGORIES = {
 
 export const SECTION_STATES = {
   FIXED: "fixed",
-  MOBILE: "mobil"
+  RIGHT: "right",
+  LEFT : "right"
 };

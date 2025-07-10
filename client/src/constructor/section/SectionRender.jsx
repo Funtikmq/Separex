@@ -152,13 +152,13 @@ function SectionRenderer({
   const renderLayout = () => {
     switch(selectedType) {
       case SECTION_TYPES.TWO_PART:
-        return <layouts.TwoPartElementO {...layoutProps} />;
+        return <layouts.TwoPartElementO {...layoutProps} selectedType={selectedType} />;
       case SECTION_TYPES.FOUR_PART:
-        return <layouts.FourPartElementO {...layoutProps} />;
+        return <layouts.FourPartElementO {...layoutProps} selectedType={selectedType} />;
       case (selectedType.match(/^\d+-Part Element A$/) || {}).input:
-        return <layouts.XPartElementA {...layoutProps} sectionCount={sectionCount} />;
+        return <layouts.XPartElementA {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} />;
       default:
-        return <layouts.DefaultSectionLayout {...layoutProps} sectionCount={sectionCount} />;
+        return <layouts.DefaultSectionLayout {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} />;
     }
   };
 

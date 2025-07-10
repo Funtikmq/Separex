@@ -62,10 +62,10 @@ useEffect(() => {
         0% 0%,
         100% 0%,
         100% 100%,
-        ${(doorRight + wallPadding)/15.9}rem 100%,
-        ${(doorRight + wallPadding)/15.9}rem ${doorTop -0.1 * containerHeight}px,
-        ${(doorLeft - wallPadding)/16.15}rem ${doorTop  -0.1 * containerHeight}px,
-        ${(doorLeft - wallPadding)/16.15}rem 100%,
+        ${(doorRight + wallPadding)/16}rem 100%,
+        ${(doorRight + wallPadding)/16}rem ${(doorTop -0.1 * containerHeight)/16}rem,
+        ${(doorLeft - wallPadding)/16}rem ${(doorTop  -0.1 * containerHeight)/16}rem,
+        ${(doorLeft - wallPadding)/16}rem 100%,
         0% 100%
       )`
     : "none";
