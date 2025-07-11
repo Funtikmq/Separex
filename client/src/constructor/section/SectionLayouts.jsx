@@ -1,13 +1,13 @@
 import React from "react";
 import Section from "./Section.jsx";
-import { getSectionColor, modelComponents } from "./utils/sectionRenderUtils.js";
+import { getSectionColor, modelComponents,getHandleOverlay } from "./utils/sectionRenderUtils.js";
+
 
 export function getModelOverlay(modelName, scaled) {
   if (!modelName || modelName === "Aero") return null;
   const Component = modelComponents[modelName];
   return Component ? <Component scaled={scaled} /> : null;
 }
-
 
 export function TwoPartElementO({ dimensions, 
                                   scaled,
@@ -49,6 +49,7 @@ export function TwoPartElementO({ dimensions,
           doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
+          {getHandleOverlay(selectedHandle, scaled, i)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
         </Section>
       ))}
@@ -139,6 +140,7 @@ export function FourPartElementO({ dimensions,
           doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
+          {getHandleOverlay(selectedHandle, scaled, i)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
         </Section>
       ))}
@@ -224,6 +226,7 @@ export function XPartElementA({
         doorDimensions={doorDimensions}
       >
         {getModelOverlay(sectionModels[0], scaled)}
+        {getHandleOverlay(selectedHandle, scaled, 0)}
         {renderSectionTypeRadio && renderSectionTypeRadio(0)}
       </Section>
 
@@ -318,7 +321,6 @@ export function DefaultSectionLayout({
     // Default to equal widths
     return Array(sectionCount).fill(100 / sectionCount);
   }, [dimensions.widths, sectionCount]);
-
   return (
     <div 
       id="sections-container" 
@@ -337,7 +339,7 @@ export function DefaultSectionLayout({
           total={sectionCount}
           onClick={() => { onClick(i); setSelectionVisible(true); }}
           style={{
-            flex: `0 0 ${widths[i]}%`, // Use flex instead of width
+            flex: `0 0 ${widths[i]}%`, 
             height: '100%',
             borderRight: i < sectionCount - 1 ? `${scaled.borderPx}px solid #222` : "0",
             background: isSelected(i)
@@ -347,11 +349,13 @@ export function DefaultSectionLayout({
             overflow: 'visible',
             cursor: 'pointer',
           }}
+          doorDimensions={doorDimensions}
           selectedType={selectedType}
           sectionDimensions={sectionDimensions}
           doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
+          {getHandleOverlay(selectedHandle, scaled, i)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
           {i < sectionCount - 1 && selectedCategory !== 'Sliding Doors' && (
             <div

@@ -21,7 +21,9 @@ function SectionRenderer({
   doorDimensions,
   sectionTypes,
   setSectionTypes,
+  selectedHandle,
 }) {
+
   const [isResizing, setIsResizing] = useState(false);
   const [resizingIndex, setResizingIndex] = useState(null);
   const [startX, setStartX] = useState(0);
@@ -127,11 +129,21 @@ function SectionRenderer({
             <input
               type="radio"
               name={`section-type-${idx}`}
-              value="mobil"
-              checked={sectionTypes[idx] === "mobil"}
-              onChange={() => handleSectionTypeChange(idx, "mobil")}
+              value="left"
+              checked={sectionTypes[idx] === "left"}
+              onChange={() => handleSectionTypeChange(idx, "left")}
             />
-            Mobile
+            To Left
+          </label>
+          <label>
+            <input
+              type="radio"
+              name={`section-type-${idx}`}
+              value="right"
+              checked={sectionTypes[idx] === "right"}
+              onChange={() => handleSectionTypeChange(idx, "right")}
+            />
+            To Right
           </label>
         </div>
       );

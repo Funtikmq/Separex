@@ -1,7 +1,8 @@
-// 1. Import Models
+import React from 'react';
 import * as Models from "../ModelOverlays.jsx";
+import * as Handles from "../SectionHandles.jsx";
 
-// 2. Model Components Object
+// 1. Model Components Object
 export const modelComponents = {
   Line: Models.Line,
   "Double Line": Models.DoubleLine,
@@ -23,7 +24,7 @@ export const modelComponents = {
   Altus: Models.Altus,
 };
 
-// 3. Color Styles Object
+// 2. Color Styles Object
 export const colorStyles = {
   Clear: { 
     backgroundColor: "linear-gradient(225deg, rgba(150, 150, 150, 0.4) 30%, rgba(150,150,150,0.2) 100%)" 
@@ -54,11 +55,11 @@ export const colorStyles = {
   }
 };
 
-// 4. Utility Functions
+// 3. Utility Functions
 export const getSectionColor = (sectionColors, index) =>
   colorStyles[sectionColors?.[index]] || colorStyles["Clear"];
 
-// 5. Section Type Validation
+// 4. Section Type Validation
 export const isValidSectionType = (type) => {
   return typeof type === 'string' && (
     type === "2-Part Element O" ||
@@ -67,12 +68,12 @@ export const isValidSectionType = (type) => {
   );
 };
 
-// 6. Model Component Helper
+// 5. Model Component Helper
 export const getModelComponent = (modelName) => {
   return modelComponents[modelName] || null;
 };
 
-// 7. Section Measurement Utilities
+// 6. Section Measurement Utilities
 export const calculateSectionMeasurements = (dimensions, doorDimensions) => {
   if (!dimensions || !doorDimensions) return null;
 
@@ -80,4 +81,32 @@ export const calculateSectionMeasurements = (dimensions, doorDimensions) => {
     width: Math.round(dimensions.width * doorDimensions.width / 100),
     height: Math.round(dimensions.height * doorDimensions.height / 100)
   };
+};
+
+// 7. Handle Components Object 
+export const handleComponents = {
+  HandleWithLock: Handles.HandleWithLock,
+  PullHandle160: Handles.PullHandle160,
+  PullHandle288: Handles.PullHandle288,
+  PullHandle448: Handles.PullHandle448
+};
+
+// 8. Handle Utility Function 
+export const getHandleOverlay = (handleType, scaled, index) => {
+
+  if (!handleType || (Array.isArray(handleType) && handleType.length === 0)) {
+    return null;
+  }
+  const handleName = Array.isArray(handleType) ? handleType[index] : handleType;
+  if (!handleName) {
+    return null;
+  }
+  const HandleComponent = handleComponents[handleName];
+  if (HandleComponent) {
+    return React.createElement(HandleComponent, {
+      scaled,
+    });
+  }
+
+  return null;
 };
