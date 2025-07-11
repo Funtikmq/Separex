@@ -322,14 +322,29 @@ export function DefaultSectionLayout({
   sectionTypes,
   renderSectionTypeRadio = () => null 
 }) {
-  // Ensure widths are properly initialized and sum to 100%
+  const SLIDING_DOOR_GAP = scaled.borderPx/64; 
+  const isSlidingDoor = selectedCategory === 'Sliding Doors';
+  
+  // Calculăm width-urile ținând cont de gap pentru sliding doors
   const widths = React.useMemo(() => {
     if (dimensions.widths && dimensions.widths.length === sectionCount) {
+      if (isSlidingDoor) {
+        const totalGap = SLIDING_DOOR_GAP * (sectionCount - 1);
+        const availableWidth = 100 - totalGap;
+        return dimensions.widths.map(width => 
+          (width * availableWidth) / 100
+        );
+      }
       return dimensions.widths;
     }
-    // Default to equal widths
+    if (isSlidingDoor) {
+      const totalGap = SLIDING_DOOR_GAP * (sectionCount - 1);
+      const sectionWidth = (100 - totalGap) / sectionCount;
+      return Array(sectionCount).fill(sectionWidth);
+    }
     return Array(sectionCount).fill(100 / sectionCount);
-  }, [dimensions.widths, sectionCount]);
+  }, [dimensions.widths, sectionCount, isSlidingDoor]);
+
   return (
     <div 
       id="sections-container" 
@@ -338,7 +353,10 @@ export function DefaultSectionLayout({
         width: '100%', 
         height: '100%', 
         display: 'flex',
-        overflow: 'visible'
+        overflow: 'visible',
+        gap: isSlidingDoor ? `${SLIDING_DOOR_GAP}rem` : 0,
+        padding: 0,
+        boxSizing: 'border-box',
       }}
     >
       {[...Array(sectionCount).keys()].map((i) => (
@@ -350,22 +368,42 @@ export function DefaultSectionLayout({
           style={{
             flex: `0 0 ${widths[i]}%`, 
             height: '100%',
-            borderRight: i < sectionCount - 1 ? `${scaled.borderPx}px solid #222` : "0",
+            ...(isSlidingDoor ? 
+              (sectionCount > 1 ? {
+                ...(i === 0 && {
+                  borderRight: `${scaled.borderPx/16}rem solid #222`,
+                }),
+                ...(i === sectionCount - 1 && {
+                  borderLeft: `${scaled.borderPx/16}rem solid #222`,
+                }),
+                ...(i > 0 && i < sectionCount - 1 && {
+                  borderLeft: `${scaled.borderPx/16}rem solid #222`,
+                  borderRight: `${scaled.borderPx/16}rem solid #222`,
+                }),
+              } : {}) 
+              : 
+              (i < sectionCount - 1 ? { 
+                borderRight: `${scaled.borderPx/16}rem solid #222`,
+              } : {})
+            ),
             background: isSelected(i)
               ? "rgba(105, 200, 255, 0.6)"
               : getSectionColor(sectionColors, i)?.backgroundColor || "transparent",
             position: 'relative',
             overflow: 'visible',
             cursor: 'pointer',
+            ...(isSlidingDoor && {
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            })
           }}
           doorDimensions={doorDimensions}
           selectedType={selectedType}
           sectionDimensions={sectionDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
-          {getHandleOverlay(selectedHandle, scaled, i,sectionTypes[i])}
+          {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
-          {i < sectionCount - 1 && selectedCategory !== 'Sliding Doors' && (
+          {!isSlidingDoor && i < sectionCount - 1 && (
             <div
               style={{
                 position: 'absolute',

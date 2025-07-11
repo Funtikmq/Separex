@@ -4,10 +4,10 @@ export const SECTION_TYPES = {
   X_PART: "X-Part Element A"
 };
 
-export const MIN_WIDTH = 5;
-export const MAX_WIDTH = 95;
-export const MIN_HEIGHT = 5;
-export const MAX_HEIGHT = 95;
+export const MIN_WIDTH = 10;
+export const MAX_WIDTH = 90;
+export const MIN_HEIGHT = 10;
+export const MAX_HEIGHT = 90;
 
 export const SECTION_CATEGORIES = {
   SLIDING_DOORS: "Sliding Doors",

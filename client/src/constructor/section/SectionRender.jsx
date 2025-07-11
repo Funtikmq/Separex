@@ -1,9 +1,14 @@
-import React, { memo, useMemo, useState,useCallback } from 'react';
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 import { useSectionDimensions } from './hooks/useSectionDimensions';
 import { useResizeLogic } from './hooks/useResizeLogic';
-import { SECTION_TYPES } from './constants/sectionConstants';
-import * as layouts from './SectionLayouts';
-import PropTypes from 'prop-types';
+import { useMouseHandlers } from './hooks/useMouseHandlers';
+import { useSectionTypeManagement } from './hooks/useSectionTypeManagement';
+import { getLayoutComponent } from './utils/layoutSelector';
+import { 
+  SECTION_CATEGORIES, 
+  SECTION_STATES
+} from './constants/sectionConstants';
 
 function SectionRenderer({
   selectedCategory,
@@ -23,23 +28,14 @@ function SectionRenderer({
   setSectionTypes,
   selectedHandle,
 }) {
-
-  const [isResizing, setIsResizing] = useState(false);
-  const [resizingIndex, setResizingIndex] = useState(null);
-  const [startX, setStartX] = useState(0);
-  const [startY, setStartY] = useState(0);
-  const [startDimensions, setStartDimensions] = useState(null);
-
-  const {
-    dimensions,
-    updateDimensions,
-  } = useSectionDimensions({
+  // useSectionDimensions hook
+  const { dimensions, updateDimensions } = useSectionDimensions({
     selectedType,
     sectionCount,
     doorDimensions,
     sectionDimensions
   });
-
+  // useResizeLogic hook
   const { handleResize } = useResizeLogic({
     selectedCategory,
     doorDimensions,
@@ -48,52 +44,12 @@ function SectionRenderer({
     updateDimensions
   });
 
-  const handleResizeStart = useCallback((e, type) => {
-    if (selectedCategory === 'Sliding Doors') return;
-    e.preventDefault();
-    setIsResizing(true);
-    setResizingIndex(type);
-    setStartX(e.clientX);
-    setStartY(e.clientY);
-    setStartDimensions({...dimensions});
-  }, [selectedCategory, dimensions]);
+  const { isResizing, handleResizeStart, handleMouseMove, handleMouseUp } = 
+    useMouseHandlers(handleResize);
 
-  const handleSectionTypeChange = (idx, type) => {
-    if (typeof setSectionTypes === 'function') {
-      setSectionTypes(prev => {
-        const newTypes = [...prev];
-        newTypes[idx] = type;
-        return newTypes;
-      });
-    }
-  };
+  const { handleSectionTypeChange } = useSectionTypeManagement(setSectionTypes);
 
-  const handleMouseMove = useCallback((e) => {
-    if (isResizing && startDimensions) {
-      handleResize(e, resizingIndex, startX, startY, startDimensions);
-    }
-  }, [isResizing, resizingIndex, startX, startY, startDimensions, handleResize]);
-
-  const handleMouseUp = useCallback(() => {
-    if (isResizing) {
-      setIsResizing(false);
-      setResizingIndex(null);
-      setStartDimensions(null);
-    }
-  }, [isResizing]);
-
-  React.useEffect(() => {
-    if (isResizing) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-    }
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isResizing, handleMouseMove, handleMouseUp]);
-
-  const layoutProps = useMemo(() => ({
+  const layoutProps = React.useMemo(() => ({
     dimensions,
     scaled,
     sectionColors,
@@ -101,50 +57,40 @@ function SectionRenderer({
     isSelected: (i) => selectedIndex === i && selectionVisible,
     onClick,
     setSelectionVisible,
-    handleVerticalResizeStart: (e) => handleResizeStart(e, 'vertical'),
-    handleHorizontalResizeStart: (e) => handleResizeStart(e, 'horizontal'),
-    handleTopSectionResizeStart: (e) => handleResizeStart(e, 'top'),
-    handleSectionResizeStart: (e, index) => handleResizeStart(e, index),
+    handleVerticalResizeStart: (e) => handleResizeStart(e, 'vertical', selectedCategory, dimensions),
+    handleHorizontalResizeStart: (e) => handleResizeStart(e, 'horizontal', selectedCategory, dimensions),
+    handleTopSectionResizeStart: (e) => handleResizeStart(e, 'top', selectedCategory, dimensions),
+    handleSectionResizeStart: (e, index) => handleResizeStart(e, index, selectedCategory, dimensions),
     selectedCategory,
+    selectedType,
+    sectionDimensions,
+    doorDimensions,
+    selectedHandle,
+    sectionTypes,
+    sectionCount,
+    isResizing,
+    resizingIndex: null,
     renderSectionTypeRadio: (idx) => {
       if (
         !selectionVisible ||
         selectedIndex !== idx ||
-        !["Sliding Doors", "Swing Doors"].includes(selectedCategory)
+        ![SECTION_CATEGORIES.SLIDING_DOORS, SECTION_CATEGORIES.SWING_DOORS].includes(selectedCategory)
       ) return null;
-      
+
       return (
         <div className="sectionTypeInput">
-          <label style={{ marginRight: 8 }}>
-            <input
-              type="radio"
-              name={`section-type-${idx}`}
-              value="fixed"
-              checked={sectionTypes[idx] === "fixed"}
-              onChange={() => handleSectionTypeChange(idx, "fixed")}
-            />
-            Fixed
-          </label>
-          <label>
-            <input
-              type="radio"
-              name={`section-type-${idx}`}
-              value="left"
-              checked={sectionTypes[idx] === "left"}
-              onChange={() => handleSectionTypeChange(idx, "left")}
-            />
-            To Left
-          </label>
-          <label>
-            <input
-              type="radio"
-              name={`section-type-${idx}`}
-              value="right"
-              checked={sectionTypes[idx] === "right"}
-              onChange={() => handleSectionTypeChange(idx, "right")}
-            />
-            To Right
-          </label>
+          {Object.entries(SECTION_STATES).map(([key, value]) => (
+            <label key={key} style={{ marginRight: key !== 'RIGHT' ? 8 : 0 }}>
+              <input
+                type="radio"
+                name={`section-type-${idx}`}
+                value={value}
+                checked={sectionTypes[idx] === value}
+                onChange={() => handleSectionTypeChange(idx, value)}
+              />
+              {key === 'FIXED' ? 'Fixed' : `To ${key.toLowerCase()}`}
+            </label>
+          ))}
         </div>
       );
     }
@@ -157,24 +103,31 @@ function SectionRenderer({
     selectionVisible,
     onClick,
     selectedCategory,
+    selectedType,
     sectionTypes,
-    handleResizeStart
+    handleResizeStart,
+    handleSectionTypeChange,
+    sectionDimensions,
+    doorDimensions,
+    selectedHandle,
+    sectionCount,
+    isResizing
   ]);
 
-  const renderLayout = () => {
-    switch(selectedType) {
-      case SECTION_TYPES.TWO_PART:
-        return <layouts.TwoPartElementO {...layoutProps} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} selectedHandle={selectedHandle} sectionTypes={sectionTypes} />;
-      case SECTION_TYPES.FOUR_PART:
-        return <layouts.FourPartElementO {...layoutProps} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} selectedHandle={selectedHandle} sectionTypes={sectionTypes} />;
-      case (selectedType.match(/^\d+-Part Element A$/) || {}).input:
-        return <layouts.XPartElementA {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} selectedHandle={selectedHandle} sectionTypes={sectionTypes}/>;
-      default:
-        return <layouts.DefaultSectionLayout {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} selectedHandle={selectedHandle} sectionTypes={sectionTypes}/>;
+  // Mouse event effects
+  React.useEffect(() => {
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
     }
-  };
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing, handleMouseMove, handleMouseUp]);
 
-  return renderLayout();
+  const LayoutComponent = getLayoutComponent(selectedType);
+  return <LayoutComponent {...layoutProps} />;
 }
 
 SectionRenderer.propTypes = {
@@ -192,7 +145,8 @@ SectionRenderer.propTypes = {
   setSectionDimensions: PropTypes.func,
   doorDimensions: PropTypes.object,
   sectionTypes: PropTypes.array,
-  setSectionTypes: PropTypes.func
+  setSectionTypes: PropTypes.func,
+  selectedHandle: PropTypes.string
 };
 
 export default memo(SectionRenderer);

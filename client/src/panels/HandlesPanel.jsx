@@ -27,7 +27,7 @@ function HandlePanel({
       <div className="navigationPanel">
         <div>
           <h2>
-            No handles for fixed
+            Select the Direction
           </h2>
         </div>
       </div>
