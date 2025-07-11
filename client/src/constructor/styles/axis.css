@@ -1,0 +1,168 @@
+.AxisX {
+  height: 0.1vh;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.AxisX::before,
+.AxisX::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 0.6vh solid transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.AxisX::before {
+  border-right: 8px solid black;
+  left: -1vh;
+}
+
+.AxisX::after {
+  border-left: 8px solid black;
+  right: -1vh;
+}
+
+.AxisY {
+  width: 0.1vh;
+  background-color: #000;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.AxisY::before,
+.AxisY::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 0.6vh solid transparent;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.AxisY::before {
+  border-bottom: 8px solid black;
+  top: -1vh;
+}
+
+.AxisY::after {
+  border-top: 8px solid black;
+  bottom: -1vh;
+}
+
+.AxisLabel {
+  padding: 0.2vh;
+  color: #4d5396;
+  margin-left: 0.37vw;
+  margin-top: 0.1vh;
+  font-size: 0.9rem;
+}
+
+#yAxisLabel{
+  background-color: #F4F4F6;
+}
+
+#xAxisLabel{
+  background-color: #ccc;
+}
+
+ /*Axele Sectiunilor*/
+ 
+/* Axa orizontală */
+.XsectionAxis {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 0;
+  width: 100%;
+  height: .1vh;
+  background-color: #000;
+  z-index: 10;
+}
+
+.XsectionAxis .sectionAxisLabel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.2vh 0.4vh;
+  background-color: #ccc;
+  color: #4d5396;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 11;
+}
+
+.XsectionAxis::before,
+.XsectionAxis::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 0.6vh solid transparent;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.XsectionAxis::before {
+  border-right: 8px solid black;
+  left: -1vh;
+}
+
+.XsectionAxis::after {
+  border-left: 8px solid black;
+  right: -1vh;
+}
+
+/* Axa verticală */
+.YsectionAxis {
+  position: absolute;
+  top: 0;
+  left: -3rem;
+  width: .1vh;
+  height: 100%;
+  background-color: #000;
+  z-index: 10;
+}
+
+.YsectionAxis .sectionAxisLabel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.2vh 0.4vh;
+  background-color: #F4F4F6;
+  color: #4d5396;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 11;
+}
+
+.YsectionAxis::before,
+.YsectionAxis::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 0.6vh solid transparent;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.YsectionAxis::before {
+  border-bottom: 8px solid black;
+  top: -1vh;
+}
+
+.YsectionAxis::after {
+  border-top: 8px solid black;
+  bottom: -1vh;
+}

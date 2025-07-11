@@ -8,7 +8,7 @@ function Axis({ realWidth, realHeight,borderPx,scaled }) {
           width: `100%`,
           position: "absolute",
           bottom: `-3rem`,
-          left:-borderPx,
+          left:0,
         }}
       >
         <span id="xAxisLabel" className="AxisLabel">{realWidth}</span>
@@ -18,7 +18,7 @@ function Axis({ realWidth, realHeight,borderPx,scaled }) {
         style={{
           height: `100%`,
           position: "absolute",
-          right: `-4rem`,
+          right: `-3rem`,
           bottom:-borderPx
         }}
       >

@@ -19,6 +19,8 @@ export function TwoPartElementO({ dimensions,
                                   handleVerticalResizeStart, 
                                   selectedCategory,
                                   selectedType,
+                                  sectionDimensions,
+                                  doorDimensions,
                                   renderSectionTypeRadio = () => null }) {
   return (
     <div id="sections-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -43,6 +45,8 @@ export function TwoPartElementO({ dimensions,
             overflow: "visible"
           }}
           selectedType={selectedType}
+          sectionDimensions={sectionDimensions}
+          doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
@@ -77,6 +81,8 @@ export function FourPartElementO({ dimensions,
                                    handleHorizontalResizeStart,
                                    selectedType, 
                                    selectedCategory,
+                                   sectionDimensions,
+                                   doorDimensions,
                                     renderSectionTypeRadio = () => null }) {
   // Calculăm dimensiunile pentru fiecare secțiune
   const sections = [
@@ -129,6 +135,8 @@ export function FourPartElementO({ dimensions,
             overflow: "visible"
           }}
           selectedType={selectedType}
+          sectionDimensions={sectionDimensions}
+          doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
@@ -182,6 +190,8 @@ export function XPartElementA({
   handleTopSectionResizeStart, 
   selectedCategory, 
   selectedType,
+  sectionDimensions,
+  doorDimensions,
   renderSectionTypeRadio = () => null 
 }) {
   const total = sectionCount;
@@ -210,6 +220,8 @@ export function XPartElementA({
           overflow: "visible"
         }}
         selectedType={selectedType}
+        sectionDimensions={sectionDimensions}
+        doorDimensions={doorDimensions}
       >
         {getModelOverlay(sectionModels[0], scaled)}
         {renderSectionTypeRadio && renderSectionTypeRadio(0)}
@@ -236,6 +248,8 @@ export function XPartElementA({
             overflow: "visible"
           }}
           selectedType={selectedType}
+          sectionDimensions={sectionDimensions}
+          doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i + 1], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i + 1)}
@@ -291,7 +305,9 @@ export function DefaultSectionLayout({
   resizingIndex, 
   handleSectionResizeStart, 
   selectedCategory,
-  selectedType, 
+  selectedType,
+  sectionDimensions,
+  doorDimensions, 
   renderSectionTypeRadio = () => null 
 }) {
   // Ensure widths are properly initialized and sum to 100%
@@ -332,6 +348,8 @@ export function DefaultSectionLayout({
             cursor: 'pointer',
           }}
           selectedType={selectedType}
+          sectionDimensions={sectionDimensions}
+          doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}

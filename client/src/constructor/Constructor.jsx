@@ -95,6 +95,7 @@ useEffect(() => {
         )}
 
         <DoorFrame
+          doorDimensions={doorDimensions}
           ref={doorFrameRef}
           scaled={scaled}
           width={width}

@@ -4,6 +4,7 @@ import Axis from "./Axis.jsx";
 import SectionRenderer from "./section/SectionRender.jsx";
 
 const DoorFrame = forwardRef(({
+  doorDimensions,
   scaled,
   selectedCategory,
   slidingMountType,
@@ -133,7 +134,7 @@ const wallContureStyle = {
               onClick={onClick}
               sectionDimensions={sectionDimensions}
               setSectionDimensions={setSectionDimensions}
-              doorDimensions={{ width, height }}
+              doorDimensions={doorDimensions}
               orientation={selectedCategory === "Fixed Wall" ? "horizontal" : "vertical"}
               sectionTypes={sectionTypes}
               setSectionTypes={setSectionTypes}
