@@ -26,7 +26,7 @@ function NavigationPanel({
   selectedIndex,
   sectionDimensions,
   setSectionDimensions,
-  orientation,
+  sectionTypes,
 }) {
   if (!activeItem) return null;
   switch (activeItem) {
@@ -50,7 +50,6 @@ function NavigationPanel({
           sectionCount={sectionCount}
           sectionDimensions={sectionDimensions}
           setSectionDimensions={setSectionDimensions}
-          orientation={orientation}
           selectedCategory={selectedCategory}
           selectedType={selectedType}
         />
@@ -63,11 +62,14 @@ function NavigationPanel({
       return <HandlePanel selectedCategory={selectedCategory}
                           selectedHandle={selectedHandle}
                           setSelectedHandle={setSelectedHandle}
-                          selectedIndex={selectedIndex}/>;
+                          selectedIndex={selectedIndex}
+                          sectionTypes={sectionTypes}
+                          />
+                          
     case "Color":
       return <ColorPanel sectionColors={sectionColors} 
                          setSectionColors={setSectionColors}
-                         selectedIndex={selectedIndex}/>;
+                         selectedIndex={selectedIndex}/>
 
     default:
       return null;

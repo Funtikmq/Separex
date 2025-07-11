@@ -59,20 +59,18 @@
   bottom: -1vh;
 }
 
-.AxisLabel {
+.AxisX .AxisLabel {
   padding: 0.2vh;
+  background-color: #ccc;
   color: #4d5396;
-  margin-left: 0.37vw;
-  margin-top: 0.1vh;
   font-size: 0.9rem;
 }
 
-#yAxisLabel{
+.AxisY .AxisLabel{
+  padding: 0.2vh;
   background-color: #F4F4F6;
-}
-
-#xAxisLabel{
-  background-color: #ccc;
+  color: #4d5396;
+  font-size: 0.9rem;
 }
 
  /*Axele Sectiunilor*/

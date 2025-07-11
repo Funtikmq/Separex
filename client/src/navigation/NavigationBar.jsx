@@ -29,7 +29,7 @@ function NavigationBar({
     doorFrameRef,
     sectionDimensions,
     setSectionDimensions,
-    orientation
+    sectionTypes,
 }) {
     const [activeItem, setActiveItem] = useState(null);
     const wrapperRef = useRef(null);
@@ -95,7 +95,7 @@ function NavigationBar({
                 selectedIndex={selectedIndex}
                 sectionDimensions={sectionDimensions}
                 setSectionDimensions={setSectionDimensions}
-                orientation={orientation}
+                sectionTypes={sectionTypes}
             />
         </div>
     );

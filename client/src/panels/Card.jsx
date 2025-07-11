@@ -1,8 +1,13 @@
-function Card({title, onClick,img}) {
+function Card({title, onClick,disabled, isSelected}) {
     return (
-        <div className="Card" onClick={onClick}>
-            <img className="cardImage" src={img}/>
-            <h2 className="cardTitle">{title}</h2>
+        <div 
+            className={`Card ${disabled ? 'disabled' : ''} ${isSelected ? 'selected' : ''}`} 
+            onClick={disabled ? null : onClick}
+            title={disabled ? "Not available for fixed sections" : title}
+        >
+            <h2 className={`cardTitle ${disabled ? 'text-disabled' : ''}`}>
+                {title}
+            </h2>
         </div>
     );
 }

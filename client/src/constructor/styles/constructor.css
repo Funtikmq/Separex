@@ -103,18 +103,10 @@
    left: 0;
    width: 100%;
    height: 15vh;
-<<<<<<< HEAD
    background-color: #ccc;
    z-index: 0;
 }
 
-
-=======
-   background: #ccc;
-   z-index: 0;
-}
-
->>>>>>> 748f18347ad81bf997a47d2a223affd6e812780f
 .sectionTypeInput {
   display: flex;
   flex-direction: column;

@@ -92,19 +92,23 @@ export const handleComponents = {
 };
 
 // 8. Handle Utility Function 
-export const getHandleOverlay = (handleType, scaled, index) => {
-
+export const getHandleOverlay = (handleType, scaled, index, sectionType) => {
   if (!handleType || (Array.isArray(handleType) && handleType.length === 0)) {
     return null;
   }
+  
   const handleName = Array.isArray(handleType) ? handleType[index] : handleType;
-  if (!handleName) {
+  
+  // Return null if section is fixed or no handle name
+  if (!handleName || sectionType === 'fixed') {
     return null;
   }
+
   const HandleComponent = handleComponents[handleName];
   if (HandleComponent) {
     return React.createElement(HandleComponent, {
       scaled,
+      position: sectionType === 'left' ? 'right' : 'left' // Handle position based on section type
     });
   }
 

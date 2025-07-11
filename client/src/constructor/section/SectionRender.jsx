@@ -164,13 +164,13 @@ function SectionRenderer({
   const renderLayout = () => {
     switch(selectedType) {
       case SECTION_TYPES.TWO_PART:
-        return <layouts.TwoPartElementO {...layoutProps} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} />;
+        return <layouts.TwoPartElementO {...layoutProps} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} selectedHandle={selectedHandle} sectionTypes={sectionTypes} />;
       case SECTION_TYPES.FOUR_PART:
-        return <layouts.FourPartElementO {...layoutProps} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} />;
+        return <layouts.FourPartElementO {...layoutProps} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} selectedHandle={selectedHandle} sectionTypes={sectionTypes} />;
       case (selectedType.match(/^\d+-Part Element A$/) || {}).input:
-        return <layouts.XPartElementA {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} />;
+        return <layouts.XPartElementA {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} selectedHandle={selectedHandle} sectionTypes={sectionTypes}/>;
       default:
-        return <layouts.DefaultSectionLayout {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} />;
+        return <layouts.DefaultSectionLayout {...layoutProps} sectionCount={sectionCount} selectedType={selectedType} sectionDimensions={sectionDimensions} doorDimensions={doorDimensions} selectedHandle={selectedHandle} sectionTypes={sectionTypes}/>;
     }
   };
 

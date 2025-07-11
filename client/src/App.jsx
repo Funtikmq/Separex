@@ -86,6 +86,7 @@ function App() {
           doorFrameRef={doorFrameRef}
           sectionDimensions={sectionDimensions}
           setSectionDimensions={setSectionDimensions}
+          sectionTypes={sectionTypes}
         />
 
         <Constructor 

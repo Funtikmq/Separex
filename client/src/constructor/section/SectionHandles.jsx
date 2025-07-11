@@ -7,9 +7,9 @@ export const HandleWithLock = ({scaled, position}) => {
         width: `${(scaled.borderPx*2)/16}rem`,
         height: `${(scaled.borderPx*2)/16}rem`,
         backgroundColor: "#333",
-        left: position === 'right' ? "95%" : "5%",
+        left: position === 'right' ? "85%" : "10%",
         top: "50%",
-        transform: "translateY(-50%)", 
+        transform: `translateY(-50%) translateX(${position === 'right' ? '0' : '-50%'})`,
         pointerEvents: "none",
       }}
     />
@@ -19,9 +19,9 @@ export const HandleWithLock = ({scaled, position}) => {
         width: `${(scaled.borderPx * 5/16)}rem`,
         height: `${scaled.borderPx/16}rem`,
         backgroundColor: "#333",
-        left: position === 'right' ? "95%" : "5%",
+        left: position === 'right' ? "69%" : "17%",
         top: "50%",
-        transform: "translateY(-50%)", 
+        transform: `translateY(-50%) translateX(${position === 'right' ? '0' : '-50%'})`,
         pointerEvents: "none",
       }}
     />
@@ -37,9 +37,9 @@ export const PullHandle160 = ({scaled, position}) => {
         width: `${scaled.borderPx/16}rem`,
         height: `${(scaled.borderPx * 7)/16}rem`,
         backgroundColor: "#333",
-        left: position === 'right' ? "95%" : "5%",
+        left: position === 'right' ? "85%" : "10%",
         top: "50%",
-        transform: "translateY(-50%)",
+        transform: `translateY(-50%) translateX(${position === 'right' ? '0' : '-50%'})`,
         pointerEvents: "none",
       }}
     />
@@ -54,9 +54,9 @@ export const PullHandle288 = ({scaled, position}) => {
         width: `${scaled.borderPx/16}rem`,
         height: `${(scaled.borderPx * 13)/16}rem`,
         backgroundColor: "#333",
-        left: position === 'right' ? "95%" : "5%",
+        left: position === 'right' ? "85%" : "10%",
         top: "50%",
-        transform: "translateY(-50%)",
+        transform: `translateY(-50%) translateX(${position === 'right' ? '0' : '-50%'})`,
         pointerEvents: "none",
       }}
     />
@@ -71,9 +71,9 @@ export const PullHandle448 = ({scaled, position}) => {
         width: `${scaled.borderPx/16}rem`,
         height: `${(scaled.borderPx * 20)/16}rem`,
         backgroundColor: "#333",
-        left: position === 'right' ? "95%" : "5%",
+        left: position === 'right' ? "85%" : "10%",
         top: "50%",
-        transform: "translateY(-50%)",
+        transform: `translateY(-50%) translateX(${position === 'right' ? '0' : '-50%'})`,
         pointerEvents: "none",
       }}
     />

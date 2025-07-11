@@ -21,6 +21,8 @@ export function TwoPartElementO({ dimensions,
                                   selectedType,
                                   sectionDimensions,
                                   doorDimensions,
+                                  selectedHandle,
+                                  sectionTypes,
                                   renderSectionTypeRadio = () => null }) {
   return (
     <div id="sections-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -49,7 +51,7 @@ export function TwoPartElementO({ dimensions,
           doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
-          {getHandleOverlay(selectedHandle, scaled, i)}
+          {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
         </Section>
       ))}
@@ -84,6 +86,8 @@ export function FourPartElementO({ dimensions,
                                    selectedCategory,
                                    sectionDimensions,
                                    doorDimensions,
+                                   selectedHandle,
+                                   sectionTypes,
                                     renderSectionTypeRadio = () => null }) {
   // Calculăm dimensiunile pentru fiecare secțiune
   const sections = [
@@ -140,7 +144,7 @@ export function FourPartElementO({ dimensions,
           doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
-          {getHandleOverlay(selectedHandle, scaled, i)}
+          {getHandleOverlay(selectedHandle, scaled, i,sectionTypes[i])}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
         </Section>
       ))}
@@ -194,6 +198,8 @@ export function XPartElementA({
   selectedType,
   sectionDimensions,
   doorDimensions,
+  selectedHandle,
+  sectionTypes,
   renderSectionTypeRadio = () => null 
 }) {
   const total = sectionCount;
@@ -226,7 +232,7 @@ export function XPartElementA({
         doorDimensions={doorDimensions}
       >
         {getModelOverlay(sectionModels[0], scaled)}
-        {getHandleOverlay(selectedHandle, scaled, 0)}
+        {getHandleOverlay(selectedHandle, scaled, 0, sectionTypes[0])}
         {renderSectionTypeRadio && renderSectionTypeRadio(0)}
       </Section>
 
@@ -255,6 +261,7 @@ export function XPartElementA({
           doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i + 1], scaled)}
+          {getHandleOverlay(selectedHandle, scaled, i+1,sectionTypes[i+1])}
           {renderSectionTypeRadio && renderSectionTypeRadio(i + 1)}
           
           {/* Horizontal resize handle */}
@@ -311,6 +318,8 @@ export function DefaultSectionLayout({
   selectedType,
   sectionDimensions,
   doorDimensions, 
+  selectedHandle,
+  sectionTypes,
   renderSectionTypeRadio = () => null 
 }) {
   // Ensure widths are properly initialized and sum to 100%
@@ -352,10 +361,9 @@ export function DefaultSectionLayout({
           doorDimensions={doorDimensions}
           selectedType={selectedType}
           sectionDimensions={sectionDimensions}
-          doorDimensions={doorDimensions}
         >
           {getModelOverlay(sectionModels[i], scaled)}
-          {getHandleOverlay(selectedHandle, scaled, i)}
+          {getHandleOverlay(selectedHandle, scaled, i,sectionTypes[i])}
           {renderSectionTypeRadio && renderSectionTypeRadio(i)}
           {i < sectionCount - 1 && selectedCategory !== 'Sliding Doors' && (
             <div
