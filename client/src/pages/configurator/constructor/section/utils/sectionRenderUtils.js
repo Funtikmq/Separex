@@ -24,7 +24,19 @@ export const modelComponents = {
   Altus: Models.Altus,
 };
 
-// 2. Color Styles Object
+// 2. Model Component Helper
+export const getModelComponent = (modelName) => {
+  return modelComponents[modelName] || null;
+};
+
+// 3. Model Utility Function
+export function getModelOverlay(modelName, scaled) {
+  if (!modelName || modelName === "Aero") return null;
+  const Component = modelComponents[modelName];
+  return Component ? React.createElement(Component,{scaled}) : null;
+}
+
+// 4. Color Styles Object
 export const colorStyles = {
   Clear: { 
     backgroundColor: "linear-gradient(225deg, rgba(150, 150, 150, 0.4) 30%, rgba(150,150,150,0.2) 100%)" 
@@ -55,11 +67,11 @@ export const colorStyles = {
   }
 };
 
-// 3. Utility Functions
+// 5. Utility Functions
 export const getSectionColor = (sectionColors, index) =>
   colorStyles[sectionColors?.[index]] || colorStyles["Clear"];
 
-// 4. Section Type Validation
+// 6. Section Type Validation
 export const isValidSectionType = (type) => {
   return typeof type === 'string' && (
     type === "2-Part Element O" ||
@@ -68,12 +80,8 @@ export const isValidSectionType = (type) => {
   );
 };
 
-// 5. Model Component Helper
-export const getModelComponent = (modelName) => {
-  return modelComponents[modelName] || null;
-};
 
-// 6. Section Measurement Utilities
+// 7. Section Measurement Utilities
 export const calculateSectionMeasurements = (dimensions, doorDimensions) => {
   if (!dimensions || !doorDimensions) return null;
 
@@ -83,7 +91,7 @@ export const calculateSectionMeasurements = (dimensions, doorDimensions) => {
   };
 };
 
-// 7. Handle Components Object 
+// 8. Handle Components Object 
 export const handleComponents = {
   HandleWithLock: Handles.HandleWithLock,
   PullHandle160: Handles.PullHandle160,
@@ -91,7 +99,7 @@ export const handleComponents = {
   PullHandle448: Handles.PullHandle448
 };
 
-// 8. Handle Utility Function 
+// 9. Handle Utility Function 
 export const getHandleOverlay = (handleType, scaled, index, sectionType) => {
   if (!handleType || (Array.isArray(handleType) && handleType.length === 0)) {
     return null;

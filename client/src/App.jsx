@@ -1,28 +1,20 @@
-import { useRef } from 'react';
-import Header from "./Header.jsx"
-import Constructor from "./constructor/Constructor.jsx";
-import NavigationBar from "./navigation/NavigationBar.jsx"
-import { useDoorsLogic } from './hooks/useDoorsLogic.js';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Configurator from "./pages/configurator/Configurator";
+import Home from "./pages/home/Home"
+import Catalog from "./pages/catalog/Catalog"
+import Basket from "./pages/basket/Basket"
 
 function App() {
-  const doorLogic = useDoorsLogic();
-  const doorFrameRef = useRef(null);
 
   return (
-    <>
-      <Header/>
-      <main className="mainLayout">
-        <NavigationBar 
-          {...doorLogic}
-          doorFrameRef={doorFrameRef}
-        />
-
-        <Constructor 
-          {...doorLogic}
-          doorFrameRef={doorFrameRef}
-        />
-      </main>
-    </>
+    <Router basename="/Separex">
+      <Routes>
+        <Route path="/Configurator" element={<Configurator />}/>
+        <Route path="/Home" element={<Home />}/>
+        <Route path="/Catalog" element={<Catalog />}/>
+        <Route path="/Basket" element={<Basket />}/>
+      </Routes>
+    </Router>
   );
 }
 

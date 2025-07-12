@@ -59,24 +59,24 @@
   bottom: -1vh;
 }
 
-.AxisX .AxisLabel {
+.AxisLabel{
   padding: 0.2vh;
-  background-color: #ccc;
   color: #4d5396;
-  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.AxisX .AxisLabel {
+  background-color: #ccc;
 }
 
 .AxisY .AxisLabel{
-  padding: 0.2vh;
   background-color: #F4F4F6;
-  color: #4d5396;
-  font-size: 0.9rem;
 }
 
  /*Axele Sectiunilor*/
  
 /* Axa orizontală */
-.XsectionAxis {
+.sectionAxisX {
   position: absolute;
   bottom: -1.5rem;
   left: 0;
@@ -86,21 +86,8 @@
   z-index: 10;
 }
 
-.XsectionAxis .sectionAxisLabel {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: 0.2vh 0.4vh;
-  background-color: #ccc;
-  color: #4d5396;
-  font-size: 0.9rem;
-  white-space: nowrap;
-  z-index: 11;
-}
-
-.XsectionAxis::before,
-.XsectionAxis::after {
+.sectionAxisX::before,
+.sectionAxisX::after {
   content: "";
   width: 0;
   height: 0;
@@ -110,18 +97,18 @@
   transform: translateY(-50%);
 }
 
-.XsectionAxis::before {
+.sectionAxisX::before {
   border-right: 8px solid black;
   left: -1vh;
 }
 
-.XsectionAxis::after {
+.sectionAxisX::after {
   border-left: 8px solid black;
   right: -1vh;
 }
 
 /* Axa verticală */
-.YsectionAxis {
+.sectionAxisY {
   position: absolute;
   top: 0;
   left: -3rem;
@@ -131,21 +118,29 @@
   z-index: 10;
 }
 
-.YsectionAxis .sectionAxisLabel {
+.sectionAxisLabel{
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   padding: 0.2vh 0.4vh;
-  background-color: #F4F4F6;
+  font-weight: 500;
   color: #4d5396;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   white-space: nowrap;
   z-index: 11;
 }
 
-.YsectionAxis::before,
-.YsectionAxis::after {
+.sectionAxisY .sectionAxisLabel {
+  background-color: #F4F4F6;
+}
+
+.sectionAxisX .sectionAxisLabel {
+  background-color: #ccc;
+}
+
+.sectionAxisY::before,
+.sectionAxisY::after {
   content: "";
   width: 0;
   height: 0;
@@ -155,12 +150,12 @@
   transform: translateX(-50%);
 }
 
-.YsectionAxis::before {
+.sectionAxisY::before {
   border-bottom: 8px solid black;
   top: -1vh;
 }
 
-.YsectionAxis::after {
+.sectionAxisY::after {
   border-top: 8px solid black;
   bottom: -1vh;
 }

@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import NavigationItem from './NavigationItem';
 import NavigationPanel from './NavigationPanel';
-import Category from '../assets/itemIcons/brochure.png';
-import Type from '../assets/itemIcons/sliding-door.png';
-import Dimensions from '../assets/itemIcons/dimensions.png';
-import Model from '../assets/itemIcons/model.png';
-import Color from '../assets/itemIcons/art.png';
-import Handles from '../assets/itemIcons/handles.png';
+import Category from '@assets/itemIcons/brochure.png';
+import Type from '@assets/itemIcons/sliding-door.png';
+import Dimensions from '@assets/itemIcons/dimensions.png';
+import Model from '@assets/itemIcons/model.png';
+import Color from '@assets/itemIcons/art.png';
+import Handles from '@assets/itemIcons/handles.png';
 
 function NavigationBar({
     doorDimensions,

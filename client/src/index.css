@@ -1,9 +1,14 @@
-body {
+*{
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: Arial, 'Times New Roman', Times, serif;
+  color: #333;
   font-size: 1rem;
+  font-weight: 600;
+}
+
+body {
+  height: 100%;
   background-color: #ffffff; 
   color: #000000; 
 }
@@ -19,6 +24,39 @@ body {
   position: relative;
   vertical-align: top;
 }
+
+.headerNavigation {
+  display: flex;
+  justify-content: center;     
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.headerItem {
+  width: 8vw;
+  min-width: 60px;         
+  max-width: 70px;
+  padding: 0 2rem;
+  font-size: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+}
+
+.headerItem:hover{
+  padding-bottom: 1vh;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+.headerImg{
+  height: 200%;           
+  cursor: pointer;
+}
+
 
 .mainLayout {
   display: flex;
