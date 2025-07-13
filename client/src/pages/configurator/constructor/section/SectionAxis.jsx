@@ -1,46 +1,49 @@
-function SectionAxis({ selectedType,index,doorDimensions,sectionDimensions }) {
-  
-  // 4-Part Element O: 
+function SectionAxis({
+  selectedType,
+  index,
+  doorDimensions,
+  sectionDimensions,
+}) {
+  // 4-Part Element O:
   if (selectedType && selectedType.includes("4-Part Element O")) {
     if (index === 0) {
       // stânga sus: verticală
       return (
         <>
           <div className="sectionAxis sectionAxisY">
-            <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
+            <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
           </div>
         </>
       );
     }
 
     if (index === 2) {
-        // stânga jos: verticala + orizontala
-        return (
-          <>
+      // stânga jos: verticala + orizontala
+      return (
+        <>
           <div className="sectionAxis sectionAxisY">
-            <span  className="sectionAxisLabel">{doorDimensions.height-sectionDimensions[0]}</span>
+            <span className="sectionAxisLabel">
+              {doorDimensions.height - sectionDimensions[0]}
+            </span>
           </div>
           <div className="sectionAxis sectionAxisX">
-            <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
+            <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
           </div>
-          </>
-        )
-        ;
-      }
+        </>
+      );
+    }
     if (index === 3) {
       // stânga jos și dreapta jos: orizontală
       return (
         <>
-        <div className="sectionAxis sectionAxisX">
-            <span  className="sectionAxisLabel">{sectionDimensions[3]}</span>
-        </div>
-        <div className="sectionAxis sectionAxisX">
-            <span  className="sectionAxisLabel">{sectionDimensions[3]}</span>
-        </div>
+          <div className="sectionAxis sectionAxisX">
+            <span className="sectionAxisLabel">{sectionDimensions[3]}</span>
+          </div>
+          <div className="sectionAxis sectionAxisX">
+            <span className="sectionAxisLabel">{sectionDimensions[3]}</span>
+          </div>
         </>
-        
-      )
-      ;
+      );
     }
     // index 1: nimic
     return null;
@@ -49,32 +52,40 @@ function SectionAxis({ selectedType,index,doorDimensions,sectionDimensions }) {
   // X-Part Element A: index 0 verticală, index 1 verticală+orizontală
   if (selectedType && selectedType.includes("Part Element A")) {
     if (index === 0) {
-      return <div className="sectionAxis sectionAxisY">
-                 <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
-            </div>;
+      return (
+        <div className="sectionAxis sectionAxisY">
+          <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
+        </div>
+      );
     }
     if (index === 1) {
       return (
         <>
-          <div className="sectionAxis sectionAxisY" >
-            <span  className="sectionAxisLabel">{doorDimensions.height-sectionDimensions[0]}</span>
+          <div className="sectionAxis sectionAxisY">
+            <span className="sectionAxisLabel">
+              {doorDimensions.height - sectionDimensions[0]}
+            </span>
           </div>
           <div className="sectionAxis sectionAxisX">
-            <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
+            <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
           </div>
-          <div className="sectionAxis sectionAxisY" >
-            <span  className="sectionAxisLabel">{doorDimensions.height-sectionDimensions[0]}</span>
+          <div className="sectionAxis sectionAxisY">
+            <span className="sectionAxisLabel">
+              {doorDimensions.height - sectionDimensions[0]}
+            </span>
           </div>
           <div className="sectionAxis sectionAxisX">
-            <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
+            <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
           </div>
         </>
       );
     }
     if (index > 1) {
-      return <div className="sectionAxis sectionAxisX">
-                <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
-            </div>;
+      return (
+        <div className="sectionAxis sectionAxisX">
+          <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
+        </div>
+      );
     }
   }
 
@@ -83,10 +94,10 @@ function SectionAxis({ selectedType,index,doorDimensions,sectionDimensions }) {
     return (
       <>
         <div className="sectionAxis sectionAxisY">
-            <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
+          <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
         </div>
         <div className="sectionAxis sectionAxisY">
-            <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
+          <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
         </div>
       </>
     );
@@ -94,9 +105,11 @@ function SectionAxis({ selectedType,index,doorDimensions,sectionDimensions }) {
 
   // Orice alt Part Element: doar orizontală
   if (selectedType && selectedType.includes("Part Element")) {
-      return <div className="sectionAxis sectionAxisX">
-                <span  className="sectionAxisLabel">{sectionDimensions[index]}</span>
-           </div>;
+    return (
+      <div className="sectionAxis sectionAxisX">
+        <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
+      </div>
+    );
   }
 
   return null;

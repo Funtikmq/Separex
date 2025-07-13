@@ -1,12 +1,10 @@
-import React from 'react';
-
 const SectionInputs = ({
   selectedType,
   selectedCategory,
   safeSectionDimensions,
   handleSectionChange,
   handleSectionConfirm,
-  sectionCount
+  sectionCount,
 }) => {
   const renderTwoPartElementO = () => (
     <>
@@ -19,7 +17,7 @@ const SectionInputs = ({
             onChange={(e) => handleSectionChange(0, e.target.value)}
             onBlur={() => handleSectionConfirm(0)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 e.preventDefault();
                 handleSectionConfirm(0);
               }
@@ -52,7 +50,7 @@ const SectionInputs = ({
             onChange={(e) => handleSectionChange(2, e.target.value)}
             onBlur={() => handleSectionConfirm(2)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 e.preventDefault();
                 handleSectionConfirm(2);
               }
@@ -69,7 +67,7 @@ const SectionInputs = ({
             onChange={(e) => handleSectionChange(0, e.target.value)}
             onBlur={() => handleSectionConfirm(0)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 e.preventDefault();
                 handleSectionConfirm(0);
               }
@@ -91,7 +89,7 @@ const SectionInputs = ({
             onChange={(e) => handleSectionChange(0, e.target.value)}
             onBlur={() => handleSectionConfirm(0)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 e.preventDefault();
                 handleSectionConfirm(0);
               }
@@ -109,7 +107,7 @@ const SectionInputs = ({
               onChange={(e) => handleSectionChange(idx + 1, e.target.value)}
               onBlur={() => handleSectionConfirm(idx + 1)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handleSectionConfirm(idx + 1);
                 }
@@ -133,7 +131,7 @@ const SectionInputs = ({
               onChange={(e) => handleSectionChange(idx, e.target.value)}
               onBlur={() => handleSectionConfirm(idx)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handleSectionConfirm(idx);
                 }
@@ -159,11 +157,7 @@ const SectionInputs = ({
     }
   };
 
-  return (
-    <div className="sectionDimensions">
-      {renderSections()}
-    </div>
-  );
+  return <div className="sectionDimensions">{renderSections()}</div>;
 };
 
 export default SectionInputs;

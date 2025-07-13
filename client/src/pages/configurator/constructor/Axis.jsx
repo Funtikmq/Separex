@@ -1,5 +1,4 @@
-function Axis({ realWidth, realHeight,borderPx }) {
-  
+function Axis({ realWidth, realHeight, borderPx }) {
   return (
     <>
       <div
@@ -8,7 +7,7 @@ function Axis({ realWidth, realHeight,borderPx }) {
           width: `100%`,
           position: "absolute",
           bottom: `-3rem`,
-          left:0,
+          left: 0,
         }}
       >
         <span className="AxisLabel">{realWidth}</span>
@@ -19,7 +18,7 @@ function Axis({ realWidth, realHeight,borderPx }) {
           height: `100%`,
           position: "absolute",
           right: `-3rem`,
-          bottom:-borderPx
+          bottom: -borderPx,
         }}
       >
         <span className="AxisLabel">{realHeight}</span>

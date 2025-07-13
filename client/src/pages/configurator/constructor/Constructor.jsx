@@ -17,7 +17,7 @@ function Constructor({
   sectionDimensions,
   setSectionDimensions,
   sectionTypes,
-  setSectionTypes
+  setSectionTypes,
 }) {
   const { height, width } = doorDimensions;
   const scaled = useScaledDimensions(height, width);
@@ -33,17 +33,19 @@ function Constructor({
     }
   }, [scaled]);
 
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (doorFrameRef.current && !doorFrameRef.current.contains(event.target)) {
-      setSelectionVisible(false);
-    }
-  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        doorFrameRef.current &&
+        !doorFrameRef.current.contains(event.target)
+      ) {
+        setSelectionVisible(false);
+      }
+    };
 
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => document.removeEventListener('mousedown', handleClickOutside);
-}, [doorFrameRef]);
-
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [doorFrameRef]);
 
   const { width: containerWidth, height: containerHeight } = containerSize;
   const doorWidth = scaled.scaledWidth;
@@ -54,21 +56,25 @@ useEffect(() => {
   const doorBottom = containerHeight;
   const doorTop = doorBottom - doorHeight;
 
-  const wallPadding = scaled.borderPx *2;
-  
+  const wallPadding = scaled.borderPx * 2;
+
   const wallClipPath =
-  containerWidth && containerHeight
-    ? `polygon(
+    containerWidth && containerHeight
+      ? `polygon(
         0% 0%,
         100% 0%,
         100% 100%,
-        ${(doorRight + wallPadding)/16}rem 100%,
-        ${(doorRight + wallPadding)/16}rem ${(doorTop -0.1 * containerHeight)/16}rem,
-        ${(doorLeft - wallPadding)/16}rem ${(doorTop  -0.1 * containerHeight)/16}rem,
-        ${(doorLeft - wallPadding)/16}rem 100%,
+        ${(doorRight + wallPadding) / 16}rem 100%,
+        ${(doorRight + wallPadding) / 16}rem ${
+          (doorTop - 0.1 * containerHeight) / 16
+        }rem,
+        ${(doorLeft - wallPadding) / 16}rem ${
+          (doorTop - 0.1 * containerHeight) / 16
+        }rem,
+        ${(doorLeft - wallPadding) / 16}rem 100%,
         0% 100%
       )`
-    : "none";
+      : "none";
 
   return (
     <div className="constructor">
@@ -81,7 +87,7 @@ useEffect(() => {
             style={{
               clipPath: wallClipPath,
               backgroundColor: "#f4f4f6",
-              backgroundSize:"cover",
+              backgroundSize: "cover",
               position: "absolute",
               width: "100%",
               height: "calc(100% - 8vh)",
@@ -91,7 +97,7 @@ useEffect(() => {
               pointerEvents: "none",
               borderBottom: ".2vh solid #555",
             }}
-            />
+          />
         )}
 
         <DoorFrame
@@ -121,10 +127,22 @@ useEffect(() => {
       <div className="constructorInfo">
         <h4 className="constructorInfoText">Category: {selectedCategory}</h4>
         <h4 className="constructorInfoText">Handles: </h4>
-        <h4 className="constructorInfoText">Size: {width} x {height} </h4>
-        <h4 className="constructorInfoText">Models: {Array.isArray(sectionModels) ? sectionModels.join(' ') : sectionModels}</h4>
+        <h4 className="constructorInfoText">
+          Size: {width} x {height}{" "}
+        </h4>
+        <h4 className="constructorInfoText">
+          Models:{" "}
+          {Array.isArray(sectionModels)
+            ? sectionModels.join(" ")
+            : sectionModels}
+        </h4>
         <h4 className="constructorInfoText">Type: {selectedType}</h4>
-        <h4 className="constructorInfoText">Colors: {Array.isArray(sectionColors) ? sectionColors.join(' ') : sectionColors}</h4>
+        <h4 className="constructorInfoText">
+          Colors:{" "}
+          {Array.isArray(sectionColors)
+            ? sectionColors.join(" ")
+            : sectionColors}
+        </h4>
       </div>
     </div>
   );

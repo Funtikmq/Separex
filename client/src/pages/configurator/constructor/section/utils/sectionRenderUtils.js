@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import * as Models from "../ModelOverlays.jsx";
 import * as Handles from "../SectionHandles.jsx";
 
@@ -33,28 +33,34 @@ export const getModelComponent = (modelName) => {
 export function getModelOverlay(modelName, scaled) {
   if (!modelName || modelName === "Aero") return null;
   const Component = modelComponents[modelName];
-  return Component ? React.createElement(Component,{scaled}) : null;
+  return Component ? React.createElement(Component, { scaled }) : null;
 }
 
 // 4. Color Styles Object
 export const colorStyles = {
-  Clear: { 
-    backgroundColor: "linear-gradient(225deg, rgba(150, 150, 150, 0.4) 30%, rgba(150,150,150,0.2) 100%)" 
+  Clear: {
+    backgroundColor:
+      "linear-gradient(225deg, rgba(150, 150, 150, 0.4) 30%, rgba(150,150,150,0.2) 100%)",
   },
-  Frosted: { 
-    backgroundColor: "linear-gradient(90deg,rgba(255, 255, 255, 0.4) 30%,rgba(255,255,255,0.2) 100%)" 
+  Frosted: {
+    backgroundColor:
+      "linear-gradient(90deg,rgba(255, 255, 255, 0.4) 30%,rgba(255,255,255,0.2) 100%)",
   },
-  Grey: { 
-    backgroundColor: "linear-gradient(225deg, rgba(100, 100, 100, 0.4) 30%, rgba(100, 100, 100, 0.2) 100%)" 
+  Grey: {
+    backgroundColor:
+      "linear-gradient(225deg, rgba(100, 100, 100, 0.4) 30%, rgba(100, 100, 100, 0.2) 100%)",
   },
-  "Dark Grey": { 
-    backgroundColor: "linear-gradient(225deg, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.2) 100%)" 
+  "Dark Grey": {
+    backgroundColor:
+      "linear-gradient(225deg, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.2) 100%)",
   },
-  Bronze: { 
-    backgroundColor: "linear-gradient(225deg, rgba(205,125,50,0.4) 30%, rgba(255,215,160,0.2) 100%)" 
+  Bronze: {
+    backgroundColor:
+      "linear-gradient(225deg, rgba(205,125,50,0.4) 30%, rgba(255,215,160,0.2) 100%)",
   },
-  Lacobel: { 
-    backgroundColor: "linear-gradient(225deg, rgba(255,255,255,0.9) 30%, rgba(230,230,230,0.9) 100%)" 
+  Lacobel: {
+    backgroundColor:
+      "linear-gradient(225deg, rgba(255,255,255,0.9) 30%, rgba(230,230,230,0.9) 100%)",
   },
   Canelata: {
     backgroundColor: `repeating-linear-gradient(
@@ -63,8 +69,8 @@ export const colorStyles = {
       rgba(255, 255, 255, 0.1) 2px,
       rgba(150, 150, 150, 0.1) 6px,
       rgba(150, 150, 150, 0.1) 9px
-    )`
-  }
+    )`,
+  },
 };
 
 // 5. Utility Functions
@@ -73,42 +79,42 @@ export const getSectionColor = (sectionColors, index) =>
 
 // 6. Section Type Validation
 export const isValidSectionType = (type) => {
-  return typeof type === 'string' && (
-    type === "2-Part Element O" ||
-    type === "4-Part Element O" ||
-    /^\d+-Part Element A$/.test(type)
+  return (
+    typeof type === "string" &&
+    (type === "2-Part Element O" ||
+      type === "4-Part Element O" ||
+      /^\d+-Part Element A$/.test(type))
   );
 };
-
 
 // 7. Section Measurement Utilities
 export const calculateSectionMeasurements = (dimensions, doorDimensions) => {
   if (!dimensions || !doorDimensions) return null;
 
   return {
-    width: Math.round(dimensions.width * doorDimensions.width / 100),
-    height: Math.round(dimensions.height * doorDimensions.height / 100)
+    width: Math.round((dimensions.width * doorDimensions.width) / 100),
+    height: Math.round((dimensions.height * doorDimensions.height) / 100),
   };
 };
 
-// 8. Handle Components Object 
+// 8. Handle Components Object
 export const handleComponents = {
-  HandleWithLock: Handles.HandleWithLock,
-  PullHandle160: Handles.PullHandle160,
-  PullHandle288: Handles.PullHandle288,
-  PullHandle448: Handles.PullHandle448
+  "Handle With Lock": Handles.HandleWithLock,
+  "Pull Handle 160": Handles.PullHandle160,
+  "Pull Handle 288": Handles.PullHandle288,
+  "Pull Handle 448": Handles.PullHandle448,
 };
 
-// 9. Handle Utility Function 
+// 9. Handle Utility Function
 export const getHandleOverlay = (handleType, scaled, index, sectionType) => {
   if (!handleType || (Array.isArray(handleType) && handleType.length === 0)) {
     return null;
   }
-  
+
   const handleName = Array.isArray(handleType) ? handleType[index] : handleType;
-  
+
   // Return null if section is fixed or no handle name
-  if (!handleName || sectionType === 'fixed') {
+  if (!handleName || sectionType === "fixed") {
     return null;
   }
 
@@ -116,7 +122,7 @@ export const getHandleOverlay = (handleType, scaled, index, sectionType) => {
   if (HandleComponent) {
     return React.createElement(HandleComponent, {
       scaled,
-      position: sectionType === 'left' ? 'right' : 'left' // Handle position based on section type
+      position: sectionType === "left" ? "right" : "left", // Handle position based on section type
     });
   }
 

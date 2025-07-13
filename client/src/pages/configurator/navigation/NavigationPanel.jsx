@@ -55,21 +55,32 @@ function NavigationPanel({
         />
       );
     case "Model":
-      return <ModelPanel setSectionModels={setSectionModels} 
-                         sectionModels={sectionModels} 
-                         selectedIndex={selectedIndex}/>;
+      return (
+        <ModelPanel
+          setSectionModels={setSectionModels}
+          sectionModels={sectionModels}
+          selectedIndex={selectedIndex}
+        />
+      );
     case "Handle":
-      return <HandlePanel selectedCategory={selectedCategory}
-                          selectedHandle={selectedHandle}
-                          setSelectedHandle={setSelectedHandle}
-                          selectedIndex={selectedIndex}
-                          sectionTypes={sectionTypes}
-                          />
-                          
+      return (
+        <HandlePanel
+          selectedCategory={selectedCategory}
+          selectedHandle={selectedHandle}
+          setSelectedHandle={setSelectedHandle}
+          selectedIndex={selectedIndex}
+          sectionTypes={sectionTypes}
+        />
+      );
+
     case "Color":
-      return <ColorPanel sectionColors={sectionColors} 
-                         setSectionColors={setSectionColors}
-                         selectedIndex={selectedIndex}/>
+      return (
+        <ColorPanel
+          sectionColors={sectionColors}
+          setSectionColors={setSectionColors}
+          selectedIndex={selectedIndex}
+        />
+      );
 
     default:
       return null;

@@ -1,18 +1,19 @@
 import Card from "./Card.jsx";
-import {HANDLES} from "../constants/constants.js"
+import { HANDLES } from "../constants/constants.js";
+import { ICON_HANDLES } from "./utils/panelImages.js";
 
 function HandlePanel({
-  selectedCategory, 
-  selectedHandle, 
-  setSelectedHandle, 
+  selectedCategory,
+  selectedHandle,
+  setSelectedHandle,
   selectedIndex,
-  sectionTypes 
+  sectionTypes,
 }) {
   const handleSelectHandle = (handle) => {
     if (selectedIndex === null) return;
-    
+
     // Don't allow handle selection for fixed sections
-    if (sectionTypes[selectedIndex] === 'fixed') {
+    if (sectionTypes[selectedIndex] === "fixed") {
       return;
     }
 
@@ -22,13 +23,11 @@ function HandlePanel({
   };
 
   // Don't show handles panel for fixed sections
-  if (sectionTypes[selectedIndex] === 'fixed') {
+  if (sectionTypes[selectedIndex] === "fixed") {
     return (
       <div className="navigationPanel">
         <div>
-          <h2>
-            Select the Direction
-          </h2>
+          <h2>Select the Direction</h2>
         </div>
       </div>
     );
@@ -37,16 +36,20 @@ function HandlePanel({
   return (
     <div className="navigationPanel">
       <ul className="navigationPanelList">
-        {(HANDLES[selectedCategory] || []).map((handle, index) => (
-          <li className="panelItem" key={index}>
-            <Card 
-              title={handle} 
-              onClick={() => handleSelectHandle(handle)}
-              isSelected={selectedHandle?.[selectedIndex] === handle}
-              disabled={sectionTypes[selectedIndex] === 'fixed'}
-            />
-          </li>
-        ))}
+        {(HANDLES[selectedCategory] || []).map((handle, index) => {
+          const image = ICON_HANDLES[handle];
+          return (
+            <li className="panelItem" key={index}>
+              <Card
+                title={handle}
+                image={image}
+                onClick={() => handleSelectHandle(handle)}
+                isSelected={selectedHandle?.[selectedIndex] === handle}
+                disabled={sectionTypes[selectedIndex] === "fixed"}
+              />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

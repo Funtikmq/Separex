@@ -1,24 +1,24 @@
-const InputWithButtons = ({ 
-  value, 
-  onChange, 
-  onBlur, 
+const InputWithButtons = ({
+  value,
+  onChange,
+  onBlur,
   onStep,
   placeholder = "",
-  readOnly = false, 
-  disabled = false 
+  readOnly = false,
+  disabled = false,
 }) => {
   return (
     <div className="inputWithButtons">
       {onStep && (
-        <button 
-          type="button" 
+        <button
+          type="button"
           onClick={() => onStep("down")}
           disabled={disabled}
         >
           −
         </button>
       )}
-      
+
       <input
         type="number"
         value={value}
@@ -26,7 +26,7 @@ const InputWithButtons = ({
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+          if (e.key === "Enter") {
             e.preventDefault();
             onBlur?.();
           }
@@ -36,11 +36,7 @@ const InputWithButtons = ({
       />
 
       {onStep && (
-        <button 
-          type="button" 
-          onClick={() => onStep("up")}
-          disabled={disabled}
-        >
+        <button type="button" onClick={() => onStep("up")} disabled={disabled}>
           +
         </button>
       )}

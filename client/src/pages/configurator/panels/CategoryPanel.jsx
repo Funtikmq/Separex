@@ -1,19 +1,24 @@
-import Card from "./Card.jsx"
+import { ICON_CATEGORYS } from "./utils/panelImages.js";
+import Card from "./Card.jsx";
 
-function CategoryPanel ({setSelectedCategory}){
+const categoryList = Object.keys(ICON_CATEGORYS);
 
-
-    return(
-        <div className="navigationPanel">
-            <ul className="navigationPanelList">
-                {["Swing Doors","Sliding Doors","Fixed Wall"].map((index) =>(
-                    <li key={index} onClick={() => setSelectedCategory(index)} className="panelItem">
-                        <Card title={index}/>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+function CategoryPanel({ setSelectedCategory }) {
+  return (
+    <div className="navigationPanel">
+      <ul className="navigationPanelList">
+        {categoryList.map((category) => (
+          <li
+            key={category}
+            onClick={() => setSelectedCategory(category)}
+            className="panelItem"
+          >
+            <Card title={category} image={ICON_CATEGORYS[category]} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default CategoryPanel;

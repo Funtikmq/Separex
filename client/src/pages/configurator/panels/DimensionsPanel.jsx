@@ -1,8 +1,8 @@
 import { DIMENSION_LIMITS } from "../constants/constants";
-import InputWithButtons from './InputWithButtons';
-import SectionInputs from './SectionInputs';
-import useDimensionLogic from './hooks/useDimensionsLogic';
-import useSectionLogic from './hooks/useSectionLogic';
+import InputWithButtons from "./InputWithButtons";
+import SectionInputs from "./SectionInputs";
+import useDimensionLogic from "./hooks/useDimensionsLogic";
+import useSectionLogic from "./hooks/useSectionLogic";
 
 function DimensionsPanel({
   doorDimensions,
@@ -11,30 +11,19 @@ function DimensionsPanel({
   setSectionDimensions,
   sectionCount,
   selectedCategory,
-  selectedType
+  selectedType,
 }) {
-  const {
-    rawInput,
-    handleChange,
-    handleInputConfirm,
-    handleStep
-  } = useDimensionLogic(
-    doorDimensions,
-    DIMENSION_LIMITS,
-    setDoorDimensions
-  );
+  const { rawInput, handleChange, handleInputConfirm, handleStep } =
+    useDimensionLogic(doorDimensions, DIMENSION_LIMITS, setDoorDimensions);
 
-  const {
-    safeSectionDimensions,
-    handleSectionChange,
-    handleSectionConfirm
-  } = useSectionLogic(
-    doorDimensions,
-    sectionDimensions,
-    setSectionDimensions,
-    sectionCount,
-    selectedType
-  );
+  const { safeSectionDimensions, handleSectionChange, handleSectionConfirm } =
+    useSectionLogic(
+      doorDimensions,
+      sectionDimensions,
+      setSectionDimensions,
+      sectionCount,
+      selectedType
+    );
 
   return (
     <div className="navigationPanel">
@@ -61,7 +50,7 @@ function DimensionsPanel({
           />
         </div>
 
-        <SectionInputs 
+        <SectionInputs
           selectedType={selectedType}
           selectedCategory={selectedCategory}
           safeSectionDimensions={safeSectionDimensions}
