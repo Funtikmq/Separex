@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 export const useDoorsLogic = () => {
-  // Initial state declarations
   const [doorDimensions, setDoorDimensions] = useState({
     height: 1900,
     width: 850,
@@ -23,7 +22,6 @@ export const useDoorsLogic = () => {
     return initialTypes;
   });
 
-  // Handle configuration validation
   const validateHandleConfiguration = (category, mountType, handles) => {
     if (
       category === "Sliding Doors" &&
@@ -38,7 +36,6 @@ export const useDoorsLogic = () => {
     return handles;
   };
 
-  // Category change effect - resets mount type for Sliding Doors
   useEffect(() => {
     if (selectedCategory === "Sliding Doors") {
       setSlidingMountType("In wall");
@@ -48,7 +45,6 @@ export const useDoorsLogic = () => {
     }
   }, [selectedCategory]);
 
-  // Mount type management effect
   useEffect(() => {
     if (selectedCategory === "Sliding Doors") {
       if (slidingMountType === "In wall") {
@@ -63,7 +59,6 @@ export const useDoorsLogic = () => {
     }
   }, [slidingMountType, selectedCategory]);
 
-  // Category and handle management effect
   useEffect(() => {
     const handlesByCategory = {
       "Swing Doors": "Handle With Lock",
@@ -71,19 +66,33 @@ export const useDoorsLogic = () => {
       "Fixed Walls": null,
     };
 
-    let newHandles;
-    if (selectedCategory === "Sliding Doors") {
-      if (slidingMountType === "On wall") {
-        newHandles = Array(sectionCount).fill(null);
-      } else {
-        newHandles = Array(sectionCount).fill(
-          handlesByCategory[selectedCategory]
-        );
+    const getHandlesByType = (type, count, handle) => {
+      const handles = Array(count).fill(null);
+
+      if (/^\d+-Part Element$/.test(type)) {
+        handles[0] = handle;
+        if (selectedCategory === "Sliding Doors") {
+          handles[0] = handle;
+          handles[1] = handle;
+        }
+      } else if (type === "2-Part Element O" && count > 1) {
+        handles[1] = handle;
+      } else if (type === "4-Part Element O" && count > 2) {
+        handles[2] = handle;
+      } else if (/^\d+-Part Element A$/.test(type) && count > 1) {
+        handles[1] = handle;
       }
+
+      return handles;
+    };
+
+    let newHandles;
+
+    if (selectedCategory === "Fixed Walls") {
+      newHandles = Array(sectionCount).fill(null);
     } else {
-      newHandles = Array(sectionCount).fill(
-        handlesByCategory[selectedCategory]
-      );
+      const defaultHandle = handlesByCategory[selectedCategory];
+      newHandles = getHandlesByType(selectedType, sectionCount, defaultHandle);
     }
 
     setSelectedHandle(
@@ -97,9 +106,8 @@ export const useDoorsLogic = () => {
     if (selectedCategory === "Fixed Walls") {
       setSectionTypes(Array(sectionCount).fill("fixed"));
     }
-  }, [selectedCategory, sectionCount, slidingMountType]);
+  }, [selectedCategory, sectionCount, slidingMountType, selectedType]);
 
-  // Section types management effect
   useEffect(() => {
     setSectionTypes((prevTypes) => {
       const newTypes = Array(sectionCount).fill("fixed");
@@ -131,7 +139,6 @@ export const useDoorsLogic = () => {
     });
   }, [sectionCount, selectedType, selectedCategory, slidingMountType]);
 
-  // Dimensions and models management effect
   useEffect(() => {
     const count = Math.max(sectionCount, 1);
     setSectionModels(Array(count).fill("Aero"));

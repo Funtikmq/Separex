@@ -8,6 +8,7 @@ function HandlePanel({
   setSelectedHandle,
   selectedIndex,
   sectionTypes,
+  activeItem,
 }) {
   const handleSelectHandle = (handle) => {
     if (selectedIndex === null) return;
@@ -43,6 +44,7 @@ function HandlePanel({
               <Card
                 title={handle}
                 image={image}
+                activeItem={activeItem}
                 onClick={() => handleSelectHandle(handle)}
                 isSelected={selectedHandle?.[selectedIndex] === handle}
                 disabled={sectionTypes[selectedIndex] === "fixed"}

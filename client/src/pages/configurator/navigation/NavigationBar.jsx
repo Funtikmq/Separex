@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import NavigationItem from "./NavigationItem";
 import NavigationPanel from "./NavigationPanel";
-import Category from "@assets/itemIcons/brochure.png";
-import Type from "@assets/itemIcons/sliding-door.png";
-import Dimensions from "@assets/itemIcons/dimensions.png";
-import Model from "@assets/itemIcons/model.png";
-import Color from "@assets/itemIcons/art.png";
-import Handles from "@assets/itemIcons/handles.png";
+import categoryIcon from "@assets/itemIcons/brochure.png";
+import typeIcon from "@assets/itemIcons/sliding-door.png";
+import dimensionsIcon from "@assets/itemIcons/dimensions.png";
+import modelIcon from "@assets/itemIcons/model.png";
+import colorIcon from "@assets/itemIcons/art.png";
+import handlesIcon from "@assets/itemIcons/handles.png";
 
 function NavigationBar({
   doorDimensions,
@@ -35,7 +35,14 @@ function NavigationBar({
   const wrapperRef = useRef(null);
 
   const items = ["Category", "Type", "Dimensions", "Model", "Handle", "Color"];
-  const itemImg = [Category, Type, Dimensions, Model, Handles, Color];
+  const itemImg = [
+    categoryIcon,
+    typeIcon,
+    dimensionsIcon,
+    modelIcon,
+    handlesIcon,
+    colorIcon,
+  ];
 
   useEffect(() => {
     setSelectedType("1-Part Element");

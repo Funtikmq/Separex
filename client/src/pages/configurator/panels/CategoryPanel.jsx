@@ -3,7 +3,7 @@ import Card from "./Card.jsx";
 
 const categoryList = Object.keys(ICON_CATEGORYS);
 
-function CategoryPanel({ setSelectedCategory }) {
+function CategoryPanel({ setSelectedCategory, activeItem }) {
   return (
     <div className="navigationPanel">
       <ul className="navigationPanelList">
@@ -13,7 +13,11 @@ function CategoryPanel({ setSelectedCategory }) {
             onClick={() => setSelectedCategory(category)}
             className="panelItem"
           >
-            <Card title={category} image={ICON_CATEGORYS[category]} />
+            <Card
+              title={category}
+              image={ICON_CATEGORYS[category]}
+              activeItem={activeItem}
+            />
           </li>
         ))}
       </ul>

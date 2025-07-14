@@ -2,7 +2,12 @@ import Card from "./Card.jsx";
 import { COLORS } from "../constants/constants.js";
 import { ICON_COLORS } from "./utils/panelImages.js";
 
-function ColorPanel({ sectionColors, setSectionColors, selectedIndex }) {
+function ColorPanel({
+  sectionColors,
+  setSectionColors,
+  selectedIndex,
+  activeItem,
+}) {
   const handleSelectedColor = (color) => {
     if (selectedIndex === null) return;
     const newColors = [...sectionColors];
@@ -20,6 +25,7 @@ function ColorPanel({ sectionColors, setSectionColors, selectedIndex }) {
               <Card
                 title={color}
                 image={image}
+                activeItem={activeItem}
                 onClick={() => handleSelectedColor(color)}
               />
             </li>

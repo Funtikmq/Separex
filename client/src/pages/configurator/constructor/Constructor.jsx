@@ -126,7 +126,12 @@ function Constructor({
 
       <div className="constructorInfo">
         <h4 className="constructorInfoText">Category: {selectedCategory}</h4>
-        <h4 className="constructorInfoText">Handles: </h4>
+        <h4 className="constructorInfoText">
+          Handles:{" "}
+          {Array.isArray(selectedHandle)
+            ? selectedHandle.join(" ")
+            : selectedHandle}
+        </h4>
         <h4 className="constructorInfoText">
           Size: {width} x {height}{" "}
         </h4>

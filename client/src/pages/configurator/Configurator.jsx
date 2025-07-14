@@ -1,31 +1,23 @@
-import { useRef } from 'react';
-import Header from "../Header.jsx"
+import { useRef } from "react";
+import Header from "../Header.jsx";
 import Constructor from "./constructor/Constructor.jsx";
-import NavigationBar from "./navigation/NavigationBar.jsx"
-import { useDoorsLogic } from './hooks/useDoorsLogic.js';
+import NavigationBar from "./navigation/NavigationBar.jsx";
+import { useDoorsLogic } from "./hooks/useDoorsLogic.js";
 
+function Configurator() {
+  const doorLogic = useDoorsLogic();
+  const doorFrameRef = useRef(null);
 
-function Configurator ()
-{
-    const doorLogic = useDoorsLogic();
-    const doorFrameRef = useRef(null);
-
-    return(
-         <>
-      <Header/>
+  return (
+    <>
+      <Header />
       <main className="mainLayout">
-        <NavigationBar 
-          {...doorLogic}
-          doorFrameRef={doorFrameRef}
-        />
+        <NavigationBar {...doorLogic} doorFrameRef={doorFrameRef} />
 
-        <Constructor 
-          {...doorLogic}
-          doorFrameRef={doorFrameRef}
-        />
+        <Constructor {...doorLogic} doorFrameRef={doorFrameRef} />
       </main>
     </>
-    );
+  );
 }
 
 export default Configurator;

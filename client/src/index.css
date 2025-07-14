@@ -21,7 +21,6 @@ body {
   overflow: hidden;
   height: 10vh;
   background-color: #ffffff;
-  position: relative;
   vertical-align: top;
 }
 
@@ -49,7 +48,7 @@ body {
 
 .headerItem:hover {
   padding-bottom: 1vh;
-  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px -2px #f4a621;
 }
 
 .headerImg {
@@ -59,7 +58,7 @@ body {
 
 .mainLayout {
   display: flex;
-  height: calc(100vh - 10.4vh);
+  height: 90vh;
   overflow: hidden;
   background-color: #ffffff;
 }

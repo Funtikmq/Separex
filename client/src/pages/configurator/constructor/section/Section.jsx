@@ -1,9 +1,9 @@
 import SectionAxis from "./SectionAxis";
 
-function Section({ 
-  style, 
-  onClick, 
-  children, 
+function Section({
+  style,
+  onClick,
+  children,
   selectedType,
   index,
   doorDimensions,
@@ -12,7 +12,7 @@ function Section({
   return (
     <div className="doorSection" style={style} onClick={onClick}>
       {children}
-      <SectionAxis 
+      <SectionAxis
         selectedType={selectedType}
         index={index}
         doorDimensions={doorDimensions}

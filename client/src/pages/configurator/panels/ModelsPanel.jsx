@@ -2,7 +2,12 @@ import Card from "./Card.jsx";
 import { MODELS } from "../constants/constants.js";
 import { ICON_MODELS } from "./utils/panelImages.js";
 
-function ModelPanel({ setSectionModels, sectionModels, selectedIndex }) {
+function ModelPanel({
+  setSectionModels,
+  sectionModels,
+  selectedIndex,
+  activeItem,
+}) {
   const handleSelectModel = (model) => {
     if (selectedIndex === null) return;
     const newModels = [...sectionModels];
@@ -20,6 +25,7 @@ function ModelPanel({ setSectionModels, sectionModels, selectedIndex }) {
               <Card
                 title={model}
                 image={image}
+                activeItem={activeItem}
                 onClick={() => handleSelectModel(model)}
               />
             </li>

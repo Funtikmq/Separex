@@ -10,6 +10,7 @@ function TypePanel({
   setSlidingMountType,
   setSectionCount,
   setSelectedType,
+  activeItem,
 }) {
   let filteredTypes = TYPES[selectedCategory] || [];
 
@@ -69,6 +70,7 @@ function TypePanel({
               <Card
                 title={type}
                 image={image}
+                activeItem={activeItem}
                 onClick={() => {
                   setSectionCount(parts);
                   setSelectedType(type);

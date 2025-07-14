@@ -31,7 +31,12 @@ function NavigationPanel({
   if (!activeItem) return null;
   switch (activeItem) {
     case "Category":
-      return <CategoryPanel setSelectedCategory={setSelectedCategory} />;
+      return (
+        <CategoryPanel
+          setSelectedCategory={setSelectedCategory}
+          activeItem={activeItem}
+        />
+      );
     case "Type":
       return (
         <TypePanel
@@ -40,6 +45,7 @@ function NavigationPanel({
           setSlidingMountType={setSlidingMountType}
           setSectionCount={setSectionCount}
           setSelectedType={setSelectedType}
+          activeItem={activeItem}
         />
       );
     case "Dimensions":
@@ -60,6 +66,7 @@ function NavigationPanel({
           setSectionModels={setSectionModels}
           sectionModels={sectionModels}
           selectedIndex={selectedIndex}
+          activeItem={activeItem}
         />
       );
     case "Handle":
@@ -70,6 +77,7 @@ function NavigationPanel({
           setSelectedHandle={setSelectedHandle}
           selectedIndex={selectedIndex}
           sectionTypes={sectionTypes}
+          activeItem={activeItem}
         />
       );
 
