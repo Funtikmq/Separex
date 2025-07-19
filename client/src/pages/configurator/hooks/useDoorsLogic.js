@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { useScaledDimensions } from "../constructor/hooks/useScaledDimensions";
 
 export const useDoorsLogic = () => {
   const [doorDimensions, setDoorDimensions] = useState({
     height: 1900,
     width: 850,
   });
+  const { height, width } = doorDimensions;
+  const scaled = useScaledDimensions(height, width);
   const [sectionCount, setSectionCount] = useState(1);
   const [slidingMountType, setSlidingMountType] = useState("In wall");
   const [selectedCategory, setSelectedCategory] = useState("Swing Doors");
@@ -28,9 +31,6 @@ export const useDoorsLogic = () => {
       mountType === "On wall" &&
       handles.some((h) => h !== null)
     ) {
-      console.warn(
-        "Sliding doors with On wall mounting should not have handles by default"
-      );
       return Array(handles.length).fill(null);
     }
     return handles;
@@ -72,8 +72,12 @@ export const useDoorsLogic = () => {
       if (/^\d+-Part Element$/.test(type)) {
         handles[0] = handle;
         if (selectedCategory === "Sliding Doors") {
-          handles[0] = handle;
-          handles[1] = handle;
+          if (selectedType === "2-Part Element") {
+            handles[0] = handle;
+            handles[1] = handle;
+          } else {
+            handles[0] = handle;
+          }
         }
       } else if (type === "2-Part Element O" && count > 1) {
         handles[1] = handle;
@@ -179,6 +183,7 @@ export const useDoorsLogic = () => {
   return {
     doorDimensions,
     setDoorDimensions,
+    scaled,
     sectionCount,
     setSectionCount,
     slidingMountType,

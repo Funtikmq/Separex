@@ -49,7 +49,7 @@
   flex-direction: column;
   align-items: center;
   width: 10vw;
-  margin: 5vh auto;
+  margin: 7vh auto;
   background: linear-gradient(to left, #f4a621, #ffc45f);
   border: 2px solid #f4a621;
   border-radius: 12px;
@@ -59,7 +59,7 @@
 }
 
 .cardContainer:hover .card {
-  transform: translateY(-4vh);
+  transform: translateY(-5vh);
 }
 
 .cardContainer:hover .cardComponents {

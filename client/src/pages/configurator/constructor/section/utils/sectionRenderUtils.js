@@ -5,15 +5,20 @@ import * as Handles from "../SectionHandles.jsx";
 // 1. Model Components Object
 export const modelComponents = {
   Line: Models.Line,
+  "Line Inverted": Models.LineInverted,
   "Double Line": Models.DoubleLine,
+  "Double Line Inverted": Models.DoubleLineInverted,
   "Triple Line": Models.TripleLine,
+  "Triple Line Inverted": Models.TripleLineInverted,
   Simetry: Models.Simetry,
   Trio: Models.Trio,
   Quatro: Models.Quatro,
   Five: Models.Five,
   Trend: Models.Trend,
   Nordic: Models.Nordic,
+  "Nordic Inverted": Models.NordicInverted,
   Punto: Models.Punto,
+  "Punto Inverted": Models.PuntoInverted,
   Geos: Models.Geos,
   Geometry: Models.Geometry,
   Star: Models.Star,
@@ -21,7 +26,9 @@ export const modelComponents = {
   Loft: Models.Loft,
   Nimbus: Models.Nimbus,
   Modern: Models.Modern,
+  "Modern Inverted": Models.ModernInverted,
   Altus: Models.Altus,
+  "Altus Inverted": Models.AltusInverted,
 };
 
 // 2. Model Component Helper

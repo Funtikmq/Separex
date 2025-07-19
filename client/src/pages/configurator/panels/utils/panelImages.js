@@ -46,15 +46,20 @@ export const ICON_TYPES = {
 export const ICON_MODELS = {
   Aero: modelIcons.aero,
   Line: modelIcons.line,
+  "Line Inverted": modelIcons.lineInverted,
   "Double Line": modelIcons.doubleLine,
+  "Double Line Inverted": modelIcons.doubleLineInverted,
   "Triple Line": modelIcons.tripleLine,
+  "Triple Line Inverted": modelIcons.tripleLineInverted,
   Simetry: modelIcons.simetry,
   Trio: modelIcons.trio,
   Quatro: modelIcons.quatro,
   Five: modelIcons.five,
   Trend: modelIcons.trend,
   Nordic: modelIcons.nordic,
+  "Nordic Inverted": modelIcons.nordicInverted,
   Punto: modelIcons.punto,
+  "Punto Inverted": modelIcons.puntoInverted,
   Geos: modelIcons.geos,
   Geometry: modelIcons.geometry,
   Star: modelIcons.star,
@@ -62,7 +67,9 @@ export const ICON_MODELS = {
   Loft: modelIcons.loft,
   Nimbus: modelIcons.nimbus,
   Modern: modelIcons.modern,
+  "Modern Inverted": modelIcons.modernInverted,
   Altus: modelIcons.altus,
+  "Altus Inverted": modelIcons.altusInverted,
 };
 
 export const ICON_COLORS = {

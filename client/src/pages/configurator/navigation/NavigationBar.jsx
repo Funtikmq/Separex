@@ -34,7 +34,14 @@ function NavigationBar({
   const [activeItem, setActiveItem] = useState(null);
   const wrapperRef = useRef(null);
 
-  const items = ["Category", "Type", "Dimensions", "Model", "Handle", "Color"];
+  const items = [
+    "Category",
+    "Type",
+    "Dimensions",
+    "Models",
+    "Handles",
+    "Colors",
+  ];
   const itemImg = [
     categoryIcon,
     typeIcon,

@@ -13,7 +13,6 @@ function Configurator() {
       <Header />
       <main className="mainLayout">
         <NavigationBar {...doorLogic} doorFrameRef={doorFrameRef} />
-
         <Constructor {...doorLogic} doorFrameRef={doorFrameRef} />
       </main>
     </>

@@ -22,8 +22,8 @@ function Header() {
         <div className="headerItem" onClick={() => navigate("/Configurator")}>
           Configurator
         </div>
-        <div className="headerItem" onClick={() => navigate("/Basket")}>
-          Basket
+        <div className="headerItem" onClick={() => navigate("/Cart")}>
+          Cart
         </div>
       </nav>
     </header>

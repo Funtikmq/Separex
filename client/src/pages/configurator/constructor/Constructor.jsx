@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { useScaledDimensions } from "./useScaledDimensions";
+import { useScaledDimensions } from "./hooks/useScaledDimensions";
 import DoorFrame from "./DoorFrame";
+import ConstructorInfo from "./ConstructorInfo";
 
 function Constructor({
   doorDimensions,
@@ -124,31 +125,19 @@ function Constructor({
         />
       </div>
 
-      <div className="constructorInfo">
-        <h4 className="constructorInfoText">Category: {selectedCategory}</h4>
-        <h4 className="constructorInfoText">
-          Handles:{" "}
-          {Array.isArray(selectedHandle)
-            ? selectedHandle.join(" ")
-            : selectedHandle}
-        </h4>
-        <h4 className="constructorInfoText">
-          Size: {width} x {height}{" "}
-        </h4>
-        <h4 className="constructorInfoText">
-          Models:{" "}
-          {Array.isArray(sectionModels)
-            ? sectionModels.join(" ")
-            : sectionModels}
-        </h4>
-        <h4 className="constructorInfoText">Type: {selectedType}</h4>
-        <h4 className="constructorInfoText">
-          Colors:{" "}
-          {Array.isArray(sectionColors)
-            ? sectionColors.join(" ")
-            : sectionColors}
-        </h4>
-      </div>
+      <ConstructorInfo
+        doorDimensions={doorDimensions}
+        selectedCategory={selectedCategory}
+        selectedType={selectedType}
+        sectionCount={sectionCount}
+        sectionModels={sectionModels}
+        sectionColors={sectionColors}
+        selectedHandle={selectedHandle}
+        selectedIndex={selectedIndex}
+        slidingMountType={slidingMountType}
+        sectionDimensions={sectionDimensions}
+        sectionTypes={sectionTypes}
+      />
     </div>
   );
 }

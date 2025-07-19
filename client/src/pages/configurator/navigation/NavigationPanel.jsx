@@ -60,7 +60,7 @@ function NavigationPanel({
           selectedType={selectedType}
         />
       );
-    case "Model":
+    case "Models":
       return (
         <ModelPanel
           setSectionModels={setSectionModels}
@@ -69,7 +69,7 @@ function NavigationPanel({
           activeItem={activeItem}
         />
       );
-    case "Handle":
+    case "Handles":
       return (
         <HandlePanel
           selectedCategory={selectedCategory}
@@ -81,7 +81,7 @@ function NavigationPanel({
         />
       );
 
-    case "Color":
+    case "Colors":
       return (
         <ColorPanel
           sectionColors={sectionColors}

@@ -20,12 +20,12 @@
   position: relative;
 }
 
-.constructorContainer{
+.constructorContainer {
   display: flex;
-  justify-content: center; 
-  align-items:flex-end;
+  justify-content: center;
+  align-items: flex-end;
   width: 100%;
-  padding-bottom:8vh;
+  padding-bottom: 8vh;
 }
 
 .constructorDoor {
@@ -52,13 +52,12 @@
   bottom: 50%;
   transform: translateX(-50%) translateY(50%);
   width: 1.2vw;
-  height: .2vh;
+  height: 0.2vh;
   background-color: #333;
   border-radius: 1px;
   opacity: 0;
-  transition: ease-in-out .1s;
+  transition: ease-in-out 0.1s;
 }
-
 
 .doorSection::after {
   content: "";
@@ -66,7 +65,7 @@
   left: 50%;
   bottom: 50%;
   transform: translateX(-50%) translateY(50%);
-  width: .2vh;
+  width: 0.2vh;
   height: 1.2vw;
   background-color: #333;
   border-radius: 1px;
@@ -74,37 +73,69 @@
   transition: ease-in-out 0.1s;
 }
 
-
 .doorSection:hover::before,
 .doorSection:hover::after {
   opacity: 1;
-} 
-
-.constructorInfo {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  height: 14vh;
-  background: #fff; 
-  flex-shrink: 0;
-  border-top: 1px solid #000;
 }
 
-.constructorInfoText{
-  padding: .5vh 2vw;
-  margin: 0.3vh;
-  font-size: 1rem;
+.constructorFooter {
+  height: 15.7%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.constructorInfo {
+  width: 80%;
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.constructorInfoText {
+  padding: 0.5vh 2vw;
+  font-weight: 500;
+  font-size: 0.9rem;
   width: 35%;
 }
 
-.constructorFloor{
-   position: absolute;
-   bottom: 0;
-   left: 0;
-   width: 100%;
-   height: 15vh;
-   background-color: #ccc;
-   z-index: 0;
+.constructorInfoButtons {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.constructorButton {
+  font-size: 0.8rem;
+  margin: 5%;
+  background-color: #fff;
+  color: #000;
+  padding: 1% 5%;
+  width: auto;
+  height: 50%;
+  outline: none;
+  border: 2px solid #f4a621;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.constructorButton:hover {
+  transform: scale(1.1);
+  background-color: #f4a621;
+  color: #fff;
+}
+
+.constructorFloor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 15vh;
+  background-color: #ccc;
+  z-index: 0;
 }
 
 .sectionTypeInput {
@@ -119,7 +150,7 @@
   padding: 1vh 1.5vh;
   background: #ffffffbb;
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
   gap: 0.75em;
   accent-color: #4d5396;
 }
@@ -132,13 +163,12 @@
   font-size: 0.75em;
   white-space: nowrap;
   text-align: left;
-  width: 100%;              
+  width: 100%;
   padding: 0;
   margin: 0;
 }
 
 .sectionTypeInput input[type="radio"] {
-  margin: 0;                
+  margin: 0;
   padding: 0;
 }
-
