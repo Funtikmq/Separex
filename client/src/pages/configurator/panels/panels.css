@@ -8,7 +8,6 @@
   height: calc(100vh - 10.4vh);
   text-align: center;
   overflow-y: auto;
-  /* background: linear-gradient(180deg, #f0f0f0 80%, #f4a621 100%); */
 }
 
 /*Scrollbarul*/
@@ -62,8 +61,16 @@
   transform: translateY(-5vh);
 }
 
+.cardContainer:active .card {
+  transform: scale(0.95);
+}
+
 .cardContainer:hover .cardComponents {
   opacity: 1;
+}
+
+.cardContainer:active .cardComponents {
+  opacity: 0;
 }
 
 .card {
@@ -102,14 +109,6 @@
   font-size: 0.9rem;
 }
 
-.cardButton {
-  width: 15%;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
 .text-disabled {
   color: #aaa;
 }
@@ -121,12 +120,14 @@
 }
 
 .toggleButton {
-  padding: 0.5rem 1.2rem;
+  padding: 0.6rem 1.5rem;
+  text-align: center;
   background-color: #ffffff;
   color: #000000;
   border: 2px solid #f4a621;
   border-radius: 8px;
   font-weight: 600;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
@@ -135,6 +136,10 @@
   background-color: #f4a621;
   color: #ffffff;
   transform: scale(1.05);
+}
+
+.toggleButton:active {
+  transform: scale(0.95);
 }
 
 .dimensionsForm {
@@ -197,63 +202,27 @@
   border-radius: 2vh;
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+.navigationPanelNoItem {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  opacity: 0; /* Începe invizibil */
-  transition: opacity 0.3s ease-in-out;
-  backdrop-filter: blur(5px);
+  height: 100%;
+  width: 100%;
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 50vh;
-  height: 50vh;
-  transform: translateX(-30vh);
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+.handlePanelText {
+  font-size: 1.2rem;
+  padding: 2rem;
+  font-weight: 600;
+  max-width: 80%;
+  text-align: center;
 
-/* Clasele pentru starea activă */
-.modal-overlay.active {
-  opacity: 1;
-}
+  background: linear-gradient(to bottom, #000, #999);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
-.modal-content.active {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-.modal-overlay.closing {
-  opacity: 0;
-}
-
-.modal-content.closing {
-  transform: translateY(30vh);
-  opacity: 0;
-}
-
-.modalSection {
-  margin: 0 auto;
-  width: 90%;
-  height: 90%;
-  background: linear-gradient(
-    225deg,
-    rgba(150, 150, 150, 0.8) 30%,
-    rgba(150, 150, 150, 0.2) 100%
-  );
-  border: 10px solid #000;
+  /* pentru browser-e moderne */
+  background-clip: text;
+  color: transparent;
 }

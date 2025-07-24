@@ -5,6 +5,7 @@ function Section({
   onClick,
   children,
   selectedType,
+  sectionCount,
   index,
   doorDimensions,
   sectionDimensions,
@@ -17,6 +18,7 @@ function Section({
         index={index}
         doorDimensions={doorDimensions}
         sectionDimensions={sectionDimensions}
+        sectionCount={sectionCount}
       />
     </div>
   );

@@ -65,7 +65,7 @@ export function DefaultSectionLayout({
         <Section
           key={i}
           index={i}
-          total={sectionCount}
+          sectionCount={sectionCount}
           onClick={() => {
             onClick(i);
             setSelectionVisible(true);

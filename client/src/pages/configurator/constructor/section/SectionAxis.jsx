@@ -3,6 +3,7 @@ function SectionAxis({
   index,
   doorDimensions,
   sectionDimensions,
+  sectionCount,
 }) {
   // 4-Part Element O:
   if (selectedType && selectedType.includes("4-Part Element O")) {
@@ -45,11 +46,11 @@ function SectionAxis({
         </>
       );
     }
-    // index 1: nimic
+    // index 1:
     return null;
   }
 
-  // X-Part Element A: index 0 verticală, index 1 verticală+orizontală
+  // X-Part Element A:
   if (selectedType && selectedType.includes("Part Element A")) {
     if (index === 0) {
       return (
@@ -89,7 +90,7 @@ function SectionAxis({
     }
   }
 
-  // 2-Part Element O: două verticale pe fiecare secțiune
+  // 2-Part Element O:
   if (selectedType && selectedType.includes("2-Part Element O")) {
     return (
       <>
@@ -102,14 +103,15 @@ function SectionAxis({
       </>
     );
   }
-
-  // Orice alt Part Element: doar orizontală
+  // Default
   if (selectedType && selectedType.includes("Part Element")) {
-    return (
-      <div className="sectionAxis sectionAxisX">
-        <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
-      </div>
-    );
+    if (sectionCount !== 1) {
+      return (
+        <div className="sectionAxis sectionAxisX">
+          <span className="sectionAxisLabel">{sectionDimensions[index]}</span>
+        </div>
+      );
+    }
   }
 
   return null;

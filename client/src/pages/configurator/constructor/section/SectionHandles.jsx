@@ -28,7 +28,7 @@ export const HandleWithLock = ({ scaled, position }) => {
           height: `${scaled.borderPx / 16}rem`,
           backgroundColor: "#333",
           top: "20%",
-          ...(position === "right" ? { right: "1em" } : { left: "1em" }),
+          ...(position === "right" ? { right: "200%" } : { left: "200%" }),
           transform: `translateY(-50%) translateX(${
             position === "right" ? "50%" : "-50%"
           })`,

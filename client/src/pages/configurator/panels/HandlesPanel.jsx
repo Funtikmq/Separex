@@ -13,22 +13,31 @@ function HandlePanel({
   const handleSelectHandle = (handle) => {
     if (selectedIndex === null) return;
 
-    // Don't allow handle selection for fixed sections
-    if (sectionTypes[selectedIndex] === "fixed") {
-      return;
-    }
-
     const newHandles = [...(selectedHandle || [])];
     newHandles[selectedIndex] = handle;
     setSelectedHandle(newHandles);
   };
 
-  // Don't show handles panel for fixed sections
+  if (selectedCategory === "Fixed Wall") {
+    return (
+      <div className="navigationPanel">
+        <div className="navigationPanelNoItem">
+          <h2 className="handlePanelText">No Handles for Fixed Walls</h2>
+          <h2 className="handlePanelText">Change the Category</h2>
+        </div>
+      </div>
+    );
+  }
+
+  // Fixed Sections
   if (sectionTypes[selectedIndex] === "fixed") {
     return (
       <div className="navigationPanel">
-        <div>
-          <h2>Select the Direction</h2>
+        <div className="navigationPanelNoItem">
+          <h2 className="handlePanelText">No Handles for Fixed Sections</h2>
+          <h2 className="handlePanelText">
+            Select Opening Direction for the Section
+          </h2>
         </div>
       </div>
     );

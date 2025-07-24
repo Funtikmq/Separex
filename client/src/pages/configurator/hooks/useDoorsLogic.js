@@ -12,7 +12,7 @@ export const useDoorsLogic = () => {
   const [slidingMountType, setSlidingMountType] = useState("In wall");
   const [selectedCategory, setSelectedCategory] = useState("Swing Doors");
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedType, setSelectedType] = useState("");
+  const [selectedType, setSelectedType] = useState("3-Part Element");
   const [sectionModels, setSectionModels] = useState([]);
   const [sectionColors, setSectionColors] = useState([]);
   const [selectedHandle, setSelectedHandle] = useState(() =>
@@ -37,31 +37,46 @@ export const useDoorsLogic = () => {
   };
 
   useEffect(() => {
-    if (selectedCategory === "Sliding Doors" && selectedType === null) {
+    setSelectedType("1-Part Element");
+    setSectionCount(1);
+    if (selectedCategory === "Sliding Doors") {
       setSlidingMountType("In wall");
-      setSectionCount(1);
-      setSelectedType("2-Part Element");
       setSelectedHandle(Array(1).fill("Pull Handle 160"));
+    } else if (selectedCategory === "Swing Doors") {
+      setSelectedHandle(Array(1).fill("Handle With Lock"));
+    } else if (selectedCategory === "Fixed Walls") {
+      setSelectedHandle(Array(1).fill(null));
+    } else {
+      setSelectedHandle(Array(1).fill(null));
     }
-  }, [selectedCategory, selectedType]);
+  }, [selectedCategory]);
 
   useEffect(() => {
     if (selectedCategory === "Sliding Doors") {
       if (slidingMountType === "In wall") {
-        setSectionCount((prev) => prev ?? 1);
-        setSelectedType((prev) => prev || "2-Part Element");
-        setSelectedHandle((prev) =>
-          prev.length !== 1 ? Array(1).fill("Pull Handle 160") : prev
-        );
+        setSectionCount(1);
+        setSelectedType("1-Part Element");
+        setSelectedHandle(Array(1).fill("Pull Handle 160"));
       } else if (slidingMountType === "On wall") {
-        setSectionCount((prev) => prev ?? 2);
-        setSelectedType((prev) => prev || "2-Part Element");
-        setSelectedHandle((prev) =>
-          prev.length !== 2 ? Array(2).fill(null) : prev
-        );
+        setSectionCount(2);
+        setSelectedType("2-Part Element");
+        setSelectedHandle(Array(2).fill(null));
       }
     }
   }, [slidingMountType, selectedCategory]);
+
+  useEffect(() => {
+    setSelectedHandle((prevHandles) => {
+      if (!prevHandles || prevHandles.length === 0) return prevHandles;
+
+      const newHandles = prevHandles.map((handle, idx) => {
+        return sectionTypes[idx] === "fixed" ? null : handle;
+      });
+
+      const isChanged = newHandles.some((h, i) => h !== prevHandles[i]);
+      return isChanged ? newHandles : prevHandles;
+    });
+  }, [sectionTypes]);
 
   useEffect(() => {
     const handlesByCategory = {

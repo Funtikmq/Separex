@@ -52,11 +52,6 @@ function NavigationBar({
   ];
 
   useEffect(() => {
-    setSelectedType("1-Part Element");
-    setSectionCount(1);
-  }, [selectedCategory]);
-
-  useEffect(() => {
     function handleClickOutside(event) {
       const clickedInsidePanel =
         wrapperRef.current && wrapperRef.current.contains(event.target);

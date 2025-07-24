@@ -34,6 +34,11 @@ function ConstructorInfo({
   return (
     <div className="constructorFooter">
       <div className="constructorInfo">
+        <div className="constructorInfoButtons">
+          <button className="constructorButton" onClick={handleConfirm}>
+            Confirm
+          </button>
+        </div>
         <h4 className="constructorInfoText">System: {selectedCategory}</h4>
         <h4 className="constructorInfoText">
           Handles:{" "}
@@ -57,11 +62,6 @@ function ConstructorInfo({
             ? sectionColors.join("; ")
             : sectionColors}
         </h4>
-      </div>
-      <div className="constructorInfoButtons">
-        <button className="constructorButton" onClick={handleConfirm}>
-          Confirm
-        </button>
       </div>
     </div>
   );

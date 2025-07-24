@@ -129,7 +129,7 @@ export const getHandleOverlay = (handleType, scaled, index, sectionType) => {
   if (HandleComponent) {
     return React.createElement(HandleComponent, {
       scaled,
-      position: sectionType === "left" ? "right" : "left", // Handle position based on section type
+      position: sectionType === "left" ? "right" : "left",
     });
   }
 
