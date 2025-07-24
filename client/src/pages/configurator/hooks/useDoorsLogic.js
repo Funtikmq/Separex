@@ -37,24 +37,28 @@ export const useDoorsLogic = () => {
   };
 
   useEffect(() => {
-    if (selectedCategory === "Sliding Doors") {
+    if (selectedCategory === "Sliding Doors" && selectedType === null) {
       setSlidingMountType("In wall");
       setSectionCount(1);
-      setSelectedType("1-Part Element");
+      setSelectedType("2-Part Element");
       setSelectedHandle(Array(1).fill("Pull Handle 160"));
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, selectedType]);
 
   useEffect(() => {
     if (selectedCategory === "Sliding Doors") {
       if (slidingMountType === "In wall") {
-        setSectionCount(1);
-        setSelectedType("1-Part Element");
-        setSelectedHandle(Array(1).fill("Pull Handle 160"));
+        setSectionCount((prev) => prev ?? 1);
+        setSelectedType((prev) => prev || "2-Part Element");
+        setSelectedHandle((prev) =>
+          prev.length !== 1 ? Array(1).fill("Pull Handle 160") : prev
+        );
       } else if (slidingMountType === "On wall") {
-        setSectionCount(2);
-        setSelectedType("2-Part Element");
-        setSelectedHandle(Array(2).fill(null));
+        setSectionCount((prev) => prev ?? 2);
+        setSelectedType((prev) => prev || "2-Part Element");
+        setSelectedHandle((prev) =>
+          prev.length !== 2 ? Array(2).fill(null) : prev
+        );
       }
     }
   }, [slidingMountType, selectedCategory]);
@@ -69,7 +73,7 @@ export const useDoorsLogic = () => {
     const getHandlesByType = (type, count, handle) => {
       const handles = Array(count).fill(null);
 
-      if (/^\d+-Part Element$/.test(type)) {
+      if (type && /^\d+-Part Element$/.test(type)) {
         handles[0] = handle;
         if (selectedCategory === "Sliding Doors") {
           if (selectedType === "2-Part Element") {
@@ -83,7 +87,7 @@ export const useDoorsLogic = () => {
         handles[1] = handle;
       } else if (type === "4-Part Element O" && count > 2) {
         handles[2] = handle;
-      } else if (/^\d+-Part Element A$/.test(type) && count > 1) {
+      } else if (type && /^\d+-Part Element A$/.test(type) && count > 1) {
         handles[1] = handle;
       }
 
@@ -130,7 +134,11 @@ export const useDoorsLogic = () => {
         } else if (selectedType === "4-Part Element O" && sectionCount > 2) {
           newTypes.fill("fixed");
           newTypes[2] = "right";
-        } else if (selectedType.includes("Element A") && sectionCount > 1) {
+        } else if (
+          selectedType &&
+          selectedType.includes("Element A") &&
+          sectionCount > 1
+        ) {
           newTypes.fill("fixed");
           newTypes[1] = "right";
         } else {
@@ -170,13 +178,14 @@ export const useDoorsLogic = () => {
     }
 
     setSectionDimensions(
-      dimensions[selectedType] ||
-        (/^\d+-Part Element A$/.test(selectedType)
-          ? [
-              sectionDimensions[0] ?? Math.round(doorDimensions.height * 0.3),
-              ...splitNatural(doorDimensions.width, count - 1),
-            ]
-          : splitNatural(doorDimensions.width, count))
+      selectedType && dimensions[selectedType]
+        ? dimensions[selectedType]
+        : selectedType && /^\d+-Part Element A$/.test(selectedType)
+        ? [
+            sectionDimensions[0] ?? Math.round(doorDimensions.height * 0.3),
+            ...splitNatural(doorDimensions.width, count - 1),
+          ]
+        : splitNatural(doorDimensions.width, count)
     );
   }, [sectionCount, selectedType, doorDimensions, selectedCategory]);
 
