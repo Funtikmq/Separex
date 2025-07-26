@@ -32,9 +32,50 @@ function CartContent() {
     addOrder(newOrder);
   };
 
+  // Documentation
+
+  const handleGenerateAndDownloadPDF = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/generate/files", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          category: orderData?.selectedCategory,
+          type: orderData?.selectedType,
+          dimensions: orderData?.doorDimensions,
+          sectionType: orderData?.sectionTypes,
+          sectionDimensions: orderData?.sectionDimensions,
+          models: orderData?.sectionModels,
+          colors: orderData?.sectionColors,
+          handles: orderData?.selectedHandle,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error at Generating PDF");
+      }
+
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "order.zip";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error at Generating PDF:", error);
+    }
+  };
+
   return (
     <div className="cartLayout">
-      <Table orders={orders} onDeleteOrder={deleteOrder} />
+      <Table
+        orders={orders}
+        onDeleteOrder={deleteOrder}
+        onGenerate={handleGenerateAndDownloadPDF}
+      />
       {orderData ? (
         <Order
           data={orderData}

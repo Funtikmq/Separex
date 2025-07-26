@@ -1,6 +1,5 @@
 function Order({ data, quantity, onSave, onQuantityChange }) {
   const sectionCount = data.sectionCount || 1;
-  const colWidth = `${100 / (sectionCount + 1)}%`;
 
   const renderRow = (label, values, keyPrefix) => (
     <tr className="orderTableRow">
@@ -33,12 +32,35 @@ function Order({ data, quantity, onSave, onQuantityChange }) {
         {/* Header cu secțiunile */}
         <tr className="orderTableRow">
           <th className="orderTableHead">Section</th>
-          {Array.from({ length: sectionCount }, (_, i) => (
-            <td key={`section-${i}`}>{i + 1}</td>
-          ))}
+          {Array.from({ length: sectionCount }, (_, i) => {
+            let label = `${i + 1}`;
+            if (data.selectedType === "2-Part Element O") {
+              label = i === 0 ? "Top" : "Bottom";
+            } else if (data.selectedType === "4-Part Element O") {
+              const labels = [
+                "Top Left",
+                "Top Right",
+                "Bottom Left",
+                "Bottom Right",
+              ];
+              label = labels[i] || `${i + 1}`;
+            } else if (data.selectedType?.includes("Part Element A")) {
+              label = i === 0 ? "Top" : `${i + 1}`;
+            }
+            return <td key={`section-${i}`}>{label}</td>;
+          })}
         </tr>
 
-        {renderRow("Opening Direction", data.sectionTypes, "dir")}
+        {renderRow(
+          "Opening Direction",
+          data.sectionTypes?.map((val) => {
+            if (val === "right") return "To Right";
+            if (val === "left") return "To Left";
+            if (val === "fixed") return "Fixed";
+            return val;
+          }),
+          "dir"
+        )}
         {renderRow(
           "Section Dimensions",
           data.sectionDimensions?.map((dim, index, dims) => {

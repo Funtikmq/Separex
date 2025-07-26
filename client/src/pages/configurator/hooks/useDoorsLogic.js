@@ -168,8 +168,6 @@ export const useDoorsLogic = () => {
 
   useEffect(() => {
     const count = Math.max(sectionCount, 1);
-    setSectionModels(Array(count).fill("Aero"));
-    setSectionColors(Array(count).fill("Clear"));
 
     const dimensions = {
       "2-Part Element O": [

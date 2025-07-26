@@ -94,6 +94,21 @@ button:active {
   height: 3vh;
 }
 
+.tableItemButton {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.tableItemButton:hover {
+  background-color: transparent;
+  transform: scale(1.1);
+}
+
+.tableItemButton:active {
+  transform: scale(0.9);
+}
+
 .tableCancelButton {
   padding: 0;
   border: none;

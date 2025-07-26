@@ -1,4 +1,4 @@
-function Table({ orders, onDeleteOrder }) {
+function Table({ orders, onDeleteOrder, onGenerate }) {
   return (
     <table className="table">
       <thead>
@@ -16,7 +16,27 @@ function Table({ orders, onDeleteOrder }) {
           <tr key={index} className="tableDataRow">
             <td>{order.product}</td>
             <td>{order.type}</td>
-            <td>docs</td>
+            <td>
+              <button className="tableItemButton" onClick={onGenerate}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                  <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                  <path d="M10 9H8" />
+                  <path d="M16 13H8" />
+                  <path d="M16 17H8" />
+                </svg>
+              </button>
+            </td>
             <td>{order.quantity}</td>
             <td>{order.price}</td>
             <td>
@@ -31,10 +51,10 @@ function Table({ orders, onDeleteOrder }) {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#000"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-x-icon lucide-x"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-x-icon lucide-x"
                 >
                   <path d="M18 6 6 18" />
                   <path d="m6 6 12 12" />
