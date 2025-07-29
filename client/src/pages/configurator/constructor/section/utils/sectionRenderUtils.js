@@ -55,11 +55,11 @@ export const colorStyles = {
   },
   Grey: {
     backgroundColor:
-      "linear-gradient(225deg, rgba(100, 100, 100, 0.4) 30%, rgba(100, 100, 100, 0.2) 100%)",
+      "linear-gradient(225deg, rgba(0, 0, 0, 0.4) 30%, rgba(100, 100, 100, 0.2) 100%)",
   },
   "Dark Grey": {
     backgroundColor:
-      "linear-gradient(225deg, rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.2) 100%)",
+      "linear-gradient(225deg, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0.4) 100%)",
   },
   Bronze: {
     backgroundColor:
@@ -120,7 +120,6 @@ export const getHandleOverlay = (handleType, scaled, index, sectionType) => {
 
   const handleName = Array.isArray(handleType) ? handleType[index] : handleType;
 
-  // Return null if section is fixed or no handle name
   if (!handleName || sectionType === "fixed") {
     return null;
   }

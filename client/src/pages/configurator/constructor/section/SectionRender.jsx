@@ -27,6 +27,7 @@ function SectionRenderer({
   sectionTypes,
   setSectionTypes,
   selectedHandle,
+  slidingMountType,
 }) {
   // useSectionDimensions hook
   const { dimensions, updateDimensions } = useSectionDimensions({
@@ -73,6 +74,7 @@ function SectionRenderer({
       selectedHandle,
       sectionTypes,
       sectionCount,
+      slidingMountType,
       isResizing,
       resizingIndex: null,
       renderSectionTypeRadio: (idx) => {

@@ -1,118 +1,260 @@
-import Section from '../Section';
-import { getSectionColor, getModelOverlay, getHandleOverlay } from '../utils/sectionRenderUtils';
+import Section from "../Section";
+import {
+  getSectionColor,
+  getModelOverlay,
+  getHandleOverlay,
+} from "../utils/sectionRenderUtils";
 
-export function XPartElementA({ 
-  dimensions, 
-  scaled, 
-  sectionColors, 
-  sectionModels, 
-  isSelected, 
-  onClick, 
-  setSelectionVisible, 
-  sectionCount, 
-  resizingIndex, 
-  isResizing, 
-  handleSectionResizeStart, 
-  handleTopSectionResizeStart, 
-  selectedCategory, 
+export function XPartElementA({
+  dimensions,
+  scaled,
+  sectionColors,
+  sectionModels,
+  isSelected,
+  onClick,
+  setSelectionVisible,
+  sectionCount,
+  resizingIndex,
+  isResizing,
+  handleSectionResizeStart,
+  handleTopSectionResizeStart,
+  selectedCategory,
   selectedType,
   sectionDimensions,
   doorDimensions,
   selectedHandle,
   sectionTypes,
-  renderSectionTypeRadio = () => null 
+  renderSectionTypeRadio = () => null,
 }) {
+  const isSlidingDoor = selectedCategory === "Sliding Doors";
+  const isSwingDoor = selectedCategory === "Swing Doors";
+
+  const borderSize = scaled.borderPx / 16;
+  const extraBorderSize = scaled.borderPx / 32;
+
   const total = sectionCount;
   const rest = total - 1;
   const widths = dimensions.widths || Array(rest).fill(100 / rest);
-  
-  return (
-    <div id="sections-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {/* Top section remains the same */}
-      <Section
-        key={0}
-        index={0}
-        total={total}
-        onClick={() => { onClick(0); setSelectionVisible(true); }}
-        style={{
-          position: "absolute",
-          top: "0%",
-          left: 0,
-          width: "100%",
-          height: `${dimensions.topHeight}%`,
-          borderBottom: `${scaled.borderPx}px solid #222`,
-          background: isSelected(0)
-            ? "rgba(105, 200, 255, 0.6)"
-            : getSectionColor(sectionColors, 0)?.backgroundColor || "transparent",
-          cursor: "pointer",
-          overflow: "visible"
-        }}
-        selectedType={selectedType}
-        sectionDimensions={sectionDimensions}
-        doorDimensions={doorDimensions}
-      >
-        {getModelOverlay(sectionModels[0], scaled)}
-        {getHandleOverlay(selectedHandle, scaled, 0, sectionTypes[0])}
-        {renderSectionTypeRadio && renderSectionTypeRadio(0)}
-      </Section>
 
-      {/* Bottom sections with both resize handlers */}
-      {[...Array(rest).keys()].map((i) => (
-        <Section
-          key={i + 1}
-          index={i + 1}
-          total={total}
-          onClick={() => { onClick(i + 1); setSelectionVisible(true); }}
-          style={{
-            position: "absolute",
-            top: `${dimensions.topHeight}%`,
-            left: `${widths.slice(0, i).reduce((a, b) => a + b, 0)}%`,
-            width: `${widths[i]}%`,
-            height: `${100 - dimensions.topHeight}%`,
-            borderRight: i < rest - 1 ? `${scaled.borderPx}px solid #222` : "0",
-            background: isSelected(i + 1)
-              ? "rgba(105, 200, 255, 0.6)"
-              : getSectionColor(sectionColors, i + 1)?.backgroundColor || "transparent",
-            cursor: "pointer",
-            overflow: "visible"
-          }}
-          selectedType={selectedType}
-          sectionDimensions={sectionDimensions}
-          doorDimensions={doorDimensions}
-        >
-          {getModelOverlay(sectionModels[i + 1], scaled)}
-          {getHandleOverlay(selectedHandle, scaled, i+1,sectionTypes[i+1])}
-          {renderSectionTypeRadio && renderSectionTypeRadio(i + 1)}
-          
-          {/* Horizontal resize handle */}
-          {i < rest - 1 && selectedCategory !== 'Sliding Doors' && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                right: -3,
-                width: 6,
-                height: '100%',
-                cursor: 'col-resize',
-                backgroundColor: isResizing && resizingIndex === i ? 'rgba(0,0,0,0.2)' : 'transparent',
-                zIndex: 10,
+  return (
+    <div
+      id="sections-container"
+      style={{ position: "relative", width: "100%", height: "100%" }}
+    >
+      {/* Top section */}
+      {[0].map((i) => {
+        const isMobile =
+          isSwingDoor &&
+          (sectionTypes[i] === "right" || sectionTypes[i] === "left");
+
+        // Inițializăm margin și border
+        let marginLeft = 0;
+        let marginRight = 0;
+        let borderLeft = "none";
+        let borderRight = "none";
+
+        if (isMobile) {
+          if (sectionTypes[i] === "left") {
+            marginLeft = "1px";
+            borderLeft = `${extraBorderSize}rem solid #000`;
+            borderRight = `${extraBorderSize}rem solid #000`;
+          } else if (sectionTypes[i] === "right") {
+            marginRight = "1px";
+            borderRight = `${extraBorderSize}rem solid #000`;
+            borderLeft = `${extraBorderSize}rem solid #000`;
+          }
+        }
+
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              top: "0%",
+              left: 0,
+              width: "100%",
+              height: `${dimensions.topHeight}%`,
+              boxSizing: "border-box",
+              padding: isMobile ? `${extraBorderSize / 3}rem` : 0,
+              borderLeft,
+              borderRight,
+              borderTop: isMobile ? `${extraBorderSize}rem solid #000` : "none",
+              borderBottom: "none",
+              marginLeft: `${marginLeft}rem`,
+              marginRight: `${marginRight}rem`,
+            }}
+          >
+            <Section
+              index={i}
+              total={total}
+              onClick={() => {
+                onClick(i);
+                setSelectionVisible(true);
               }}
-              onMouseDown={(e) => handleSectionResizeStart(e, i)}
-            />
-          )}
-        </Section>
-      ))}
+              style={{
+                width: "100%",
+                height: "100%",
+                border: `${borderSize}rem solid #000`,
+                borderBottom: `${borderSize}rem solid #000`,
+                background: isSelected(i)
+                  ? "rgba(105, 200, 255, 0.6)"
+                  : getSectionColor(sectionColors, i)?.backgroundColor ||
+                    "transparent",
+                cursor: "pointer",
+                overflow: "visible",
+                boxSizing: "border-box",
+                ...(isSlidingDoor && {
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                }),
+              }}
+              selectedType={selectedType}
+              sectionDimensions={sectionDimensions}
+              doorDimensions={doorDimensions}
+            >
+              {getModelOverlay(sectionModels[i], scaled)}
+              {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
+              {renderSectionTypeRadio && renderSectionTypeRadio(i)}
+            </Section>
+          </div>
+        );
+      })}
+
+      {/* Bottom sections */}
+      {[...Array(rest).keys()].map((i) => {
+        const sectionIndex = i + 1;
+        const isMobile =
+          isSwingDoor &&
+          (sectionTypes[sectionIndex] === "right" ||
+            sectionTypes[sectionIndex] === "left");
+        const isNextMobile =
+          sectionIndex < total - 1 &&
+          (sectionTypes[sectionIndex + 1] === "right" ||
+            sectionTypes[sectionIndex + 1] === "left");
+        const isPrevMobile =
+          sectionIndex > 1 &&
+          (sectionTypes[sectionIndex - 1] === "right" ||
+            sectionTypes[sectionIndex - 1] === "left");
+
+        // Inițializăm margin și border
+        let marginLeft = 0;
+        let marginRight = 0;
+        let borderLeft = "none";
+        let borderRight = "none";
+
+        if (isMobile) {
+          if (sectionTypes[sectionIndex] === "left") {
+            marginLeft = "1px";
+            borderLeft = `${extraBorderSize}rem solid #000`;
+            borderRight =
+              isNextMobile && sectionTypes[sectionIndex + 1] === "right"
+                ? "none"
+                : `${extraBorderSize}rem solid #000`;
+          } else if (sectionTypes[sectionIndex] === "right") {
+            marginRight = "1px";
+            borderRight = `${extraBorderSize}rem solid #000`;
+            borderLeft =
+              isPrevMobile && sectionTypes[sectionIndex - 1] === "left"
+                ? "none"
+                : `${extraBorderSize}rem solid #000`;
+          }
+
+          // Adăugăm margin între 2 secțiuni mobile consecutive
+          if (isNextMobile) {
+            marginRight = "1px";
+          }
+          if (isPrevMobile) {
+            marginLeft = "1px";
+          }
+        }
+
+        return (
+          <div
+            key={sectionIndex}
+            style={{
+              position: "absolute",
+              top: `${dimensions.topHeight}%`,
+              left: `${widths.slice(0, i).reduce((a, b) => a + b, 0)}%`,
+              width: `${widths[i]}%`,
+              height: `${100 - dimensions.topHeight}%`,
+              boxSizing: "border-box",
+              padding: isMobile ? `${extraBorderSize / 3}rem` : 0,
+              borderLeft,
+              borderRight,
+              borderTop: isMobile ? `${extraBorderSize}rem solid #000` : "none",
+              borderBottom: "none",
+              marginLeft: `${marginLeft}rem`,
+              marginRight: `${marginRight}rem`,
+            }}
+          >
+            <Section
+              index={sectionIndex}
+              total={total}
+              onClick={() => {
+                onClick(sectionIndex);
+                setSelectionVisible(true);
+              }}
+              style={{
+                width: "100%",
+                height: "100%",
+                border: `${borderSize}rem solid #000`,
+                background: isSelected(sectionIndex)
+                  ? "rgba(105, 200, 255, 0.6)"
+                  : getSectionColor(sectionColors, sectionIndex)
+                      ?.backgroundColor || "transparent",
+                cursor: "pointer",
+                overflow: "visible",
+                boxSizing: "border-box",
+                ...(isSlidingDoor && {
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                }),
+              }}
+              selectedType={selectedType}
+              sectionDimensions={sectionDimensions}
+              doorDimensions={doorDimensions}
+            >
+              {getModelOverlay(sectionModels[sectionIndex], scaled)}
+              {getHandleOverlay(
+                selectedHandle,
+                scaled,
+                sectionIndex,
+                sectionTypes[sectionIndex]
+              )}
+              {renderSectionTypeRadio && renderSectionTypeRadio(sectionIndex)}
+
+              {/* Horizontal resize handle */}
+              {!isSlidingDoor && i < rest - 1 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: -3,
+                    width: 6,
+                    height: "100%",
+                    cursor: "col-resize",
+                    backgroundColor:
+                      isResizing && resizingIndex === i
+                        ? "rgba(0,0,0,0.2)"
+                        : "transparent",
+                    zIndex: 10,
+                  }}
+                  onMouseDown={(e) => handleSectionResizeStart(e, i)}
+                />
+              )}
+            </Section>
+          </div>
+        );
+      })}
 
       {/* Top section resize handle */}
-      {selectedCategory !== 'Sliding Doors' && (
+      {selectedCategory !== "Sliding Doors" && (
         <div
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: `${dimensions.topHeight - 3}%`,
             left: 0,
-            width: '100%',
-            height: '6px',
-            cursor: 'row-resize',
+            width: "100%",
+            height: "6px",
+            cursor: "row-resize",
             zIndex: 10,
           }}
           onMouseDown={handleTopSectionResizeStart}

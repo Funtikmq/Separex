@@ -61,6 +61,7 @@ export const useDoorsLogic = () => {
         setSectionCount(2);
         setSelectedType("2-Part Element");
         setSelectedHandle(Array(2).fill(null));
+        setSectionTypes(Array(2).fill("fixed"));
       }
     }
   }, [slidingMountType, selectedCategory]);
@@ -69,14 +70,25 @@ export const useDoorsLogic = () => {
     setSelectedHandle((prevHandles) => {
       if (!prevHandles || prevHandles.length === 0) return prevHandles;
 
-      const newHandles = prevHandles.map((handle, idx) => {
-        return sectionTypes[idx] === "fixed" ? null : handle;
+      const defaultHandle =
+        selectedCategory === "Swing Doors"
+          ? "Handle With Lock"
+          : selectedCategory === "Sliding Doors"
+          ? "Pull Handle 160"
+          : null;
+
+      const newHandles = sectionTypes.map((type, idx) => {
+        if (type === "fixed") {
+          return null;
+        } else {
+          return prevHandles[idx] ?? defaultHandle;
+        }
       });
 
       const isChanged = newHandles.some((h, i) => h !== prevHandles[i]);
       return isChanged ? newHandles : prevHandles;
     });
-  }, [sectionTypes]);
+  }, [sectionTypes, selectedCategory]);
 
   useEffect(() => {
     const handlesByCategory = {
@@ -135,6 +147,14 @@ export const useDoorsLogic = () => {
     setSectionTypes((prevTypes) => {
       const newTypes = Array(sectionCount).fill("fixed");
 
+      // Dacă este "On wall", păstrăm toate secțiunile ca "fixed"
+      if (
+        slidingMountType === "On wall" ||
+        selectedCategory === "Fixed Walls"
+      ) {
+        return newTypes;
+      }
+
       if (selectedCategory !== "Fixed Walls") {
         if (selectedCategory === "Sliding Doors") {
           if (selectedType === "1-Part Element") {
@@ -171,12 +191,12 @@ export const useDoorsLogic = () => {
 
     const dimensions = {
       "2-Part Element O": [
-        doorDimensions.height * 0.3,
-        doorDimensions.height * 0.7,
+        doorDimensions.height * 0.2,
+        doorDimensions.height * 0.8,
       ],
       "4-Part Element O": [
-        doorDimensions.height * 0.3,
-        doorDimensions.height * 0.7,
+        doorDimensions.height * 0.2,
+        doorDimensions.height * 0.8,
         doorDimensions.width * 0.5,
         doorDimensions.width * 0.5,
       ],

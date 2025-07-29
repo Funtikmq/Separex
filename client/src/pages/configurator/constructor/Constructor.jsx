@@ -57,7 +57,7 @@ function Constructor({
   const doorBottom = containerHeight;
   const doorTop = doorBottom - doorHeight;
 
-  const wallPadding = scaled.borderPx * 2;
+  const wallPadding = scaled.borderPx / 4;
 
   const wallClipPath =
     containerWidth && containerHeight
@@ -67,10 +67,10 @@ function Constructor({
         100% 100%,
         ${(doorRight + wallPadding) / 16}rem 100%,
         ${(doorRight + wallPadding) / 16}rem ${
-          (doorTop - 0.1 * containerHeight) / 16
+          (doorTop - 0.11 * containerHeight) / 16
         }rem,
         ${(doorLeft - wallPadding) / 16}rem ${
-          (doorTop - 0.1 * containerHeight) / 16
+          (doorTop - 0.11 * containerHeight) / 16
         }rem,
         ${(doorLeft - wallPadding) / 16}rem 100%,
         0% 100%

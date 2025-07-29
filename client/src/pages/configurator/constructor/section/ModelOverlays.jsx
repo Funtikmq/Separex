@@ -4,10 +4,12 @@ export const Line = ({ scaled }) => (
       position: "absolute",
       top: 0,
       left: "10%",
+      transform: "translateX(-50%)",
       width: `${scaled.borderPx / 16}rem`,
       height: "100%",
       backgroundColor: "#000",
       pointerEvents: "none",
+      transform: "translateX(-50%)",
     }}
   />
 );
@@ -18,6 +20,7 @@ export const LineInverted = ({ scaled }) => (
       position: "absolute",
       top: 0,
       left: "90%",
+      transform: "translateX(-50%)",
       width: `${scaled.borderPx / 16}rem`,
       height: "100%",
       backgroundColor: "#000",
@@ -42,6 +45,7 @@ export const DoubleLine = ({ scaled }) => (
         position: "absolute",
         top: 0,
         left: "10%",
+        transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
         backgroundColor: "#000",
@@ -52,6 +56,7 @@ export const DoubleLine = ({ scaled }) => (
         position: "absolute",
         top: 0,
         left: "20%",
+        transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
         backgroundColor: "#000",
@@ -76,6 +81,7 @@ export const DoubleLineInverted = ({ scaled }) => (
         position: "absolute",
         top: 0,
         left: "90%",
+        transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
         backgroundColor: "#000",
@@ -86,6 +92,7 @@ export const DoubleLineInverted = ({ scaled }) => (
         position: "absolute",
         top: 0,
         left: "80%",
+        transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
         backgroundColor: "#000",
@@ -111,6 +118,7 @@ export const TripleLine = ({ scaled }) => (
         top: 0,
         left: "10%",
         transform: "translateX(-50%)",
+        transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
         backgroundColor: "#000",
@@ -122,6 +130,7 @@ export const TripleLine = ({ scaled }) => (
         top: 0,
         left: "20%",
         transform: "translateX(-50%)",
+        transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
         backgroundColor: "#000",
@@ -132,6 +141,7 @@ export const TripleLine = ({ scaled }) => (
         position: "absolute",
         top: 0,
         left: "30%",
+        transform: "translateX(-50%)",
         transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
@@ -813,63 +823,64 @@ export const Loft = ({ scaled }) => (
   </div>
 );
 
-export const Nimbus = ({ scaled }) => (
-  <div
-    style={{
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "start",
-      pointerEvents: "none",
-    }}
-  >
+export const Nimbus = ({ scaled }) => {
+  return (
     <div
       style={{
-        position: "absolute",
-        top: "10%",
-        left: 0,
-        transform: "translateY(-50%)",
-        width: "100%",
-        height: `${scaled.borderPx / 20}rem`,
-        backgroundColor: "#000",
-      }}
-    />
-    <div
-      style={{
-        position: "absolute",
-        top: "90%",
-        left: 0,
-        transform: "translateY(-50%)",
-        width: "100%",
-        height: `${scaled.borderPx / 20}rem`,
-        backgroundColor: "#000",
-      }}
-    />
-    <div
-      style={{
-        position: "absolute",
-        top: 0,
-        left: "10%",
-        transform: "translateX(-50%)",
-        width: `${scaled.borderPx / 20}rem`,
         height: "100%",
-        backgroundColor: "#000",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        pointerEvents: "none",
       }}
-    />
-    <div
-      style={{
-        position: "absolute",
-        top: 0,
-        left: "90%",
-        transform: "translateX(-50%)",
-        width: `${scaled.borderPx / 20}rem`,
-        height: "100%",
-        backgroundColor: "#000",
-      }}
-    />
-  </div>
-);
+    >
+      <div
+        style={{
+          position: "absolute",
+          top: `${(scaled.scaledWidth * 0.1) / 16}rem`,
+          left: 0,
+          transform: "translateY(50%)",
+          width: "100%",
+          height: `${scaled.borderPx / 20}rem`,
+          backgroundColor: "#000",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: `${(scaled.scaledWidth * 0.1) / 16}rem`,
+          left: 0,
+          transform: "translateY(-50%)",
+          width: "100%",
+          height: `${scaled.borderPx / 20}rem`,
+          backgroundColor: "#000",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: `${(scaled.scaledWidth * 0.1) / 16}rem`,
+          transform: "translateX(50%)",
+          width: `${scaled.borderPx / 20}rem`,
+          height: "100%",
+          backgroundColor: "#000",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: `${(scaled.scaledWidth * 0.1) / 16}rem`,
+          transform: "translateX(-50%)",
+          width: `${scaled.borderPx / 20}rem`,
+          height: "100%",
+          backgroundColor: "#000",
+        }}
+      />
+    </div>
+  );
+};
 
 export const Modern = ({ scaled }) => (
   <div

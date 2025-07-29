@@ -76,7 +76,7 @@ export const ICON_COLORS = {
   Clear: colorIcons.clear,
   Frosted: colorIcons.frosted,
   Grey: colorIcons.grey,
-  "Dark Grey": colorIcons.grey,
+  "Dark Grey": colorIcons.darkGrey,
   Bronze: colorIcons.bronze,
   Lacobel: colorIcons.lacobel,
   Canelata: colorIcons.canelata,

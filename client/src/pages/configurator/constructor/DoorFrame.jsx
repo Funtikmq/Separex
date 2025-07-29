@@ -28,7 +28,6 @@ const DoorFrame = forwardRef(
     },
     ref
   ) => {
-    const doorPadding = `${1 / 16}rem`;
     const isOnWall = slidingMountType === "On wall";
 
     // === Stiluri pentru ușă ===
@@ -47,43 +46,13 @@ const DoorFrame = forwardRef(
             }rem`
           : `${scaled.scaledHeight / 16}rem`,
 
-      width: `${scaled.scaledWidth / 15}rem`,
+      width: `${scaled.scaledWidth / 16}rem`,
       position: "relative",
       zIndex: 1,
-      border: `${scaled.borderPx}px solid #222`,
       backdropFilter: "blur(2px)",
       background: `linear-gradient(225deg, rgba(103, 102, 102, 0.4) 30%, rgba(255, 253, 253, 0.2) 100%)`,
       boxSizing: "border-box",
       transition: "0.3s",
-    };
-
-    // === Stiluri pentru containerul ușii ===
-    const doorContainerStyle = {
-      position: "relative",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-end",
-      alignItems: "center",
-      padding:
-        selectedCategory === "Swing Doors"
-          ? `${doorPadding} ${doorPadding} 0`
-          : "0",
-      backgroundColor: "transparent",
-      boxSizing: "border-box",
-      borderTop:
-        selectedCategory === "Swing Doors"
-          ? `${scaled.borderPx}px solid #222`
-          : undefined,
-      borderLeft:
-        selectedCategory === "Swing Doors"
-          ? `${scaled.borderPx}px solid #333`
-          : undefined,
-      borderRight:
-        selectedCategory === "Swing Doors"
-          ? `${scaled.borderPx}px solid #111`
-          : undefined,
-      zIndex: 3,
-      boxShadow: "2px 2px 5px 1px rgba(0, 0, 0)",
     };
 
     const doorContureStyle = {
@@ -104,9 +73,9 @@ const DoorFrame = forwardRef(
       width: `calc(100% + ${wallContourThickness * 4}rem)`,
       height: `calc(100% + ${wallContourThickness * 2}rem)`,
       pointerEvents: "none",
-      borderTop: `${wallContourThickness / 2}rem solid #fff`,
-      borderLeft: `${wallContourThickness / 2}rem solid #fff`,
-      borderRight: `${wallContourThickness / 2}rem solid #fff`,
+      // borderTop: `${wallContourThickness / 2}rem solid #fff`,
+      // borderLeft: `${wallContourThickness / 2}rem solid #fff`,
+      // borderRight: `${wallContourThickness / 2}rem solid #fff`,
       zIndex: 1,
       boxSizing: "border-box",
     };
@@ -115,44 +84,40 @@ const DoorFrame = forwardRef(
       <div className="constructorContainer">
         <div className="doorConture" style={doorContureStyle}>
           <div style={wallContureStyle}></div>
-          <div className="doorContainer" style={doorContainerStyle} ref={ref}>
-            <TopBar
-              category={selectedCategory}
-              mountType={slidingMountType}
-              scaledWidth={scaled.scaledWidth}
-              selectedType={selectedType}
-              borderPx={scaled.borderPx}
-            />
+          <TopBar
+            category={selectedCategory}
+            mountType={slidingMountType}
+            scaledWidth={scaled.scaledWidth}
+            selectedType={selectedType}
+            borderPx={scaled.borderPx}
+          />
 
-            <div className="constructorDoor" style={doorStyle} ref={ref}>
-              <SectionRenderer
-                selectedCategory={selectedCategory}
-                selectedType={selectedType}
-                scaled={scaled}
-                sectionCount={sectionCount}
-                selectedIndex={selectedIndex}
-                sectionModels={sectionModels}
-                sectionColors={sectionColors}
-                selectionVisible={selectionVisible}
-                setSelectionVisible={setSelectionVisible}
-                selectedHandle={selectedHandle}
-                onClick={onClick}
-                sectionDimensions={sectionDimensions}
-                setSectionDimensions={setSectionDimensions}
-                doorDimensions={doorDimensions}
-                orientation={
-                  selectedCategory === "Fixed Wall" ? "horizontal" : "vertical"
-                }
-                sectionTypes={sectionTypes}
-                setSectionTypes={setSectionTypes}
-              />
-              <Axis
-                realWidth={width}
-                realHeight={height}
-                borderPx={scaled.borderPx}
-                scaled={scaled}
-              />
-            </div>
+          <div className="constructorDoor" style={doorStyle} ref={ref}>
+            <SectionRenderer
+              selectedCategory={selectedCategory}
+              selectedType={selectedType}
+              scaled={scaled}
+              sectionCount={sectionCount}
+              selectedIndex={selectedIndex}
+              sectionModels={sectionModels}
+              sectionColors={sectionColors}
+              selectionVisible={selectionVisible}
+              setSelectionVisible={setSelectionVisible}
+              selectedHandle={selectedHandle}
+              onClick={onClick}
+              sectionDimensions={sectionDimensions}
+              setSectionDimensions={setSectionDimensions}
+              doorDimensions={doorDimensions}
+              sectionTypes={sectionTypes}
+              setSectionTypes={setSectionTypes}
+              slidingMountType={slidingMountType}
+            />
+            <Axis
+              realWidth={width}
+              realHeight={height}
+              borderPx={scaled.borderPx}
+              scaled={scaled}
+            />
           </div>
         </div>
       </div>
