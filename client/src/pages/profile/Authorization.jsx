@@ -1,0 +1,26 @@
+import { auth, googleProvider, signInWithPopup } from "./firebase/firebase";
+
+function Authorization() {
+  const signInWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      console.log("User :", user);
+      // Aici adaugam logica
+    } catch (error) {
+      console.error("Google sign-in error", error);
+    }
+  };
+
+  return (
+    <>
+      <div className="authorizationBox">
+        <button className="authorizationButton" onClick={signInWithGoogle}>
+          Gmail
+        </button>
+      </div>
+    </>
+  );
+}
+
+export default Authorization;

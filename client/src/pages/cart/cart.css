@@ -74,7 +74,7 @@ button:active {
 }
 
 .tableBody::-webkit-scrollbar-thumb {
-  background: #f4a621; /* culoarea mânerului */
+  background: #f4a621;
   border-radius: 8px;
 }
 

@@ -167,6 +167,24 @@ export function XPartElementA({
           }
         }
 
+        if (isSwingDoor && sectionTypes[sectionIndex] === "fixed") {
+          const prevIsFixed =
+            sectionIndex > 1 && sectionTypes[sectionIndex - 1] === "fixed";
+          const nextIsFixed =
+            sectionIndex < total - 1 &&
+            sectionTypes[sectionIndex + 1] === "fixed";
+
+          borderLeft = prevIsFixed
+            ? "none"
+            : `${extraBorderSize}rem solid #000`;
+          borderRight = nextIsFixed
+            ? "none"
+            : `${extraBorderSize}rem solid #000`;
+
+          marginLeft = prevIsFixed ? "0" : "1px";
+          marginRight = nextIsFixed ? "0" : "1px";
+        }
+
         return (
           <div
             key={sectionIndex}

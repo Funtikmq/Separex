@@ -112,6 +112,25 @@ export function DefaultSectionLayout({
           }
         }
 
+        if (isSwingDoor && sectionTypes[i] === "fixed") {
+          borderTop = `${extraBorderSize}rem solid #000`;
+          borderBottom = `${extraBorderSize}rem solid #000`;
+
+          const prevIsFixed = i > 0 && sectionTypes[i - 1] === "fixed";
+          const nextIsFixed =
+            i < sectionCount - 1 && sectionTypes[i + 1] === "fixed";
+
+          borderLeft = prevIsFixed
+            ? "none"
+            : `${extraBorderSize}rem solid #000`;
+          borderRight = nextIsFixed
+            ? "none"
+            : `${extraBorderSize}rem solid #000`;
+
+          marginLeft = prevIsFixed ? "0" : "1px";
+          marginRight = nextIsFixed ? "0" : "1px";
+        }
+
         // === Suprascriem dacă e Fixed Wall
         if (isFixedWall) {
           borderTop = `${borderSize}rem solid #000`;

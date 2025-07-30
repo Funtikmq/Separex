@@ -25,6 +25,7 @@ body {
 }
 
 .headerNavigation {
+  margin-left: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,6 +54,17 @@ body {
 
 .headerImg {
   height: 200%;
+  cursor: pointer;
+}
+
+.headerProfile {
+  width: 70px;
+  height: 60px;
+  margin-right: 2rem;
+  font-size: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
 

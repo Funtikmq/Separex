@@ -6,6 +6,7 @@ import "./pages/configurator/constructor/styles/axis.css";
 import "./pages/configurator/panels/panels.css";
 import "./pages/configurator/navigation/navigation.css";
 import "./pages/cart/cart.css";
+import "./pages/profile/profile.css";
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(

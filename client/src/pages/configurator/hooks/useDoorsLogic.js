@@ -13,8 +13,8 @@ export const useDoorsLogic = () => {
   const [selectedCategory, setSelectedCategory] = useState("Swing Doors");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedType, setSelectedType] = useState("3-Part Element");
-  const [sectionModels, setSectionModels] = useState([]);
-  const [sectionColors, setSectionColors] = useState([]);
+  const [sectionModels, setSectionModels] = useState(Array(1).fill("Aero"));
+  const [sectionColors, setSectionColors] = useState(Array(1).fill("Clear"));
   const [selectedHandle, setSelectedHandle] = useState(() =>
     Array(1).fill("Handle With Lock")
   );
@@ -35,6 +35,11 @@ export const useDoorsLogic = () => {
     }
     return handles;
   };
+
+  useEffect(() => {
+    setSectionModels(Array(sectionCount).fill("Aero"));
+    setSectionColors(Array(sectionCount).fill("Clear"));
+  }, [sectionCount]);
 
   useEffect(() => {
     setSelectedType("1-Part Element");

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useCartContext } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
 import Table from "./Table";
 import Order from "./Order";
 
@@ -20,7 +21,14 @@ function CartContent() {
     }
   };
 
+  const { user } = useAuth();
+
   const handleSaveOrder = (orderData) => {
+    if (!user) {
+      alert("To Save Your Order, Log In First");
+      return;
+    }
+
     const quantityInt = parseInt(quantity) || 1;
     const newOrder = {
       product: orderData.selectedCategory,
@@ -82,6 +90,7 @@ function CartContent() {
           quantity={quantity}
           onSave={() => handleSaveOrder({ ...orderData, quantity })}
           onQuantityChange={handleQuantityChange}
+          user={user}
         />
       ) : null}
     </div>

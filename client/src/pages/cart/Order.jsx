@@ -1,4 +1,4 @@
-function Order({ data, quantity, onSave, onQuantityChange }) {
+function Order({ data, quantity, onSave, onQuantityChange, user }) {
   const sectionCount = data.sectionCount || 1;
 
   const renderRow = (label, values, keyPrefix) => (
@@ -104,7 +104,16 @@ function Order({ data, quantity, onSave, onQuantityChange }) {
                 padding: "12px",
               }}
             >
-              <button className="saveButton" onClick={onSave}>
+              <button
+                className="saveButton"
+                onClick={() => {
+                  if (!user) {
+                    alert("To Save Your Order, Log In First");
+                    return;
+                  }
+                  onSave();
+                }}
+              >
                 Save
               </button>
               <input
@@ -116,7 +125,7 @@ function Order({ data, quantity, onSave, onQuantityChange }) {
             </div>
           </td>
           <td>
-            <p>Price: 0.00</p>
+            <p>{user && <p>Price : </p>}</p>
           </td>
         </tr>
       </tbody>
