@@ -13,24 +13,87 @@ body {
   color: #000000;
 }
 
+button {
+  padding: 0.6rem 1.5rem;
+  text-align: center;
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #f4a621;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #f4a621;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
 .header {
   padding: 0;
   margin: 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   overflow: hidden;
   height: 10vh;
   background-color: #ffffff;
   vertical-align: top;
 }
 
+.headerLeft {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
 .headerNavigation {
-  margin-left: 3rem;
+  flex: 2;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: 100%;
+}
+
+.headerRight {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.headerImg {
+  margin: 0;
+  padding: 0;
+  height: 60%;
+  max-height: 150px;
+  width: auto;
+  cursor: pointer;
+  object-fit: contain;
+}
+
+.headerButton {
+  height: 50%;
+  padding: 0;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.headerButton:hover {
+  background-color: #fff;
+  color: #000;
+  transform: scale(1);
 }
 
 .headerItem {
@@ -50,22 +113,6 @@ body {
 .headerItem:hover {
   padding-bottom: 1vh;
   box-shadow: 0 4px 6px -2px #f4a621;
-}
-
-.headerImg {
-  height: 200%;
-  cursor: pointer;
-}
-
-.headerProfile {
-  width: 70px;
-  height: 60px;
-  margin-right: 2rem;
-  font-size: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
 }
 
 .mainLayout {

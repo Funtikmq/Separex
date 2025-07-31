@@ -3,6 +3,7 @@ from flask_cors import CORS
 import os
 from services.pdf_service import generate_pdf
 from services.dxf_service import generate_dxf
+from services.user_service import save_user_to_firestore
 from utils.file_utils import create_zip
 
 app = Flask(__name__)
@@ -30,6 +31,15 @@ def generate_files():
     create_zip([TEMP_PDF, TEMP_DXF], TEMP_ZIP)
 
     return send_file(TEMP_ZIP, as_attachment=True)
+
+@app.route('/api/save-user', methods=["POST"])
+def save_user():
+    data = request.get_json()
+    if not data:
+        return {"error": "No data provided"}, 400
+
+    save_user_to_firestore(data)
+    return {"message" : "User saved successfully"}, 200
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -16,10 +16,43 @@ export const AuthProvider = ({ children }) => {
             const tokenResult = await getIdTokenResult(firebaseUser);
             const role = tokenResult.claims.role || "customer";
 
-            setUser({ ...firebaseUser, role });
+            // Construim un user simplu pentru React:
+            setUser({
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              displayName: firebaseUser.displayName,
+              photoURL: firebaseUser.photoURL,
+              role,
+            });
+
+            try {
+              await fetch("http://localhost:5000/api/save-user", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  uid: firebaseUser.uid,
+                  email: firebaseUser.email,
+                  displayName: firebaseUser.displayName,
+                  role: role,
+                  timestamp: new Date().toISOString(),
+                }),
+              });
+            } catch (fetchError) {
+              console.warn("Failed to send user data to backend:", fetchError);
+            }
+
+            if (auth.currentUser) {
+              await auth.currentUser.getIdToken(true);
+            }
           } catch (error) {
             console.error("Error getting token", error);
-            setUser({ ...firebaseUser, role: "customer" });
+            setUser({
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              displayName: firebaseUser.displayName,
+              photoURL: firebaseUser.photoURL,
+              role: "customer",
+            });
           }
         } else {
           setUser(null);
@@ -29,6 +62,7 @@ export const AuthProvider = ({ children }) => {
 
       handleUser();
     });
+
     return () => unsubscribe();
   }, []);
 

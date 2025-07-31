@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useCartContext } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  Timestamp,
+} from "firebase/firestore";
 import Table from "./Table";
 import Order from "./Order";
 
@@ -8,6 +14,7 @@ function CartContent() {
   const { orders, addOrder, deleteOrder } = useCartContext();
   const [orderData, setData] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const db = getFirestore();
 
   useEffect(() => {
     const stored = localStorage.getItem("cartData");
@@ -30,14 +37,71 @@ function CartContent() {
     }
 
     const quantityInt = parseInt(quantity) || 1;
+
     const newOrder = {
       product: orderData.selectedCategory,
       type: orderData.selectedType,
       docs: "Link to docs",
       quantity: quantityInt,
       price: "Calculat",
+      dimensions: orderData.doorDimensions,
+      sectionType: orderData.sectionTypes,
+      sectionDimensions: orderData.sectionDimensions,
+      sectionModels: orderData.sectionModels,
+      sectionColors: orderData.sectionColors,
+      handles: orderData.selectedHandle ? [orderData.selectedHandle] : [],
     };
+
     addOrder(newOrder);
+  };
+
+  const handleConfirmOrder = async () => {
+    if (!user) {
+      alert("To confirm your order, please log in first.");
+      return;
+    }
+
+    if (!orders || orders.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    const total = orders.reduce(
+      (sum, order) => sum + (parseFloat(order.price) || 0),
+      0
+    );
+
+    const orderNumber = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    const transformedProducts = orders.map((order) => ({
+      category: order.product,
+      type: order.type,
+      quantity: order.quantity,
+      price: order.price,
+      dimensions: order.dimensions || null,
+      sectionType: (order.sectionType || []).flat(),
+      sectionDimensions: (order.sectionDimensions || []).flat(),
+      sectionModels: (order.sectionModels || []).flat(),
+      sectionColors: (order.sectionColors || []).flat(),
+      handles: (order.handles || []).flat(),
+    }));
+
+    const newOrder = {
+      orderNumber,
+      userEmail: user.email,
+      createdAt: Timestamp.now(),
+      products: transformedProducts,
+      total,
+    };
+
+    try {
+      await addDoc(collection(db, "orders"), newOrder);
+      alert("Order successfully confirmed!");
+      // clearOrders(); // dacă ai implementat
+    } catch (error) {
+      console.error("Error saving order:", error);
+      alert("An error occurred while confirming your order.");
+    }
   };
 
   // Documentation
@@ -83,6 +147,7 @@ function CartContent() {
         orders={orders}
         onDeleteOrder={deleteOrder}
         onGenerate={handleGenerateAndDownloadPDF}
+        onConfirmOrder={handleConfirmOrder}
       />
       {orderData ? (
         <Order

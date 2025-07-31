@@ -124,9 +124,7 @@ function Order({ data, quantity, onSave, onQuantityChange, user }) {
               />
             </div>
           </td>
-          <td>
-            <p>{user && <p>Price : </p>}</p>
-          </td>
+          <td>{user && <p>Price : </p>}</td>
         </tr>
       </tbody>
     </table>

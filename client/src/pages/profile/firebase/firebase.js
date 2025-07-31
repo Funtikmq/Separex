@@ -20,4 +20,4 @@ const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 
-export { auth, googleProvider, signInWithPopup, signOut };
+export { app, auth, googleProvider, signInWithPopup, signOut };

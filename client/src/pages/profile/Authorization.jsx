@@ -5,7 +5,6 @@ function Authorization() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      console.log("User :", user);
       // Aici adaugam logica
     } catch (error) {
       console.error("Google sign-in error", error);

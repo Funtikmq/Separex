@@ -1,4 +1,4 @@
-function Table({ orders, onDeleteOrder, onGenerate }) {
+function Table({ orders, onDeleteOrder, onGenerate, onConfirmOrder }) {
   return (
     <table className="table">
       <thead>
@@ -73,7 +73,9 @@ function Table({ orders, onDeleteOrder, onGenerate }) {
               .toFixed(2)}
           </td>
           <td>
-            <button className="tableSubmitButton">Confirm Order</button>
+            <button className="tableSubmitButton" onClick={onConfirmOrder}>
+              Confirm Order
+            </button>
           </td>
         </tr>
       </tfoot>

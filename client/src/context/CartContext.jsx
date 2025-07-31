@@ -1,19 +1,42 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useAuth } from "./AuthContext"; // important pentru user.uid
 
-const CartContext = createContext(null);
+const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [orders, setOrders] = useState(() => {
-    const saved = localStorage.getItem("cartOrders");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const { user } = useAuth();
+  const [orders, setOrders] = useState([]);
 
-  const addOrder = (newOrder) => {
-    setOrders([...orders, newOrder]);
+  // Load cart orders from localStorage for this user
+  useEffect(() => {
+    if (user) {
+      const savedOrders = localStorage.getItem(`orders_${user.uid}`);
+      if (savedOrders) {
+        setOrders(JSON.parse(savedOrders));
+      } else {
+        setOrders([]);
+      }
+    } else {
+      setOrders([]);
+    }
+  }, [user]);
+
+  const saveToLocal = (newOrders) => {
+    if (user) {
+      localStorage.setItem(`orders_${user.uid}`, JSON.stringify(newOrders));
+    }
   };
 
-  const deleteOrder = (indexToDelete) => {
-    setOrders(orders.filter((_, index) => index !== indexToDelete));
+  const addOrder = (order) => {
+    const updated = [...orders, order];
+    setOrders(updated);
+    saveToLocal(updated);
+  };
+
+  const deleteOrder = (index) => {
+    const updated = orders.filter((_, i) => i !== index);
+    setOrders(updated);
+    saveToLocal(updated);
   };
 
   return (
@@ -23,6 +46,4 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-export const useCartContext = () => {
-  return useContext(CartContext);
-};
+export const useCartContext = () => useContext(CartContext);
