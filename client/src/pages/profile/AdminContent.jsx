@@ -12,12 +12,9 @@ function AdminContent() {
 
   return (
     <>
-      <div className="authorizationBox">
-        Admin
-        <button className="authorizationButton" onClick={handleLogOut}>
-          Log Out
-        </button>
-      </div>
+      <button className="authorizationButton" onClick={handleLogOut}>
+        Log Out
+      </button>
     </>
   );
 }

@@ -73,7 +73,7 @@ function Table({ orders, onDeleteOrder, onGenerate }) {
               .toFixed(2)}
           </td>
           <td>
-            <button className="tableSubmitButton">Trimite comanda</button>
+            <button className="tableSubmitButton">Confirm Order</button>
           </td>
         </tr>
       </tfoot>

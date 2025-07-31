@@ -14,10 +14,12 @@ function Authorization() {
 
   return (
     <>
-      <div className="authorizationBox">
-        <button className="authorizationButton" onClick={signInWithGoogle}>
-          Gmail
-        </button>
+      <div className="authorizationContainer">
+        <div className="authorizationBox">
+          <button className="authorizationButton" onClick={signInWithGoogle}>
+            Gmail
+          </button>
+        </div>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, getIdTokenResult } from "firebase/auth";
 import { auth } from "../pages/profile/firebase/firebase";
 
 const AuthContext = createContext();
@@ -10,22 +10,25 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        const adminEmails = ["veaceslav.bobeica.02@gmail.com"];
+      const handleUser = async () => {
+        if (firebaseUser) {
+          try {
+            const tokenResult = await getIdTokenResult(firebaseUser);
+            const role = tokenResult.claims.role || "customer";
 
-        //  lista adminilor
-        const role = adminEmails.includes(firebaseUser.email)
-          ? "admin"
-          : "customer";
+            setUser({ ...firebaseUser, role });
+          } catch (error) {
+            console.error("Error getting token", error);
+            setUser({ ...firebaseUser, role: "customer" });
+          }
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      };
 
-        // Setăm user cu rolul atașat
-        setUser({ ...firebaseUser, role });
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
+      handleUser();
     });
-
     return () => unsubscribe();
   }, []);
 

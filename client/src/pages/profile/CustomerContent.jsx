@@ -12,8 +12,19 @@ function CustomerContent() {
 
   return (
     <>
-      <div className="authorizationBox">
-        Customer
+      <table className="customerTable">
+        <thead>
+          <tr className="customerTableHeaderRow">
+            <th>Order Number</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Docs</th>
+          </tr>
+        </thead>
+        <tbody className="customerTableBody"></tbody>
+      </table>
+      <div className="authorizationContainer">
         <button className="authorizationButton" onClick={handleLogOut}>
           Log Out
         </button>
