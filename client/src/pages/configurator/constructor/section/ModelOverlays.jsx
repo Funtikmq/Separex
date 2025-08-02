@@ -353,41 +353,49 @@ export const Five = ({ scaled }) => (
   </div>
 );
 
-export const Trend = ({ scaled }) => (
-  <div
-    style={{
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "start",
-      pointerEvents: "none",
-    }}
-  >
-    <div
-      style={{
-        position: "absolute",
-        top: "40%",
-        left: 0,
-        transform: "translateY(-50%)",
-        width: "100%",
-        height: `${scaled.borderPx / 20}rem`,
-        backgroundColor: "#000",
-      }}
-    />
-    <div
-      style={{
-        position: "absolute",
-        top: "60%",
-        left: 0,
-        transform: "translateY(-50%)",
-        width: "100%",
-        height: `${scaled.borderPx / 20}rem`,
-        backgroundColor: "#000",
-      }}
-    />
-  </div>
-);
+export const Trend = ({ scaled, doorDimensions }) => {
+  if (doorDimensions.height < 1200) {
+    return null;
+  } else {
+    return (
+      <div
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "start",
+          pointerEvents: "none",
+          boxSizing: "border-box",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            bottom: `${2.1 * scaled.borderPx}rem`,
+            left: 0,
+            transform: "translateY(-50%)",
+            width: "100%",
+            height: `${scaled.borderPx / 20}rem`,
+            backgroundColor: "#000",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: `${2.9 * scaled.borderPx}rem`,
+            left: 0,
+            zIndex: 0,
+            transform: "translateY(-50%)",
+            width: "100%",
+            height: `${scaled.borderPx / 20}rem`,
+            backgroundColor: "#000",
+          }}
+        />
+      </div>
+    );
+  }
+};
 
 export const Nordic = ({ scaled }) => (
   <div
@@ -403,7 +411,7 @@ export const Nordic = ({ scaled }) => (
     <div
       style={{
         position: "absolute",
-        top: "60%",
+        top: "70%",
         left: 0,
         transform: "translateY(-50%)",
         width: "100%",
@@ -415,7 +423,7 @@ export const Nordic = ({ scaled }) => (
       style={{
         position: "absolute",
         top: 0,
-        left: "10%",
+        left: "15%",
         transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
@@ -439,7 +447,7 @@ export const NordicInverted = ({ scaled }) => (
     <div
       style={{
         position: "absolute",
-        top: "60%",
+        top: "70%",
         left: 0,
         transform: "translateY(-50%)",
         width: "100%",
@@ -451,7 +459,7 @@ export const NordicInverted = ({ scaled }) => (
       style={{
         position: "absolute",
         top: 0,
-        left: "90%",
+        left: "85%",
         transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
@@ -475,7 +483,7 @@ export const Punto = ({ scaled }) => (
     <div
       style={{
         position: "absolute",
-        top: "45%",
+        bottom: `${2.1 * scaled.borderPx}rem`,
         left: 0,
         transform: "translateY(-50%)",
         width: "100%",
@@ -486,7 +494,7 @@ export const Punto = ({ scaled }) => (
     <div
       style={{
         position: "absolute",
-        top: "55%",
+        bottom: `${2.9 * scaled.borderPx}rem`,
         left: 0,
         transform: "translateY(-50%)",
         width: "100%",
@@ -498,7 +506,7 @@ export const Punto = ({ scaled }) => (
       style={{
         position: "absolute",
         top: 0,
-        left: "10%",
+        left: "15%",
         transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
@@ -522,7 +530,7 @@ export const PuntoInverted = ({ scaled }) => (
     <div
       style={{
         position: "absolute",
-        top: "45%",
+        bottom: `${2.1 * scaled.borderPx}rem`,
         left: 0,
         transform: "translateY(-50%)",
         width: "100%",
@@ -533,7 +541,7 @@ export const PuntoInverted = ({ scaled }) => (
     <div
       style={{
         position: "absolute",
-        top: "55%",
+        bottom: `${2.9 * scaled.borderPx}rem`,
         left: 0,
         transform: "translateY(-50%)",
         width: "100%",
@@ -545,7 +553,7 @@ export const PuntoInverted = ({ scaled }) => (
       style={{
         position: "absolute",
         top: 0,
-        left: "90%",
+        left: "85%",
         transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
@@ -802,7 +810,7 @@ export const Loft = ({ scaled }) => (
       style={{
         position: "absolute",
         top: 0,
-        left: "10%",
+        left: "15%",
         transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",
@@ -813,7 +821,7 @@ export const Loft = ({ scaled }) => (
       style={{
         position: "absolute",
         top: 0,
-        left: "90%",
+        left: "85%",
         transform: "translateX(-50%)",
         width: `${scaled.borderPx / 20}rem`,
         height: "100%",

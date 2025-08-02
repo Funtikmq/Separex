@@ -7,6 +7,7 @@ import {
   addDoc,
   Timestamp,
 } from "firebase/firestore";
+import { handleGenerateAndDownloadPDF } from "../../utils/downloadPDF";
 import Table from "./Table";
 import Order from "./Order";
 
@@ -15,6 +16,17 @@ function CartContent() {
   const [orderData, setData] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const db = getFirestore();
+
+  const transformOrderDataForPDF = (data) => ({
+    category: data.selectedCategory,
+    type: data.selectedType,
+    dimensions: data.doorDimensions,
+    sectionType: data.sectionTypes,
+    sectionDimensions: data.sectionDimensions,
+    sectionModels: data.sectionModels,
+    sectionColors: data.sectionColors,
+    handles: data.selectedHandle ? [data.selectedHandle] : [],
+  });
 
   useEffect(() => {
     const stored = localStorage.getItem("cartData");
@@ -39,7 +51,7 @@ function CartContent() {
     const quantityInt = parseInt(quantity) || 1;
 
     const newOrder = {
-      product: orderData.selectedCategory,
+      category: orderData.selectedCategory,
       type: orderData.selectedType,
       docs: "Link to docs",
       quantity: quantityInt,
@@ -74,7 +86,7 @@ function CartContent() {
     const orderNumber = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
 
     const transformedProducts = orders.map((order) => ({
-      category: order.product,
+      category: order.category,
       type: order.type,
       quantity: order.quantity,
       price: order.price,
@@ -97,7 +109,6 @@ function CartContent() {
     try {
       await addDoc(collection(db, "orders"), newOrder);
       alert("Order successfully confirmed!");
-      // clearOrders(); // dacă ai implementat
     } catch (error) {
       console.error("Error saving order:", error);
       alert("An error occurred while confirming your order.");
@@ -105,48 +116,14 @@ function CartContent() {
   };
 
   // Documentation
-
-  const handleGenerateAndDownloadPDF = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/generate/files", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          category: orderData?.selectedCategory,
-          type: orderData?.selectedType,
-          dimensions: orderData?.doorDimensions,
-          sectionType: orderData?.sectionTypes,
-          sectionDimensions: orderData?.sectionDimensions,
-          models: orderData?.sectionModels,
-          colors: orderData?.sectionColors,
-          handles: orderData?.selectedHandle,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error at Generating PDF");
-      }
-
-      const blob = await response.blob();
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "order.zip";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error at Generating PDF:", error);
-    }
-  };
-
   return (
     <div className="cartLayout">
       <Table
         orders={orders}
         onDeleteOrder={deleteOrder}
-        onGenerate={handleGenerateAndDownloadPDF}
+        onGenerate={() =>
+          handleGenerateAndDownloadPDF(transformOrderDataForPDF(orderData))
+        }
         onConfirmOrder={handleConfirmOrder}
       />
       {orderData ? (

@@ -20,6 +20,11 @@
   overflow: auto;
 }
 
+table td,
+table th {
+  border: 1px solid transparent;
+}
+
 .tableHeaderRow {
   display: table;
   width: 100%;
@@ -62,11 +67,15 @@
 
 .tableDataRow td {
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #212529;
   border-bottom: 1px solid #f1f1f1;
   transition: background-color 0.2s;
   height: 3vh;
+}
+
+.tableDataRow li {
+  font-size: 0.8rem;
 }
 
 .tableItemButton {

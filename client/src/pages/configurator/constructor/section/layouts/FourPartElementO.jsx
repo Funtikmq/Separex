@@ -139,9 +139,30 @@ export function FourPartElementO({
               sectionDimensions={sectionDimensions}
               doorDimensions={doorDimensions}
             >
-              {getModelOverlay(sectionModels[i], scaled)}
+              {getModelOverlay(sectionModels[i], scaled, doorDimensions)}
               {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
+              {isSwingDoor &&
+                (sectionTypes[i] === "left" || sectionTypes[i] === "right") && (
+                  <>
+                    {[0, 1, 2].map((index) => (
+                      <div
+                        key={index}
+                        style={{
+                          position: "absolute",
+                          width: `${scaled.borderPx / 128}rem`,
+                          height: `${scaled.borderPx / 4}rem`,
+                          backgroundColor: "#222",
+                          top: `${20 + index * 30}%`,
+                          [sectionTypes[i] === "left" ? "left" : "right"]: `${
+                            -scaled.borderPx / 15
+                          }rem`,
+                          zIndex: 5,
+                        }}
+                      />
+                    ))}
+                  </>
+                )}
             </Section>
           </div>
         );

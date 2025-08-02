@@ -17,21 +17,23 @@ TEMP_PDF = os.path.join(FILES_DIR, "order.pdf")
 TEMP_DXF = os.path.join(FILES_DIR, "order.dxf")
 TEMP_ZIP = os.path.join(FILES_DIR, "order.zip")
 
-@app.route("/generate/files", methods=["POST"])
-def generate_files():
+@app.route("/generate/pdf", methods=["POST"])
+def generate_pdf_file():
     data = request.get_json()
-
-    # Generăm PDF
+    os.makedirs(FILES_DIR, exist_ok=True)
+    TEMP_PDF = os.path.join(FILES_DIR, "order.pdf")
     generate_pdf(data, TEMP_PDF)
+    return send_file(TEMP_PDF, as_attachment=True)
 
-    # Generăm DXF în funcție de categorie + tip
+
+@app.route("/generate/dxf", methods=["POST"])
+def generate_dxf_file():
+    data = request.get_json()
+    if not data:
+        return {"error": "No data provided"}, 400
+
     generate_dxf(data, TEMP_DXF)
-
-    # Creăm ZIP
-    create_zip([TEMP_PDF, TEMP_DXF], TEMP_ZIP)
-
-    return send_file(TEMP_ZIP, as_attachment=True)
-
+    return send_file(TEMP_DXF, as_attachment=True, download_name="order.dxf")
 @app.route('/api/save-user', methods=["POST"])
 def save_user():
     data = request.get_json()

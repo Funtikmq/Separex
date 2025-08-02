@@ -67,10 +67,10 @@ function Constructor({
         100% 100%,
         ${(doorRight + wallPadding) / 16}rem 100%,
         ${(doorRight + wallPadding) / 16}rem ${
-          (doorTop - 0.11 * containerHeight) / 16
+          (doorTop - 0.1 * containerHeight) / 16
         }rem,
         ${(doorLeft - wallPadding) / 16}rem ${
-          (doorTop - 0.11 * containerHeight) / 16
+          (doorTop - 0.1 * containerHeight) / 16
         }rem,
         ${(doorLeft - wallPadding) / 16}rem 100%,
         0% 100%
@@ -84,7 +84,6 @@ function Constructor({
 
         {wallClipPath !== "none" && (
           <div
-            className="constructorWall"
             style={{
               clipPath: wallClipPath,
               backgroundColor: "#f4f4f6",

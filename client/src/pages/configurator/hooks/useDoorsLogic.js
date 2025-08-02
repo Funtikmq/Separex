@@ -3,8 +3,8 @@ import { useScaledDimensions } from "../constructor/hooks/useScaledDimensions";
 
 export const useDoorsLogic = () => {
   const [doorDimensions, setDoorDimensions] = useState({
-    height: 1900,
-    width: 850,
+    height: 2000,
+    width: 1000,
   });
   const { height, width } = doorDimensions;
   const scaled = useScaledDimensions(height, width);
@@ -35,6 +35,13 @@ export const useDoorsLogic = () => {
     }
     return handles;
   };
+
+  useEffect(() => {
+    setDoorDimensions((prev) => ({
+      ...prev,
+      height: selectedCategory === "Sliding Doors" ? 2500 : 2000,
+    }));
+  }, [selectedCategory]);
 
   useEffect(() => {
     setSectionModels(Array(sectionCount).fill("Aero"));

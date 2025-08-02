@@ -28,7 +28,7 @@ export function DefaultSectionLayout({
   renderSectionTypeRadio = () => null,
 }) {
   const SLIDING_DOOR_GAP =
-    slidingMountType === "In wall" ? scaled.borderPx / 200 : 0;
+    slidingMountType === "In wall" ? scaled.borderPx / 128 : 0;
   const isSlidingDoor = selectedCategory === "Sliding Doors";
   const isSwingDoor = selectedCategory === "Swing Doors";
   const isFixedWall = selectedCategory === "Fixed Wall";
@@ -77,7 +77,6 @@ export function DefaultSectionLayout({
         const borderSize = scaled.borderPx / 16;
         const extraBorderSize = scaled.borderPx / 32;
 
-        // Inițializăm margin și border
         let marginLeft = 0;
         let marginRight = 0;
         let borderTop = "none";
@@ -190,9 +189,32 @@ export function DefaultSectionLayout({
               selectedType={selectedType}
               sectionDimensions={sectionDimensions}
             >
-              {getModelOverlay(sectionModels[i], scaled)}
+              {getModelOverlay(sectionModels[i], scaled, dimensions)}
               {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
+
+              {isSwingDoor &&
+                (sectionTypes[i] === "left" || sectionTypes[i] === "right") && (
+                  <>
+                    {[0, 1, 2].map((index) => (
+                      <div
+                        key={index}
+                        style={{
+                          position: "absolute",
+                          width: `${scaled.borderPx / 128}rem`,
+                          height: `${scaled.borderPx / 4}rem`,
+                          backgroundColor: "#222",
+                          top: `${20 + index * 30}%`,
+                          [sectionTypes[i] === "left" ? "left" : "right"]: `${
+                            -scaled.borderPx / 15
+                          }rem`,
+                          zIndex: 5,
+                        }}
+                      />
+                    ))}
+                  </>
+                )}
+
               {!isSlidingDoor && i < sectionCount - 1 && (
                 <div
                   style={{

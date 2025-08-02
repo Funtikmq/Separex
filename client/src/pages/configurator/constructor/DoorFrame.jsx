@@ -56,9 +56,6 @@ const DoorFrame = forwardRef(
     };
 
     const doorContureStyle = {
-      borderTop: `${scaled.borderPx / 8}rem solid #c3c2c2`,
-      borderLeft: `${scaled.borderPx / 8}rem solid #c3c2c2`,
-      borderRight: `${scaled.borderPx / 8}rem solid #c3c2c2`,
       position: "relative",
       zIndex: 2,
       boxSizing: "border-box",
@@ -73,9 +70,6 @@ const DoorFrame = forwardRef(
       width: `calc(100% + ${wallContourThickness * 4}rem)`,
       height: `calc(100% + ${wallContourThickness * 2}rem)`,
       pointerEvents: "none",
-      // borderTop: `${wallContourThickness / 2}rem solid #fff`,
-      // borderLeft: `${wallContourThickness / 2}rem solid #fff`,
-      // borderRight: `${wallContourThickness / 2}rem solid #fff`,
       zIndex: 1,
       boxSizing: "border-box",
     };

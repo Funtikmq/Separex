@@ -1,11 +1,13 @@
 function Table({ orders, onDeleteOrder, onGenerate, onConfirmOrder }) {
+  console.log(orders[0]);
+
   return (
     <table className="table">
       <thead>
         <tr className="tableHeaderRow">
           <th>Product</th>
           <th>Type</th>
-          <th>Docs</th>
+          <th>PDF</th>
           <th>Quantity</th>
           <th>Price</th>
           <th></th>
@@ -14,10 +16,13 @@ function Table({ orders, onDeleteOrder, onGenerate, onConfirmOrder }) {
       <tbody className="tableBody">
         {orders.map((order, index) => (
           <tr key={index} className="tableDataRow">
-            <td>{order.product}</td>
+            <td>{order.product || order.category}</td>
             <td>{order.type}</td>
             <td>
-              <button className="tableItemButton" onClick={onGenerate}>
+              <button
+                className="tableItemButton"
+                onClick={() => onGenerate(order)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"

@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { auth, signOut } from "./profile/firebase/firebase";
 import logo from "@assets/logo.png";
+import { useState } from "react";
 
 function Header() {
   const navigate = useNavigate();
-
   const { user, loading } = useAuth();
+  const [imgFailed, setImgFailed] = useState(false); // 👈 fallback flag
 
   const handleLogOut = async () => {
     try {
@@ -28,12 +29,6 @@ function Header() {
       </div>
 
       <nav className="headerNavigation">
-        <div className="headerItem" onClick={() => navigate("/Home")}>
-          Home
-        </div>
-        <div className="headerItem" onClick={() => navigate("/Catalog")}>
-          Catalog
-        </div>
         <div className="headerItem" onClick={() => navigate("/Configurator")}>
           Configurator
         </div>
@@ -41,7 +36,7 @@ function Header() {
           Cart
         </div>
         <div className="headerItem" onClick={() => navigate("/Profile")}>
-          {!loading && user?.photoURL ? (
+          {!loading && user?.photoURL && !imgFailed ? (
             <img
               src={user.photoURL}
               className="profileAvatar"
@@ -50,11 +45,8 @@ function Header() {
                 height: "32px",
                 borderRadius: "50%",
                 objectFit: "cover",
-                backgroundColor: "gray",
               }}
-              onError={(e) => {
-                e.target.src = "https://via.placeholder.com/32";
-              }}
+              onError={() => setImgFailed(true)}
             />
           ) : (
             "Profile"
@@ -72,10 +64,10 @@ function Header() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-log-out-icon lucide-log-out"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-log-out-icon lucide-log-out"
             >
               <path d="m16 17 5-5-5-5" />
               <path d="M21 12H9" />

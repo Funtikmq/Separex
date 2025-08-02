@@ -41,6 +41,12 @@
   width: 60%;
 }
 
+.ordersTable td {
+  white-space: normal !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 .userTable {
   width: 30%;
 }

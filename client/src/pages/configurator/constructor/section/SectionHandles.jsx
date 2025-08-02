@@ -8,6 +8,7 @@ export const HandleWithLock = ({ scaled, position }) => {
         transform: `translateY(-50%) translateX(${
           position === "right" ? "50%" : "-50%"
         })`,
+        zIndex: 5,
       }}
     >
       {/*Blocul manerului*/}
@@ -44,17 +45,49 @@ export const PullHandle160 = ({ scaled, position }) => {
     <div
       style={{
         position: "absolute",
+        top: "50%",
+        pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 7) / 16}rem`,
-        backgroundColor: "#333",
-        ...(position === "right" ? { right: ".2em" } : { left: ".2em" }),
-        top: "50%",
-        transform: `translateY(-50%) translateX(${
-          position === "right" ? "50%" : "-50%"
-        })`,
-        pointerEvents: "none",
+        ...(position === "right" ? { right: "0" } : { left: "0" }),
+        transform: `translateY(-50%)`,
+        zIndex: 5,
       }}
-    />
+    >
+      {/*Bara orizontala top*/}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          ...(position === "right" ? { right: "0" } : { left: "0" }),
+          width: `${scaled.borderPx / 16}rem`,
+          height: `${scaled.borderPx / 16}rem`,
+          backgroundColor: "#333",
+        }}
+      />
+      {/*Bara verticala*/}
+      <div
+        style={{
+          position: "absolute",
+          width: `${scaled.borderPx / 16}rem`,
+          height: "100%",
+          backgroundColor: "#333",
+          bottom: "0",
+          ...(position === "right" ? { right: "100%" } : { left: "100%" }),
+        }}
+      />
+      {/*Bara orizontala bottom*/}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          ...(position === "right" ? { right: "0" } : { left: "0" }),
+          width: `${scaled.borderPx / 16}rem`,
+          height: `${scaled.borderPx / 16}rem`,
+          backgroundColor: "#333",
+        }}
+      />
+    </div>
   );
 };
 
@@ -63,17 +96,49 @@ export const PullHandle288 = ({ scaled, position }) => {
     <div
       style={{
         position: "absolute",
+        top: "50%",
+        pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 13) / 16}rem`,
-        backgroundColor: "#333",
-        ...(position === "right" ? { right: ".2em" } : { left: ".2em" }),
-        top: "50%",
-        transform: `translateY(-50%) translateX(${
-          position === "right" ? "50%" : "-50%"
-        })`,
-        pointerEvents: "none",
+        ...(position === "right" ? { right: "0" } : { left: "0" }),
+        transform: `translateY(-50%)`,
+        zIndex: 5,
       }}
-    />
+    >
+      {/*Bara orizontala top*/}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          ...(position === "right" ? { right: "0" } : { left: "0" }),
+          width: `${scaled.borderPx / 16}rem`,
+          height: `${scaled.borderPx / 16}rem`,
+          backgroundColor: "#333",
+        }}
+      />
+      {/*Bara verticala*/}
+      <div
+        style={{
+          position: "absolute",
+          width: `${scaled.borderPx / 16}rem`,
+          height: "100%",
+          backgroundColor: "#333",
+          bottom: "0",
+          ...(position === "right" ? { right: "100%" } : { left: "100%" }),
+        }}
+      />
+      {/*Bara orizontala bottom*/}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          ...(position === "right" ? { right: "0" } : { left: "0" }),
+          width: `${scaled.borderPx / 16}rem`,
+          height: `${scaled.borderPx / 16}rem`,
+          backgroundColor: "#333",
+        }}
+      />
+    </div>
   );
 };
 
@@ -82,16 +147,48 @@ export const PullHandle448 = ({ scaled, position }) => {
     <div
       style={{
         position: "absolute",
+        top: "50%",
+        pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 20) / 16}rem`,
-        backgroundColor: "#333",
-        ...(position === "right" ? { right: ".2em" } : { left: ".2em" }),
-        top: "50%",
-        transform: `translateY(-50%) translateX(${
-          position === "right" ? "50%" : "-50%"
-        })`,
-        pointerEvents: "none",
+        ...(position === "right" ? { right: "0" } : { left: "0" }),
+        transform: `translateY(-50%)`,
+        zIndex: 5,
       }}
-    />
+    >
+      {/*Bara orizontala top*/}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          ...(position === "right" ? { right: "0" } : { left: "0" }),
+          width: `${scaled.borderPx / 16}rem`,
+          height: `${scaled.borderPx / 16}rem`,
+          backgroundColor: "#333",
+        }}
+      />
+      {/*Bara verticala*/}
+      <div
+        style={{
+          position: "absolute",
+          width: `${scaled.borderPx / 16}rem`,
+          height: "100%",
+          backgroundColor: "#333",
+          bottom: "0",
+          ...(position === "right" ? { right: "100%" } : { left: "100%" }),
+        }}
+      />
+      {/*Bara orizontala bottom*/}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          ...(position === "right" ? { right: "0" } : { left: "0" }),
+          width: `${scaled.borderPx / 16}rem`,
+          height: `${scaled.borderPx / 16}rem`,
+          backgroundColor: "#333",
+        }}
+      />
+    </div>
   );
 };

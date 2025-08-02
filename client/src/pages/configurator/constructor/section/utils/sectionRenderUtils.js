@@ -37,10 +37,12 @@ export const getModelComponent = (modelName) => {
 };
 
 // 3. Model Utility Function
-export function getModelOverlay(modelName, scaled) {
+export function getModelOverlay(modelName, scaled, doorDimensions) {
   if (!modelName || modelName === "Aero") return null;
   const Component = modelComponents[modelName];
-  return Component ? React.createElement(Component, { scaled }) : null;
+  return Component
+    ? React.createElement(Component, { scaled, doorDimensions })
+    : null;
 }
 
 // 4. Color Styles Object
