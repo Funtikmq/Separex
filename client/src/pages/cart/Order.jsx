@@ -1,4 +1,4 @@
-function Order({ data, quantity, onSave, onQuantityChange, user }) {
+function Order({ data, quantity, price, onSave, onQuantityChange, user }) {
   const sectionCount = data.sectionCount || 1;
 
   const renderRow = (label, values, keyPrefix) => (
@@ -124,7 +124,13 @@ function Order({ data, quantity, onSave, onQuantityChange, user }) {
               />
             </div>
           </td>
-          <td>{user && <p>Price : </p>}</td>
+          <td>
+            {user && (
+              <p>
+                Price: {price !== undefined ? Number(price).toFixed(2) : "N/A"}
+              </p>
+            )}
+          </td>
         </tr>
       </tbody>
     </table>

@@ -1,6 +1,6 @@
 function TopBar({ category, mountType, scaledWidth, selectedType, borderPx }) {
   if (category === "Sliding Doors") {
-    const isOnWall = mountType === "On wall";
+    const isOnWall = mountType === "In wall";
 
     return (
       <div

@@ -28,7 +28,7 @@ export function DefaultSectionLayout({
   renderSectionTypeRadio = () => null,
 }) {
   const SLIDING_DOOR_GAP =
-    slidingMountType === "In wall" ? scaled.borderPx / 128 : 0;
+    slidingMountType === "On wall" ? scaled.borderPx / 128 : 0;
   const isSlidingDoor = selectedCategory === "Sliding Doors";
   const isSwingDoor = selectedCategory === "Swing Doors";
   const isFixedWall = selectedCategory === "Fixed Wall";

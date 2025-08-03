@@ -14,13 +14,13 @@ function TypePanel({
 }) {
   let filteredTypes = TYPES[selectedCategory] || [];
 
-  if (selectedCategory === "Sliding Doors" && slidingMountType === "In wall") {
+  if (selectedCategory === "Sliding Doors" && slidingMountType === "On wall") {
     filteredTypes = filteredTypes.filter(
       (type) => type.startsWith("1-Part") || type.startsWith("2-Part")
     );
   } else if (
     selectedCategory === "Sliding Doors" &&
-    slidingMountType === "On wall"
+    slidingMountType === "In wall"
   ) {
     filteredTypes = filteredTypes.filter(
       (type) =>
@@ -38,7 +38,7 @@ function TypePanel({
             className="toggleButton"
             onClick={() =>
               setSlidingMountType((prev) =>
-                prev === "In wall" ? "On wall" : "In wall"
+                prev === "On wall" ? "In wall" : "On wall"
               )
             }
           >
@@ -58,7 +58,7 @@ function TypePanel({
             toKey(type) === "2-PART ELEMENT"
           ) {
             typeKey =
-              slidingMountType === "On wall"
+              slidingMountType === "In wall" //
                 ? "2-PART ELEMENT IN"
                 : "2-PART ELEMENT ON";
           }

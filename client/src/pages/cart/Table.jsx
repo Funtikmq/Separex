@@ -1,6 +1,4 @@
 function Table({ orders, onDeleteOrder, onGenerate, onConfirmOrder }) {
-  console.log(orders[0]);
-
   return (
     <table className="table">
       <thead>

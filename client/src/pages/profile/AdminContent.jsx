@@ -7,12 +7,19 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { app } from "../profile/firebase/firebase";
+import { useAuth } from "../../context/AuthContext";
 import { handleGenerateAndDownloadDXF } from "../../utils/downloadDXF";
 
 function AdminContent() {
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
   const [expandedRows, setExpandedRows] = useState({});
+
+  const { user, loading } = useAuth();
+
+  if (loading) return <p>Loading...</p>;
+  if (!user || user.role !== "admin") return <p>Access denied</p>;
+
   const db = getFirestore(app);
 
   const typeMap = {

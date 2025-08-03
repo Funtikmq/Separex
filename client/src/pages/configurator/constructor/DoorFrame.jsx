@@ -28,7 +28,7 @@ const DoorFrame = forwardRef(
     },
     ref
   ) => {
-    const isOnWall = slidingMountType === "On wall";
+    const isOnWall = slidingMountType === "In wall";
 
     // === Stiluri pentru ușă ===
     const doorStyle = {

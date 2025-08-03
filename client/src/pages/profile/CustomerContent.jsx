@@ -14,16 +14,13 @@ function CustomerContent() {
   const { user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [expandedRows, setExpandedRows] = useState({}); // 👈 nou
+  const [expandedRows, setExpandedRows] = useState({});
 
   const db = getFirestore();
 
   useEffect(() => {
-    if (!user) {
-      setOrders([]);
-      setLoading(false);
-      return;
-    }
+    if (!user?.email) return;
+    console.log("Logged-in user email:", user?.email);
 
     const fetchOrders = async () => {
       setLoading(true);
@@ -48,7 +45,7 @@ function CustomerContent() {
     };
 
     fetchOrders();
-  }, [user, db]);
+  }, [user?.email]);
 
   const toggleRow = (orderId, productIndex) => {
     setExpandedRows((prev) => ({
@@ -81,14 +78,7 @@ function CustomerContent() {
           {orders.map((order) => (
             <tr key={order.id} className="tableDataRow">
               <td>{order.orderNumber}</td>
-              {/* Lista produselor */}
-              <td
-                style={{
-                  textAlign: "left",
-                  verticalAlign: "middle",
-                  textAlign: "center",
-                }}
-              >
+              <td style={{ textAlign: "center" }}>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                   {order.products.map((product, i) => (
                     <li
@@ -118,34 +108,38 @@ function CustomerContent() {
                                 {product.dimensions.width}
                               </li>
                             )}
-                            {product.sectionType?.length > 0 && (
-                              <li>
-                                Section Types:{" "}
-                                {product.sectionType
-                                  .map((type) => typeMap[type] || type)
-                                  .join(", ")}
-                              </li>
-                            )}
-                            {product.sectionDimensions?.length > 0 && (
-                              <li>
-                                Section Dimensions:{" "}
-                                {product.sectionDimensions.join(", ")}
-                              </li>
-                            )}
-                            {product.sectionModels?.length > 0 && (
-                              <li>
-                                Section Models:{" "}
-                                {product.sectionModels.join(", ")}
-                              </li>
-                            )}
-                            {product.sectionColors?.length > 0 && (
-                              <li>
-                                Section Colors:{" "}
-                                {product.sectionColors.join(", ")}
-                              </li>
-                            )}
-                            {product.handles?.length > 0 && (
-                              <li>Handles: {product.handles.join(", ")}</li>
+                            {Array.isArray(product.sectionType) &&
+                              product.sectionType.length > 0 && (
+                                <li>
+                                  Section Types:{" "}
+                                  {product.sectionType
+                                    .map((type) => typeMap[type] || type)
+                                    .join(", ")}
+                                </li>
+                              )}
+                            {Array.isArray(product.sectionDimensions) &&
+                              product.sectionDimensions.length > 0 && (
+                                <li>
+                                  Section Dimensions:{" "}
+                                  {product.sectionDimensions.join(", ")}
+                                </li>
+                              )}
+                            {Array.isArray(product.sectionModels) &&
+                              product.sectionModels.length > 0 && (
+                                <li>
+                                  Section Models:{" "}
+                                  {product.sectionModels.join(", ")}
+                                </li>
+                              )}
+                            {Array.isArray(product.sectionColors) &&
+                              product.sectionColors.length > 0 && (
+                                <li>
+                                  Section Colors:{" "}
+                                  {product.sectionColors.join(", ")}
+                                </li>
+                              )}
+                            {product.selectedHandle && (
+                              <li>Handle: {product.selectedHandle}</li>
                             )}
                           </ul>
                         </div>
@@ -155,8 +149,7 @@ function CustomerContent() {
                 </ul>
               </td>
 
-              {/* Butoane pentru fiecare produs */}
-              <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+              <td style={{ textAlign: "center" }}>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                   {order.products.map((product, i) => (
                     <li key={i} style={{ marginBottom: "8px" }}>

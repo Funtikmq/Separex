@@ -9,7 +9,7 @@ export const useDoorsLogic = () => {
   const { height, width } = doorDimensions;
   const scaled = useScaledDimensions(height, width);
   const [sectionCount, setSectionCount] = useState(1);
-  const [slidingMountType, setSlidingMountType] = useState("In wall");
+  const [slidingMountType, setSlidingMountType] = useState("On wall");
   const [selectedCategory, setSelectedCategory] = useState("Swing Doors");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedType, setSelectedType] = useState("3-Part Element");
@@ -28,7 +28,7 @@ export const useDoorsLogic = () => {
   const validateHandleConfiguration = (category, mountType, handles) => {
     if (
       category === "Sliding Doors" &&
-      mountType === "On wall" &&
+      mountType === "In wall" &&
       handles.some((h) => h !== null)
     ) {
       return Array(handles.length).fill(null);
@@ -52,7 +52,7 @@ export const useDoorsLogic = () => {
     setSelectedType("1-Part Element");
     setSectionCount(1);
     if (selectedCategory === "Sliding Doors") {
-      setSlidingMountType("In wall");
+      setSlidingMountType("On wall");
       setSelectedHandle(Array(1).fill("Pull Handle 160"));
     } else if (selectedCategory === "Swing Doors") {
       setSelectedHandle(Array(1).fill("Handle With Lock"));
@@ -65,11 +65,11 @@ export const useDoorsLogic = () => {
 
   useEffect(() => {
     if (selectedCategory === "Sliding Doors") {
-      if (slidingMountType === "In wall") {
+      if (slidingMountType === "On wall") {
         setSectionCount(1);
         setSelectedType("1-Part Element");
         setSelectedHandle(Array(1).fill("Pull Handle 160"));
-      } else if (slidingMountType === "On wall") {
+      } else if (slidingMountType === "In wall") {
         setSectionCount(2);
         setSelectedType("2-Part Element");
         setSelectedHandle(Array(2).fill(null));
@@ -159,9 +159,9 @@ export const useDoorsLogic = () => {
     setSectionTypes((prevTypes) => {
       const newTypes = Array(sectionCount).fill("fixed");
 
-      // Dacă este "On wall", păstrăm toate secțiunile ca "fixed"
+      // Dacă este "In wall", păstrăm toate secțiunile ca "fixed"
       if (
-        slidingMountType === "On wall" ||
+        slidingMountType === "In wall" || //
         selectedCategory === "Fixed Walls"
       ) {
         return newTypes;

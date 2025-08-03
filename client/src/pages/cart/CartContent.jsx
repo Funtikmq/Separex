@@ -1,36 +1,23 @@
 import { useState, useEffect } from "react";
 import { useCartContext } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  Timestamp,
-} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { auth } from "../profile/firebase/firebase";
 import { handleGenerateAndDownloadPDF } from "../../utils/downloadPDF";
 import Table from "./Table";
 import Order from "./Order";
 
 function CartContent() {
   const { orders, addOrder, deleteOrder } = useCartContext();
-  const [orderData, setData] = useState(null);
+  const [orderData, setOrderData] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(null);
+  const { user } = useAuth();
   const db = getFirestore();
-
-  const transformOrderDataForPDF = (data) => ({
-    category: data.selectedCategory,
-    type: data.selectedType,
-    dimensions: data.doorDimensions,
-    sectionType: data.sectionTypes,
-    sectionDimensions: data.sectionDimensions,
-    sectionModels: data.sectionModels,
-    sectionColors: data.sectionColors,
-    handles: data.selectedHandle ? [data.selectedHandle] : [],
-  });
 
   useEffect(() => {
     const stored = localStorage.getItem("cartData");
-    if (stored) setData(JSON.parse(stored));
+    if (stored) setOrderData(JSON.parse(stored));
   }, []);
 
   const handleQuantityChange = (e) => {
@@ -40,11 +27,63 @@ function CartContent() {
     }
   };
 
-  const { user } = useAuth();
+  // Calculează prețul
+  useEffect(() => {
+    const fetchInitialPrice = async () => {
+      if (!orderData || !user) return;
 
-  const handleSaveOrder = (orderData) => {
+      const quantityInt = parseInt(quantity) || 1;
+
+      const orderToSend = {
+        category: orderData.selectedCategory,
+        type: orderData.selectedType,
+        mountType: orderData.slidingMountType,
+        dimensions: orderData.doorDimensions,
+        sectionType: orderData.sectionTypes,
+        sectionDimensions: orderData.sectionDimensions,
+        sectionModels: orderData.sectionModels,
+        sectionColors: orderData.sectionColors,
+        handles: orderData.selectedHandle || [],
+        quantity: quantityInt,
+      };
+
+      try {
+        const token = await auth.currentUser.getIdToken();
+
+        const response = await fetch(
+          "http://localhost:5000/api/calculate-order",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(orderToSend),
+          }
+        );
+
+        if (!response.ok) throw new Error("Failed to calculate price");
+
+        const result = await response.json();
+        setPrice(result.total);
+      } catch (err) {
+        console.error("Error fetching price:", err);
+      }
+    };
+
+    fetchInitialPrice();
+  }, [orderData, user, quantity]);
+
+  // Adaugă în context
+  const handleSaveOrder = () => {
+    console.log(orderData, price);
     if (!user) {
       alert("To Save Your Order, Log In First");
+      return;
+    }
+
+    if (!orderData || price == null) {
+      alert("Order data or price is not ready.");
       return;
     }
 
@@ -53,22 +92,24 @@ function CartContent() {
     const newOrder = {
       category: orderData.selectedCategory,
       type: orderData.selectedType,
-      docs: "Link to docs",
-      quantity: quantityInt,
-      price: "Calculat",
+      mountType: orderData.slidingMountType,
       dimensions: orderData.doorDimensions,
       sectionType: orderData.sectionTypes,
       sectionDimensions: orderData.sectionDimensions,
       sectionModels: orderData.sectionModels,
       sectionColors: orderData.sectionColors,
-      handles: orderData.selectedHandle ? [orderData.selectedHandle] : [],
+      handles: orderData.selectedHandle || [],
+      quantity: quantityInt,
+      price: price.toFixed(2),
+      product: orderData.selectedCategory,
     };
 
     addOrder(newOrder);
   };
 
+  // Confirmă comenzile și le salvează în Firestore
   const handleConfirmOrder = async () => {
-    if (!user) {
+    if (!auth.currentUser) {
       alert("To confirm your order, please log in first.");
       return;
     }
@@ -78,44 +119,49 @@ function CartContent() {
       return;
     }
 
-    const total = orders.reduce(
-      (sum, order) => sum + (parseFloat(order.price) || 0),
-      0
-    );
-
-    const orderNumber = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
-
-    const transformedProducts = orders.map((order) => ({
-      category: order.category,
-      type: order.type,
-      quantity: order.quantity,
-      price: order.price,
-      dimensions: order.dimensions || null,
-      sectionType: (order.sectionType || []).flat(),
-      sectionDimensions: (order.sectionDimensions || []).flat(),
-      sectionModels: (order.sectionModels || []).flat(),
-      sectionColors: (order.sectionColors || []).flat(),
-      handles: (order.handles || []).flat(),
-    }));
-
-    const newOrder = {
-      orderNumber,
-      userEmail: user.email,
-      createdAt: Timestamp.now(),
-      products: transformedProducts,
-      total,
-    };
-
     try {
-      await addDoc(collection(db, "orders"), newOrder);
-      alert("Order successfully confirmed!");
+      const token = await auth.currentUser.getIdToken();
+
+      const orderToSave = {
+        userEmail: auth.currentUser.email,
+        products: orders,
+      };
+
+      const saveResponse = await fetch("http://localhost:5000/api/save-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(orderToSave),
+      });
+
+      if (!saveResponse.ok) {
+        const errorText = await saveResponse.text();
+        throw new Error(`Failed to save order: ${errorText}`);
+      }
+
+      const savedResult = await saveResponse.json();
+      alert(`Order confirmed!`);
     } catch (error) {
-      console.error("Error saving order:", error);
-      alert("An error occurred while confirming your order.");
+      console.error("Error confirming and saving orders:", error);
+      alert("There was an error confirming your order.");
     }
   };
 
-  // Documentation
+  // Datele Pentru PDF
+  const transformOrderDataForPDF = (data) => ({
+    category: data.selectedCategory,
+    type: data.selectedType,
+    mountType: data.slidingMountType,
+    dimensions: data.doorDimensions,
+    sectionType: data.sectionTypes,
+    sectionDimensions: data.sectionDimensions,
+    sectionModels: data.sectionModels,
+    sectionColors: data.sectionColors,
+    handles: data.selectedHandle ? [data.selectedHandle] : [],
+  });
+
   return (
     <div className="cartLayout">
       <Table
@@ -126,15 +172,16 @@ function CartContent() {
         }
         onConfirmOrder={handleConfirmOrder}
       />
-      {orderData ? (
+      {orderData && (
         <Order
           data={orderData}
           quantity={quantity}
-          onSave={() => handleSaveOrder({ ...orderData, quantity })}
+          price={price}
+          onSave={handleSaveOrder}
           onQuantityChange={handleQuantityChange}
           user={user}
         />
-      ) : null}
+      )}
     </div>
   );
 }

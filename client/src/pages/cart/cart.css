@@ -96,6 +96,7 @@ table th {
 .tableCancelButton {
   padding: 0;
   border: none;
+  border-radius: 0;
   background-color: transparent;
 }
 
