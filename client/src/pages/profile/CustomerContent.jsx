@@ -20,7 +20,6 @@ function CustomerContent() {
 
   useEffect(() => {
     if (!user?.email) return;
-    console.log("Logged-in user email:", user?.email);
 
     const fetchOrders = async () => {
       setLoading(true);

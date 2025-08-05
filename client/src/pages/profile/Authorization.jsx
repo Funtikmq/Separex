@@ -15,8 +15,13 @@ function Authorization() {
     <>
       <div className="authorizationContainer">
         <div className="authorizationBox">
+          <h1 className="authorizationTitle">Welcome to Separex</h1>
+          <p className="authorizationText">
+            To save your orders, please log in
+          </p>
+          <p className="authorizationText">Choose any available method</p>
           <button className="authorizationButton" onClick={signInWithGoogle}>
-            Gmail
+            Continue with Google
           </button>
         </div>
       </div>

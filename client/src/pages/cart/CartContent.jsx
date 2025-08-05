@@ -76,7 +76,6 @@ function CartContent() {
 
   // Adaugă în context
   const handleSaveOrder = () => {
-    console.log(orderData, price);
     if (!user) {
       alert("To Save Your Order, Log In First");
       return;

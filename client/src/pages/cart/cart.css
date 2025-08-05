@@ -1,5 +1,5 @@
 .cartLayout {
-  background: #f4f4f6;
+  background: linear-gradient(135deg, #f4f4f6, #f3f3fb);
   height: 80vh;
   display: flex;
   margin: 0;
@@ -86,6 +86,7 @@ table th {
 
 .tableItemButton:hover {
   background-color: transparent;
+  color: #f4a621;
   transform: scale(1.1);
 }
 
@@ -118,7 +119,7 @@ table th {
 }
 
 .tableFooterRow {
-  width: 100%;
+  width: 97.9%;
   height: 6vh;
   background-color: #f0f0f0;
   padding: 2vh 0.5vw;
