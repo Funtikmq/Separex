@@ -1,4 +1,8 @@
+import base64
+import io
+from PIL import Image
 from reportlab.lib.units import cm
+from reportlab.lib.utils import ImageReader
 from .common import draw_box, draw_table
 from ..constants import  MARGIN, PAGE_SIZE
 from ..utils import draw_logo, draw_contact_info, draw_title
@@ -9,20 +13,21 @@ from reportlab.platypus import Paragraph
 def draw_first_page(c, data):
     page_width, page_height = PAGE_SIZE
 
-    # 1. Logo and Contact Info
+    # 1. Logo și informații de contact
     draw_logo(c, MARGIN, page_height - MARGIN - 3 * cm)
     draw_contact_info(c, page_width - MARGIN, page_height - MARGIN)
 
-    # 2. Title
+    # 2. Titlu
     title_text = f"{data.get('category', 'No Category')} - {data.get('type', 'No Type')}"
-    draw_title(c, page_width / 2, page_height - MARGIN - 4 * cm, title_text)
+    title_y = page_height - MARGIN - 4 * cm
+    draw_title(c, page_width / 2, title_y, title_text)
 
-    # 3. Main content sections
-    _draw_main_content_section(c, page_height - MARGIN - 5 * cm,data)
-    _draw_bottom_section(c, page_height - MARGIN - 17 * cm, data)
+    # 3. Conținut principal și secțiune de jos
+    image_bottom_y = _draw_main_content_section(c, page_height - MARGIN - 5 * cm, title_y, data, MARGIN)
+    _draw_bottom_section(c, image_bottom_y - 1 * cm, data)
 
 
-def _draw_main_content_section(c, start_y, data):
+def _draw_main_content_section(c, start_y, title_y, data, MARGIN):
     page_width, _ = PAGE_SIZE
 
     # Inițializare stiluri
@@ -33,59 +38,107 @@ def _draw_main_content_section(c, start_y, data):
     style.leading = 12
     style.textColor = "black"
 
-    # Left image
-    draw_box(c, MARGIN, start_y, 8 * cm, 11 * cm, "Imagine produs")
+    image_height_drawn = 0
+    y_position = start_y  # fallback dacă nu există imagine
 
-    # Right 2x3 boxes
-    right_start_x = MARGIN + 8 * cm + 2 * cm
-    box_width = 4 * cm
-    box_height = 4 * cm
-    gap = 0.5 * cm
+    if data.get('image'):
+        try:
+            base64_data = data['image'].split(',')[1]
+            image_bytes = base64.b64decode(base64_data)
+            pil_image = Image.open(io.BytesIO(image_bytes))
+            orig_width, orig_height = pil_image.size
 
-    color = data.get("colors", ["-"])
-    glass_color = "transparenta" if (color[0] == "Clear") else color[0].lower()
+            # Crop
+            crop_margin_x = 0
+            crop_margin_y = 0
+            dimensions = data.get("dimensions")
+            if dimensions and dimensions.get("width", 0) <= 1000:
+                crop_margin_x = int(orig_width * 0.35)
+                target_width = 8.5 * cm
+            elif dimensions and dimensions.get("width", 0) >= 3000:
+                crop_margin_x = int(orig_width * 0.22)
+                if dimensions and dimensions.get("height", 0) <= 3000:
+                    crop_margin_y = int(orig_height * 0.2)
+                else:
+                    crop_margin_y = 0
+                target_width = 13.5 * cm
+            else:
+                crop_margin_x = int(orig_width * 0.28)
+                target_width = 11.5 * cm
 
-    box1_text = """
-    <b>SCHEMA DESCHIDERE</b><br/>
-    <b>2 sectiuni active</b><br/>
-    Glisare fluida si usoara<br/>
-    datorita sistemului de<br/>
-    glisare si mecanismului<br/>
-    soft-close italian
-    """
+            cropped = pil_image.crop((
+                crop_margin_x,
+                crop_margin_y,
+                orig_width - crop_margin_x,
+                orig_height
+            ))
 
-    boxes = [
-        (box1_text, box_height),
-        ("Imagine 2", box_height),
-        ("Imagine 3", box_height),
-        ("Imagine 4", box_height),
-        ("<b>Profil Anodizat Negru </b>",box_height/5),
-        (f"<b>Sticla</b> {glass_color}", box_height/5),
-    ]
+            # Conversie pentru PDF
+            img_byte_arr = io.BytesIO()
+            cropped.save(img_byte_arr, format='PNG')
+            img_byte_arr.seek(0)
+            image = ImageReader(img_byte_arr)
 
-    for index, (label, height) in enumerate(boxes):
-        row = index // 2
-        col = index % 2
+            # Dimensiuni
+            cropped_width, cropped_height = cropped.size
+            aspect_ratio = cropped_height / cropped_width
+            real_height = target_width * aspect_ratio
 
-        height_current = height
+            # Poziționare
+            x_position = MARGIN
+            y_position = title_y - real_height - 1 * cm
+            image_height_drawn = real_height + 1 * cm
 
-        y = start_y
-        for r in range(row):
-            above_index = r * 2
-            _, h = boxes[above_index]
-            y -= h + gap
+            c.drawImage(
+                image,
+                x_position,
+                y_position,
+                width=target_width,
+                height=real_height,
+                preserveAspectRatio=True,
+                mask='auto'
+            )
 
-        x = right_start_x + col * (box_width + gap)
+            # === 2. Chenare Dreapta (alături de imagine) ===
+            box_width = 4 * cm
+            box_height = 4 * cm
+            gap = 2 * cm
 
-        draw_box(c, x, y, box_width, height_current)
+            y = y_position + real_height - box_height
+            right_start_x = x_position + target_width + gap
 
-        if "<b>" in str(label):
-            p = Paragraph(label, style)
-            p.wrapOn(c, box_width - 0.4 * cm, height_current - 0.4 * cm)
-            p.drawOn(c, x + 0.2 * cm, y - height_current + 0.2 * cm)
-        elif "Imagine" not in label:
+            color = data.get("colors", ["-"])
+            glass_color = "transparenta" if (color[0] == "Clear") else color[0].lower()
+
+            boxes = [
+                (
+                    """
+                    <b>SCHEMA DESCHIDERE</b><br/>
+                    2 sectiuni active<br/>
+                    Glisare fluida si usoara datorita sistemului de glisare si mecanismului soft-close italian
+                    """,
+                    box_height
+                ),
+                (
+                    "<b>SCHEMA</b><br/>",
+                    box_height
+                ),
+            ]
+
+            for label, height in boxes:
+                draw_box(c, right_start_x, start_y, box_width, height)
+                p = Paragraph(label, style)
+                p.wrapOn(c, box_width - 0.4 * cm, height - 0.4 * cm)
+                p.drawOn(c, right_start_x + 0.2 * cm, y + height - p.height - 0.2 * cm)
+                y -= height + gap
+
+        except Exception as e:
+            print(f"[EROARE] {str(e)}")
             c.setFont("Helvetica", 10)
-            c.drawString(x + 0.2 * cm, y - height_current + 0.5 * cm, label)
+            c.drawString(MARGIN, title_y - 2 * cm, f"Eroare imagine: {str(e)}")
+
+    return y_position
+
 
 def draw_right_boxes(c, right_x, table_y, right_width, image_path):
     top_box_width = (right_width - 0.5 * cm) / 2
@@ -145,7 +198,6 @@ def draw_right_boxes(c, right_x, table_y, right_width, image_path):
     p.drawOn(c,
              text_box_x + 0.2 * cm,
              table_y - 4.5 * cm + 0.2 * cm)
-
 
 def _draw_bottom_section(c, start_y, data):
     page_width, _ = PAGE_SIZE
@@ -236,7 +288,13 @@ def _draw_bottom_section(c, start_y, data):
     # Pret
     table_data.append(("Pret", ""))
 
-    table_y = start_y - box_height - 1 * cm
+    dimensions = data.get("dimensions")
+    if dimensions and dimensions.get("width") <= 1000:
+        top_gap = 1 * cm
+    else:
+        top_gap = 1.5 * cm
+
+    table_y = start_y - box_height - top_gap
     draw_table(c, MARGIN, table_y, table_data, [4 * cm, 4 * cm])
 
     # Desenează restul boxurilor din dreapta
@@ -248,3 +306,4 @@ def _draw_bottom_section(c, start_y, data):
 
     draw_box(c, right_x, table_y - 4.5 * cm - 0.5 * cm, right_width, 1.125 * cm,
              "* Transport Inclus. Montajul se achita separat", 12, "Helvetica-Bold")
+
