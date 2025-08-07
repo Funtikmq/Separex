@@ -9,6 +9,7 @@ export const TwoPartElementO = ({
   dimensions,
   scaled,
   sectionColors,
+  profileColor,
   sectionModels,
   isSelected,
   onClick,
@@ -47,19 +48,19 @@ export const TwoPartElementO = ({
 
         if (isMobile) {
           if (sectionTypes[i] === "left") {
-            borderLeft = `${extraBorderSize}rem solid #000`;
+            borderLeft = `${extraBorderSize}rem solid ${profileColor}`;
             borderRight =
               i === 0 && sectionTypes[1] === "right"
                 ? "none"
-                : `${extraBorderSize}rem solid #000`;
+                : `${extraBorderSize}rem solid ${profileColor}`;
           } else if (sectionTypes[i] === "right") {
-            borderRight = `${extraBorderSize}rem solid #000`;
+            borderRight = `${extraBorderSize}rem solid ${profileColor}`;
             borderLeft =
               i === 1 && sectionTypes[0] === "left"
                 ? "none"
-                : `${extraBorderSize}rem solid #000`;
+                : `${extraBorderSize}rem solid ${profileColor}`;
           }
-          borderTop = `${extraBorderSize}rem solid #000`;
+          borderTop = `${extraBorderSize}rem solid ${profileColor}`;
         }
 
         return (
@@ -91,8 +92,8 @@ export const TwoPartElementO = ({
                 display: "flex",
                 height: "100%",
                 width: "100%",
-                border: `${borderSize}rem solid #000`,
-                borderBottom: `${borderSize}rem solid #000`,
+                border: `${borderSize}rem solid ${profileColor}`,
+                borderBottom: `${borderSize}rem solid ${profileColor}`,
                 background: isSelected(i)
                   ? "rgba(105, 200, 255, 0.6)"
                   : getSectionColor(sectionColors, i)?.backgroundColor ||

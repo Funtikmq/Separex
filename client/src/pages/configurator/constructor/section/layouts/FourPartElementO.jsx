@@ -9,6 +9,7 @@ export function FourPartElementO({
   dimensions,
   scaled,
   sectionColors,
+  profileColor,
   sectionModels,
   isSelected,
   onClick,
@@ -79,21 +80,21 @@ export function FourPartElementO({
 
         if (isMobile) {
           if (sectionTypes[i] === "left") {
-            borderLeft = `${extraBorderSize}rem solid #000`;
+            borderLeft = `${extraBorderSize}rem solid ${profileColor}`;
             // Verificăm dacă următoarea secțiune este right pentru a elimina border dublu
             const nextSectionIsRight = i < 3 && sectionTypes[i + 1] === "right";
             borderRight = nextSectionIsRight
               ? "none"
-              : `${extraBorderSize}rem solid #000`;
+              : `${extraBorderSize}rem solid ${profileColor}`;
           } else if (sectionTypes[i] === "right") {
-            borderRight = `${extraBorderSize}rem solid #000`;
+            borderRight = `${extraBorderSize}rem solid ${profileColor}`;
             // Verificăm dacă secțiunea anterioară este left pentru a elimina border dublu
             const prevSectionIsLeft = i > 0 && sectionTypes[i - 1] === "left";
             borderLeft = prevSectionIsLeft
               ? "none"
-              : `${extraBorderSize}rem solid #000`;
+              : `${extraBorderSize}rem solid ${profileColor}`;
           }
-          borderTop = `${extraBorderSize}rem solid #000`;
+          borderTop = `${extraBorderSize}rem solid ${profileColor}`;
         }
 
         return (
@@ -123,7 +124,7 @@ export function FourPartElementO({
                 position: "relative",
                 width: "100%",
                 height: "100%",
-                border: `${borderSize}rem solid #000`,
+                border: `${borderSize}rem solid ${profileColor}`,
                 background: isSelected(i)
                   ? "rgba(105, 200, 255, 0.6)"
                   : getSectionColor(sectionColors, i)?.backgroundColor ||

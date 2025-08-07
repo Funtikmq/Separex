@@ -10,14 +10,17 @@ const DoorFrame = forwardRef(
       scaled,
       selectedCategory,
       slidingMountType,
+      slidingType,
       selectedType,
       sectionCount,
       selectedIndex,
       sectionModels,
       sectionColors,
+      profileColor,
       selectionVisible,
       setSelectionVisible,
       selectedHandle,
+      setSelectedHandle,
       width,
       height,
       onClick,
@@ -84,6 +87,7 @@ const DoorFrame = forwardRef(
             scaledWidth={scaled.scaledWidth}
             selectedType={selectedType}
             borderPx={scaled.borderPx}
+            profileColor={profileColor}
           />
 
           <div className="constructorDoor" style={doorStyle} ref={ref}>
@@ -95,9 +99,11 @@ const DoorFrame = forwardRef(
               selectedIndex={selectedIndex}
               sectionModels={sectionModels}
               sectionColors={sectionColors}
+              profileColor={profileColor}
               selectionVisible={selectionVisible}
               setSelectionVisible={setSelectionVisible}
               selectedHandle={selectedHandle}
+              setSelectedHandle={setSelectedHandle}
               onClick={onClick}
               sectionDimensions={sectionDimensions}
               setSectionDimensions={setSectionDimensions}
@@ -105,12 +111,14 @@ const DoorFrame = forwardRef(
               sectionTypes={sectionTypes}
               setSectionTypes={setSectionTypes}
               slidingMountType={slidingMountType}
+              slidingType={slidingType}
             />
             <Axis
               realWidth={width}
               realHeight={height}
               borderPx={scaled.borderPx}
               scaled={scaled}
+              slidingMountType={slidingMountType}
             />
           </div>
         </div>

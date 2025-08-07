@@ -1,3 +1,5 @@
+import html2canvas from "html2canvas";
+
 function ConstructorInfo({
   doorDimensions,
   selectedCategory,
@@ -10,8 +12,16 @@ function ConstructorInfo({
   selectedIndex,
   sectionDimensions,
   sectionTypes,
+  doorRef,
 }) {
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    let image = null;
+
+    if (doorRef?.current) {
+      const canvas = await html2canvas(doorRef.current);
+      image = canvas.toDataURL("image/png");
+    }
+
     const data = {
       doorDimensions,
       selectedCategory,
@@ -24,10 +34,10 @@ function ConstructorInfo({
       selectedIndex,
       sectionDimensions,
       sectionTypes,
+      image,
     };
 
     localStorage.setItem("cartData", JSON.stringify(data));
-
     alert("Configuration Saved To Cart");
   };
 

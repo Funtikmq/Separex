@@ -3,8 +3,10 @@ export const HandleWithLock = ({ scaled, position }) => {
     <div
       style={{
         position: "absolute",
-        top: "50%",
-        ...(position === "right" ? { right: ".3em" } : { left: ".3em" }),
+        bottom: "50%",
+        ...(position === "right"
+          ? { right: `${scaled.borderPx / 16}rem` }
+          : { left: `${scaled.borderPx / 16}rem` }),
         transform: `translateY(-50%) translateX(${
           position === "right" ? "50%" : "-50%"
         })`,
@@ -45,12 +47,12 @@ export const PullHandle160 = ({ scaled, position }) => {
     <div
       style={{
         position: "absolute",
-        top: "50%",
+        bottom: "50%",
         pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 7) / 16}rem`,
         ...(position === "right" ? { right: "0" } : { left: "0" }),
-        transform: `translateY(-50%)`,
+        transform: `translateY(50%)`,
         zIndex: 5,
       }}
     >
@@ -96,12 +98,12 @@ export const PullHandle288 = ({ scaled, position }) => {
     <div
       style={{
         position: "absolute",
-        top: "50%",
+        bottom: "50%",
         pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 13) / 16}rem`,
         ...(position === "right" ? { right: "0" } : { left: "0" }),
-        transform: `translateY(-50%)`,
+        transform: `translateY(50%)`,
         zIndex: 5,
       }}
     >
@@ -147,12 +149,12 @@ export const PullHandle448 = ({ scaled, position }) => {
     <div
       style={{
         position: "absolute",
-        top: "50%",
+        bottom: "50%",
         pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 20) / 16}rem`,
         ...(position === "right" ? { right: "0" } : { left: "0" }),
-        transform: `translateY(-50%)`,
+        transform: `translateY(50%)`,
         zIndex: 5,
       }}
     >

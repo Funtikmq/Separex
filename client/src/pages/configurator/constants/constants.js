@@ -80,8 +80,8 @@ export const TYPES = {
 };
 
 export const DIMENSION_LIMITS = {
-  MIN_HEIGHT: 100,
+  MIN_HEIGHT: 1200,
   MAX_HEIGHT: 10000,
-  MIN_WIDTH: 100,
+  MIN_WIDTH: 300,
   MAX_WIDTH: 10000,
 };

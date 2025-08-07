@@ -15,6 +15,8 @@ function NavigationBar({
   sectionCount,
   slidingMountType,
   setSlidingMountType,
+  slidingType,
+  setSlidingType,
   selectedCategory,
   selectedIndex,
   setSelectedCategory,
@@ -24,6 +26,7 @@ function NavigationBar({
   sectionModels,
   setSectionColors,
   sectionColors,
+  setProfileColor,
   selectedHandle,
   setSelectedHandle,
   doorFrameRef,
@@ -95,12 +98,15 @@ function NavigationBar({
         sectionCount={sectionCount}
         slidingMountType={slidingMountType}
         setSlidingMountType={setSlidingMountType}
+        slidingType={slidingType}
+        setSlidingType={setSlidingType}
         setSelectedType={setSelectedType}
         selectedType={selectedType}
         setSectionModels={setSectionModels}
         sectionModels={sectionModels}
         setSectionColors={setSectionColors}
         sectionColors={sectionColors}
+        setProfileColor={setProfileColor}
         selectedHandle={selectedHandle}
         setSelectedHandle={setSelectedHandle}
         selectedIndex={selectedIndex}

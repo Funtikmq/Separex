@@ -10,6 +10,7 @@ export function DefaultSectionLayout({
   dimensions,
   scaled,
   sectionColors,
+  profileColor,
   sectionModels,
   isSelected,
   onClick,
@@ -25,6 +26,7 @@ export function DefaultSectionLayout({
   selectedHandle,
   sectionTypes,
   slidingMountType,
+  slidingType,
   renderSectionTypeRadio = () => null,
 }) {
   const SLIDING_DOOR_GAP =
@@ -85,22 +87,22 @@ export function DefaultSectionLayout({
         let borderBottom = "none";
 
         if (isMobile) {
-          borderTop = `${extraBorderSize}rem solid #000`;
+          borderTop = `${extraBorderSize}rem solid ${profileColor}`;
 
           if (sectionTypes[i] === "left") {
             marginLeft = "1px";
-            borderLeft = `${extraBorderSize}rem solid #000`;
+            borderLeft = `${extraBorderSize}rem solid ${profileColor}`;
             borderRight =
-              isNextMobile && sectionTypes[i + 1] === "right"
+              isNextMobile && sectionTypes[i + 1] === ""
                 ? "none"
-                : `${extraBorderSize}rem solid #000`;
+                : `${extraBorderSize}rem solid ${profileColor}`;
           } else if (sectionTypes[i] === "right") {
             marginRight = "1px";
-            borderRight = `${extraBorderSize}rem solid #000`;
+            borderRight = `${extraBorderSize}rem solid ${profileColor}`;
             borderLeft =
               isPrevMobile && sectionTypes[i - 1] === "left"
                 ? "none"
-                : `${extraBorderSize}rem solid #000`;
+                : `${extraBorderSize}rem solid ${profileColor}`;
           }
 
           if (isNextMobile) {
@@ -112,8 +114,8 @@ export function DefaultSectionLayout({
         }
 
         if (isSwingDoor && sectionTypes[i] === "fixed") {
-          borderTop = `${extraBorderSize}rem solid #000`;
-          borderBottom = `${extraBorderSize}rem solid #000`;
+          borderTop = `${extraBorderSize}rem solid ${profileColor}`;
+          borderBottom = `${extraBorderSize}rem solid ${profileColor}`;
 
           const prevIsFixed = i > 0 && sectionTypes[i - 1] === "fixed";
           const nextIsFixed =
@@ -121,10 +123,10 @@ export function DefaultSectionLayout({
 
           borderLeft = prevIsFixed
             ? "none"
-            : `${extraBorderSize}rem solid #000`;
+            : `${extraBorderSize}rem solid ${profileColor}`;
           borderRight = nextIsFixed
             ? "none"
-            : `${extraBorderSize}rem solid #000`;
+            : `${extraBorderSize}rem solid ${profileColor}`;
 
           marginLeft = prevIsFixed ? "0" : "1px";
           marginRight = nextIsFixed ? "0" : "1px";
@@ -132,15 +134,15 @@ export function DefaultSectionLayout({
 
         // === Suprascriem dacă e Fixed Wall
         if (isFixedWall) {
-          borderTop = `${borderSize}rem solid #000`;
-          borderBottom = `${borderSize}rem solid #000`;
+          borderTop = `${borderSize}rem solid ${profileColor}`;
+          borderBottom = `${borderSize}rem solid ${profileColor}`;
 
           if (i === 0) {
-            borderLeft = `${borderSize}rem solid #000`;
-            borderRight = `${borderSize}rem solid #000`;
+            borderLeft = `${borderSize}rem solid ${profileColor}`;
+            borderRight = `${borderSize}rem solid ${profileColor}`;
           } else if (i > 0 && i < sectionCount) {
             borderLeft = "none";
-            borderRight = `${borderSize}rem solid #000`;
+            borderRight = `${borderSize}rem solid ${profileColor}`;
           } else {
             borderLeft = "none";
             borderRight = "none";
@@ -173,7 +175,9 @@ export function DefaultSectionLayout({
               }}
               style={{
                 height: "100%",
-                border: !isFixedWall ? `${borderSize}rem solid #000` : "none",
+                border: !isFixedWall
+                  ? `${borderSize}rem solid ${profileColor}`
+                  : "none",
                 background: isSelected(i)
                   ? "rgba(105, 200, 255, 0.6)"
                   : getSectionColor(sectionColors, i)?.backgroundColor ||
@@ -203,7 +207,7 @@ export function DefaultSectionLayout({
                           position: "absolute",
                           width: `${scaled.borderPx / 128}rem`,
                           height: `${scaled.borderPx / 4}rem`,
-                          backgroundColor: "#222",
+                          backgroundColor: `${profileColor}`,
                           top: `${20 + index * 30}%`,
                           [sectionTypes[i] === "left" ? "left" : "right"]: `${
                             -scaled.borderPx / 15

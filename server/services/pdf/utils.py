@@ -2,7 +2,7 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import cm
 from .constants import LOGO_PATH, CONTACT_INFO, COLORS
-from .sections.common import draw_box
+from .pages.common import draw_box
 import os
 
 def draw_logo(c, x, y, width=5*cm):

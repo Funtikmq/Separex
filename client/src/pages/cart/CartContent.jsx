@@ -101,6 +101,7 @@ function CartContent() {
       quantity: quantityInt,
       price: price.toFixed(2),
       product: orderData.selectedCategory,
+      image: orderData.image,
     };
 
     addOrder(newOrder);
@@ -150,15 +151,17 @@ function CartContent() {
 
   // Datele Pentru PDF
   const transformOrderDataForPDF = (data) => ({
-    category: data.selectedCategory,
-    type: data.selectedType,
-    mountType: data.slidingMountType,
-    dimensions: data.doorDimensions,
-    sectionType: data.sectionTypes,
+    category: data.category,
+    type: data.type,
+    mountType: data.mountType,
+    dimensions: data.dimensions,
+    sectionType: data.sectionType,
     sectionDimensions: data.sectionDimensions,
     sectionModels: data.sectionModels,
     sectionColors: data.sectionColors,
-    handles: data.selectedHandle ? [data.selectedHandle] : [],
+    handles: data.handles || [],
+    image: data.image,
+    price: data.price,
   });
 
   return (
@@ -166,8 +169,8 @@ function CartContent() {
       <Table
         orders={orders}
         onDeleteOrder={deleteOrder}
-        onGenerate={() =>
-          handleGenerateAndDownloadPDF(transformOrderDataForPDF(orderData))
+        onGenerate={(order) =>
+          handleGenerateAndDownloadPDF(transformOrderDataForPDF(order))
         }
         onConfirmOrder={handleConfirmOrder}
       />

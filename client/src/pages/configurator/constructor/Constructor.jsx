@@ -8,12 +8,15 @@ function Constructor({
   sectionCount,
   selectedCategory,
   slidingMountType,
+  slidingType,
   selectedIndex,
   setSelectedIndex,
   selectedType,
   sectionColors,
+  profileColor,
   sectionModels,
   selectedHandle,
+  setSelectedHandle,
   doorFrameRef,
   sectionDimensions,
   setSectionDimensions,
@@ -23,6 +26,7 @@ function Constructor({
   const { height, width } = doorDimensions;
   const scaled = useScaledDimensions(height, width);
 
+  const doorDrawingRef = useRef();
   const containerRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [selectionVisible, setSelectionVisible] = useState(false);
@@ -33,6 +37,11 @@ function Constructor({
       setContainerSize({ width: offsetWidth, height: offsetHeight });
     }
   }, [scaled]);
+
+  const setRefs = (el) => {
+    containerRef.current = el;
+    doorDrawingRef.current = el;
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -65,28 +74,28 @@ function Constructor({
         0% 0%,
         100% 0%,
         100% 100%,
-        ${(doorRight + wallPadding) / 16}rem 100%,
-        ${(doorRight + wallPadding) / 16}rem ${
-          (doorTop - 0.1 * containerHeight) / 16
+        ${(doorRight + wallPadding - 3) / 16}rem 100%,
+        ${(doorRight + wallPadding - 3) / 16}rem ${
+          (doorTop - 0.05 * containerHeight) / 16
         }rem,
-        ${(doorLeft - wallPadding) / 16}rem ${
-          (doorTop - 0.1 * containerHeight) / 16
+        ${(doorLeft - wallPadding + 3) / 16}rem ${
+          (doorTop - 0.05 * containerHeight) / 16
         }rem,
-        ${(doorLeft - wallPadding) / 16}rem 100%,
+        ${(doorLeft - wallPadding + 3) / 16}rem 100%,
         0% 100%
       )`
       : "none";
 
   return (
     <div className="constructor">
-      <div className="constructorContent" ref={containerRef}>
+      <div className="constructorContent" ref={setRefs}>
         <div className="constructorFloor"></div>
 
         {wallClipPath !== "none" && (
           <div
             style={{
               clipPath: wallClipPath,
-              backgroundColor: "#f4f4f6",
+              background: "#f4f4f6", //  linear-gradient(135deg, #f4f4f6, #b8dcf5ff)
               backgroundSize: "cover",
               position: "absolute",
               width: "100%",
@@ -101,21 +110,24 @@ function Constructor({
         )}
 
         <DoorFrame
-          doorDimensions={doorDimensions}
           ref={doorFrameRef}
+          doorDimensions={doorDimensions}
           scaled={scaled}
           width={width}
           height={height}
           selectedCategory={selectedCategory}
           slidingMountType={slidingMountType}
+          slidingType={slidingType}
           selectedType={selectedType}
           sectionCount={sectionCount}
           selectedIndex={selectedIndex}
           sectionModels={sectionModels}
           sectionColors={sectionColors}
+          profileColor={profileColor}
           selectionVisible={selectionVisible}
           setSelectionVisible={setSelectionVisible}
           selectedHandle={selectedHandle}
+          setSelectedHandle={setSelectedHandle}
           onClick={setSelectedIndex}
           sectionDimensions={sectionDimensions}
           setSectionDimensions={setSectionDimensions}
@@ -136,6 +148,7 @@ function Constructor({
         slidingMountType={slidingMountType}
         sectionDimensions={sectionDimensions}
         sectionTypes={sectionTypes}
+        doorRef={doorDrawingRef}
       />
     </div>
   );

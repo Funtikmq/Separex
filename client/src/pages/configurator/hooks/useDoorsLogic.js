@@ -10,11 +10,13 @@ export const useDoorsLogic = () => {
   const scaled = useScaledDimensions(height, width);
   const [sectionCount, setSectionCount] = useState(1);
   const [slidingMountType, setSlidingMountType] = useState("On wall");
+  const [slidingType, setSlidingType] = useState("classic");
   const [selectedCategory, setSelectedCategory] = useState("Swing Doors");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedType, setSelectedType] = useState("3-Part Element");
   const [sectionModels, setSectionModels] = useState(Array(1).fill("Aero"));
   const [sectionColors, setSectionColors] = useState(Array(1).fill("Clear"));
+  const [profileColor, setProfileColor] = useState("#333");
   const [selectedHandle, setSelectedHandle] = useState(() =>
     Array(1).fill("Handle With Lock")
   );
@@ -200,18 +202,12 @@ export const useDoorsLogic = () => {
 
   useEffect(() => {
     const count = Math.max(sectionCount, 1);
+    const h = doorDimensions.height;
+    const w = doorDimensions.width;
 
     const dimensions = {
-      "2-Part Element O": [
-        doorDimensions.height * 0.2,
-        doorDimensions.height * 0.8,
-      ],
-      "4-Part Element O": [
-        doorDimensions.height * 0.2,
-        doorDimensions.height * 0.8,
-        doorDimensions.width * 0.5,
-        doorDimensions.width * 0.5,
-      ],
+      "2-Part Element O": [h * 0.2, h * 0.8],
+      "4-Part Element O": [h * 0.2, h * 0.8, w * 0.5, w * 0.5],
     };
 
     function splitNatural(total, parts) {
@@ -222,15 +218,23 @@ export const useDoorsLogic = () => {
         .map((v, i) => (i < remainder ? v + 1 : v));
     }
 
+    // Verifică dacă este tipul "N-Part Element A" cu N între 3 și 8
+    const match = selectedType?.match(/^(\d+)-Part Element A$/);
+    if (match) {
+      const partCount = parseInt(match[1], 10);
+      if (partCount >= 3 && partCount <= 8 && count >= 2) {
+        const topHeight = Math.round(h * 0.2);
+        const bottomTotal = h - topHeight;
+        const bottomHeights = splitNatural(bottomTotal, count - 1);
+        setSectionDimensions([topHeight, ...bottomHeights]);
+        return;
+      }
+    }
+
     setSectionDimensions(
       selectedType && dimensions[selectedType]
         ? dimensions[selectedType]
-        : selectedType && /^\d+-Part Element A$/.test(selectedType)
-        ? [
-            sectionDimensions[0] ?? Math.round(doorDimensions.height * 0.3),
-            ...splitNatural(doorDimensions.width, count - 1),
-          ]
-        : splitNatural(doorDimensions.width, count)
+        : splitNatural(w, count)
     );
   }, [sectionCount, selectedType, doorDimensions, selectedCategory]);
 
@@ -242,6 +246,8 @@ export const useDoorsLogic = () => {
     setSectionCount,
     slidingMountType,
     setSlidingMountType,
+    slidingType,
+    setSlidingType,
     selectedCategory,
     setSelectedCategory,
     selectedIndex,
@@ -251,6 +257,8 @@ export const useDoorsLogic = () => {
     sectionModels,
     setSectionModels,
     sectionColors,
+    profileColor,
+    setProfileColor,
     setSectionColors,
     selectedHandle,
     setSelectedHandle,

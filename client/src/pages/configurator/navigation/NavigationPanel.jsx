@@ -14,12 +14,15 @@ function NavigationPanel({
   setSectionCount,
   sectionCount,
   slidingMountType,
+  slidingType,
+  setSlidingType,
   setSlidingMountType,
   setSelectedType,
   selectedType,
   sectionModels,
   setSectionModels,
   sectionColors,
+  setProfileColor,
   setSectionColors,
   selectedHandle,
   setSelectedHandle,
@@ -43,6 +46,8 @@ function NavigationPanel({
           selectedCategory={selectedCategory}
           slidingMountType={slidingMountType}
           setSlidingMountType={setSlidingMountType}
+          slidingType={slidingType}
+          setSlidingType={setSlidingType}
           setSectionCount={setSectionCount}
           setSelectedType={setSelectedType}
           activeItem={activeItem}
@@ -86,6 +91,7 @@ function NavigationPanel({
         <ColorPanel
           sectionColors={sectionColors}
           setSectionColors={setSectionColors}
+          setProfileColor={setProfileColor}
           selectedIndex={selectedIndex}
         />
       );

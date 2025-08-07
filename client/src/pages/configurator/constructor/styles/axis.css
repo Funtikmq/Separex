@@ -1,4 +1,4 @@
-.AxisX {
+.axisX {
   height: 0.1vh;
   background-color: #000;
   display: flex;
@@ -11,8 +11,8 @@
   left: 0;
 }
 
-.AxisX::before,
-.AxisX::after {
+.axisX::before,
+.axisX::after {
   content: "";
   width: 0;
   height: 0;
@@ -22,17 +22,17 @@
   transform: translateY(-50%);
 }
 
-.AxisX::before {
+.axisX::before {
   border-right: 8px solid black;
   left: -1vh;
 }
 
-.AxisX::after {
+.axisX::after {
   border-left: 8px solid black;
   right: -1vh;
 }
 
-.AxisY {
+.axisY {
   width: 0.1vh;
   background-color: #000;
   display: flex;
@@ -41,12 +41,20 @@
   z-index: 2;
   height: 100%;
   position: absolute;
-  right: -3rem;
+  right: -1.5rem;
   bottom: 0;
 }
 
-.AxisY::before,
-.AxisY::after {
+.axisY.total {
+  height: auto;
+}
+
+.total .axisLabel {
+  transform: translateY(-100%);
+}
+
+.axisY::before,
+.axisY::after {
   content: "";
   width: 0;
   height: 0;
@@ -56,28 +64,44 @@
   transform: translateX(-50%);
 }
 
-.AxisY::before {
+.axisY::before {
   border-bottom: 8px solid black;
-  top: -1vh;
+  top: -1%;
 }
 
-.AxisY::after {
+.axisY::after {
   border-top: 8px solid black;
-  bottom: -1vh;
+  bottom: -1%;
 }
 
-.AxisLabel {
-  padding: 0.2vh;
+.axisLabel {
+  padding: 0;
   color: #4d5396;
   font-weight: 500;
 }
 
-.AxisX .AxisLabel {
+.axisX .axisLabel {
   background-color: #ccc;
 }
 
-.AxisY .AxisLabel {
+.axisY .axisLabel {
+  background-color: #f4f4f6; /*background-color: rgb(207, 232, 250);*/
+}
+
+.axisY.total p {
+  position: relative;
+  bottom: 4rem;
+  left: 0;
+  transform: translateX(50%);
   background-color: #f4f4f6;
+  color: #4d5396;
+  max-width: 0px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.axisY.total:hover p {
+  opacity: 1;
 }
 
 /*Axele Sectiunilor*/

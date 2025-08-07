@@ -9,6 +9,7 @@ export function XPartElementA({
   dimensions,
   scaled,
   sectionColors,
+  profileColor,
   sectionModels,
   isSelected,
   onClick,
@@ -56,12 +57,12 @@ export function XPartElementA({
         if (isMobile) {
           if (sectionTypes[i] === "left") {
             marginLeft = "1px";
-            borderLeft = `${extraBorderSize}rem solid #000`;
-            borderRight = `${extraBorderSize}rem solid #000`;
+            borderLeft = `${extraBorderSize}rem solid ${profileColor}`;
+            borderRight = `${extraBorderSize}rem solid ${profileColor}`;
           } else if (sectionTypes[i] === "right") {
             marginRight = "1px";
-            borderRight = `${extraBorderSize}rem solid #000`;
-            borderLeft = `${extraBorderSize}rem solid #000`;
+            borderRight = `${extraBorderSize}rem solid ${profileColor}`;
+            borderLeft = `${extraBorderSize}rem solid ${profileColor}`;
           }
         }
 
@@ -78,7 +79,9 @@ export function XPartElementA({
               padding: isMobile ? `${extraBorderSize / 3}rem` : 0,
               borderLeft,
               borderRight,
-              borderTop: isMobile ? `${extraBorderSize}rem solid #000` : "none",
+              borderTop: isMobile
+                ? `${extraBorderSize}rem solid ${profileColor}`
+                : "none",
               borderBottom: "none",
               marginLeft: `${marginLeft}rem`,
               marginRight: `${marginRight}rem`,
@@ -94,8 +97,8 @@ export function XPartElementA({
               style={{
                 width: "100%",
                 height: "100%",
-                border: `${borderSize}rem solid #000`,
-                borderBottom: `${borderSize}rem solid #000`,
+                border: `${borderSize}rem solid ${profileColor}`,
+                borderBottom: `${borderSize}rem solid ${profileColor}`,
                 background: isSelected(i)
                   ? "rgba(105, 200, 255, 0.6)"
                   : getSectionColor(sectionColors, i)?.backgroundColor ||
@@ -166,18 +169,18 @@ export function XPartElementA({
         if (isMobile) {
           if (sectionTypes[sectionIndex] === "left") {
             marginLeft = "1px";
-            borderLeft = `${extraBorderSize}rem solid #000`;
+            borderLeft = `${extraBorderSize}rem solid ${profileColor}`;
             borderRight =
               isNextMobile && sectionTypes[sectionIndex + 1] === "right"
                 ? "none"
-                : `${extraBorderSize}rem solid #000`;
+                : `${extraBorderSize}rem solid ${profileColor}`;
           } else if (sectionTypes[sectionIndex] === "right") {
             marginRight = "1px";
-            borderRight = `${extraBorderSize}rem solid #000`;
+            borderRight = `${extraBorderSize}rem solid ${profileColor}`;
             borderLeft =
               isPrevMobile && sectionTypes[sectionIndex - 1] === "left"
                 ? "none"
-                : `${extraBorderSize}rem solid #000`;
+                : `${extraBorderSize}rem solid ${profileColor}`;
           }
 
           // Adăugăm margin între 2 secțiuni mobile consecutive
@@ -198,10 +201,10 @@ export function XPartElementA({
 
           borderLeft = prevIsFixed
             ? "none"
-            : `${extraBorderSize}rem solid #000`;
+            : `${extraBorderSize}rem solid ${profileColor}`;
           borderRight = nextIsFixed
             ? "none"
-            : `${extraBorderSize}rem solid #000`;
+            : `${extraBorderSize}rem solid ${profileColor}`;
 
           marginLeft = prevIsFixed ? "0" : "1px";
           marginRight = nextIsFixed ? "0" : "1px";
@@ -220,7 +223,9 @@ export function XPartElementA({
               padding: isMobile ? `${extraBorderSize / 3}rem` : 0,
               borderLeft,
               borderRight,
-              borderTop: isMobile ? `${extraBorderSize}rem solid #000` : "none",
+              borderTop: isMobile
+                ? `${extraBorderSize}rem solid ${profileColor}`
+                : "none",
               borderBottom: "none",
               marginLeft: `${marginLeft}rem`,
               marginRight: `${marginRight}rem`,
@@ -236,7 +241,7 @@ export function XPartElementA({
               style={{
                 width: "100%",
                 height: "100%",
-                border: `${borderSize}rem solid #000`,
+                border: `${borderSize}rem solid ${profileColor}`,
                 background: isSelected(sectionIndex)
                   ? "rgba(105, 200, 255, 0.6)"
                   : getSectionColor(sectionColors, sectionIndex)

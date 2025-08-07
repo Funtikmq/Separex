@@ -5,6 +5,7 @@ import { ICON_COLORS } from "./utils/panelImages.js";
 function ColorPanel({
   sectionColors,
   setSectionColors,
+  setProfileColor,
   selectedIndex,
   activeItem,
 }) {
@@ -18,6 +19,23 @@ function ColorPanel({
   return (
     <div className="navigationPanel">
       <ul className="navigationPanelList">
+        <div className="navigationPanelSelector">
+          <p className="navigationPanelText">Profile Color</p>
+          <button
+            onClick={() => {
+              setProfileColor("#f4f4f4");
+            }}
+          >
+            White
+          </button>
+          <button
+            onClick={() => {
+              setProfileColor("#333");
+            }}
+          >
+            Black
+          </button>
+        </div>
         {COLORS.map((color, index) => {
           const image = ICON_COLORS[color];
           return (

@@ -5,10 +5,7 @@ import { useResizeLogic } from "./hooks/useResizeLogic";
 import { useMouseHandlers } from "./hooks/useMouseHandlers";
 import { useSectionTypeManagement } from "./hooks/useSectionTypeManagement";
 import { getLayoutComponent } from "./utils/layoutSelector";
-import {
-  SECTION_CATEGORIES,
-  SECTION_STATES,
-} from "./constants/sectionConstants";
+import { SECTION_CATEGORIES } from "./constants/sectionConstants";
 
 function SectionRenderer({
   selectedCategory,
@@ -18,6 +15,7 @@ function SectionRenderer({
   selectedIndex,
   sectionModels,
   sectionColors,
+  profileColor,
   selectionVisible,
   setSelectionVisible,
   onClick,
@@ -28,6 +26,7 @@ function SectionRenderer({
   setSectionTypes,
   selectedHandle,
   slidingMountType,
+  slidingType,
 }) {
   // useSectionDimensions hook
   const { dimensions, updateDimensions } = useSectionDimensions({
@@ -48,13 +47,20 @@ function SectionRenderer({
   const { isResizing, handleResizeStart, handleMouseMove, handleMouseUp } =
     useMouseHandlers(handleResize);
 
-  const { handleSectionTypeChange } = useSectionTypeManagement(setSectionTypes);
+  const { handleSectionTypeChange } = useSectionTypeManagement(
+    setSectionTypes,
+    selectedCategory,
+    sectionCount,
+    slidingType,
+    slidingMountType
+  );
 
   const layoutProps = React.useMemo(
     () => ({
       dimensions,
       scaled,
       sectionColors,
+      profileColor,
       sectionModels,
       isSelected: (i) => selectedIndex === i && selectionVisible,
       onClick,
@@ -76,6 +82,7 @@ function SectionRenderer({
       sectionCount,
       slidingMountType,
       isResizing,
+      slidingMountType,
       resizingIndex: null,
       renderSectionTypeRadio: (idx) => {
         if (
@@ -84,22 +91,50 @@ function SectionRenderer({
           ![
             SECTION_CATEGORIES.SLIDING_DOORS,
             SECTION_CATEGORIES.SWING_DOORS,
-          ].includes(selectedCategory)
+          ].includes(selectedCategory) ||
+          (selectedCategory === SECTION_CATEGORIES.SLIDING_DOORS &&
+            slidingMountType === "On wall")
         )
           return null;
 
+        // For cascade sliding doors, only show options for first and last sections
+        if (
+          selectedCategory === SECTION_CATEGORIES.SLIDING_DOORS &&
+          slidingType === "cascade"
+        ) {
+          if (idx !== 0 && idx !== sectionCount - 1) return null;
+        }
+
+        const options = [];
+
+        if (selectedCategory === SECTION_CATEGORIES.SLIDING_DOORS) {
+          options.push(
+            { value: "fixed", label: "Fixed" },
+            { value: "mobile", label: "Mobile" }
+          );
+        } else if (selectedCategory === SECTION_CATEGORIES.SWING_DOORS) {
+          options.push(
+            { value: "fixed", label: "Fixed" },
+            { value: "left", label: "To left" },
+            { value: "right", label: "To right" }
+          );
+        }
+
         return (
           <div className="sectionTypeInput">
-            {Object.entries(SECTION_STATES).map(([key, value]) => (
-              <label key={key} style={{ marginRight: key !== "RIGHT" ? 8 : 0 }}>
+            {options.map((option) => (
+              <label
+                key={option.value}
+                style={{ marginRight: option.value !== "right" ? 8 : 0 }}
+              >
                 <input
                   type="radio"
                   name={`section-type-${idx}`}
-                  value={value}
-                  checked={sectionTypes[idx] === value}
-                  onChange={() => handleSectionTypeChange(idx, value)}
+                  value={option.value}
+                  checked={sectionTypes[idx] === option.value}
+                  onChange={() => handleSectionTypeChange(idx, option.value)}
                 />
-                {key === "FIXED" ? "Fixed" : `To ${key.toLowerCase()}`}
+                {option.label}
               </label>
             ))}
           </div>
@@ -110,6 +145,7 @@ function SectionRenderer({
       dimensions,
       scaled,
       sectionColors,
+      profileColor,
       sectionModels,
       selectedIndex,
       selectionVisible,
@@ -151,6 +187,7 @@ SectionRenderer.propTypes = {
   selectedIndex: PropTypes.number,
   sectionModels: PropTypes.array,
   sectionColors: PropTypes.array,
+  profileColor: PropTypes.string,
   selectionVisible: PropTypes.bool,
   setSelectionVisible: PropTypes.func,
   onClick: PropTypes.func,
@@ -160,6 +197,8 @@ SectionRenderer.propTypes = {
   sectionTypes: PropTypes.array,
   setSectionTypes: PropTypes.func,
   selectedHandle: PropTypes.string,
+  slidingType: PropTypes.string,
+  slidingMountType: PropTypes.string,
 };
 
 export default memo(SectionRenderer);

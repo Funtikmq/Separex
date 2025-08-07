@@ -14,21 +14,13 @@ function AdminContent() {
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
   const [expandedRows, setExpandedRows] = useState({});
-
   const { user, loading } = useAuth();
-
-  if (loading) return <p>Loading...</p>;
-  if (!user || user.role !== "admin") return <p>Access denied</p>;
 
   const db = getFirestore(app);
 
-  const typeMap = {
-    right: "To Right",
-    left: "To Left",
-    fixed: "Fixed",
-  };
-
   useEffect(() => {
+    if (loading || !user || user.role !== "admin") return;
+
     const fetchOrders = async () => {
       try {
         const ordersRef = collection(db, "orders");
@@ -59,7 +51,10 @@ function AdminContent() {
 
     fetchOrders();
     fetchUsers();
-  }, [db]);
+  }, [db, loading, user]);
+
+  if (loading) return <p>Loading...</p>;
+  if (!user || user.role !== "admin") return <p>Access denied</p>;
 
   const handleDeleteOrderFromFirestore = async (orderId) => {
     try {

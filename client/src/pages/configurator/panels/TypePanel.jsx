@@ -8,6 +8,8 @@ function TypePanel({
   selectedCategory,
   slidingMountType,
   setSlidingMountType,
+  slidingType,
+  setSlidingType,
   setSectionCount,
   setSelectedType,
   activeItem,
@@ -22,28 +24,44 @@ function TypePanel({
     selectedCategory === "Sliding Doors" &&
     slidingMountType === "In wall"
   ) {
-    filteredTypes = filteredTypes.filter(
-      (type) =>
-        type.startsWith("2-Part") ||
-        type.startsWith("3-Part") ||
-        type.startsWith("4-Part")
-    );
+    if (slidingType === "classic") {
+      filteredTypes = filteredTypes.filter(
+        (type) => type.startsWith("3-Part") || type.startsWith("4-Part")
+      );
+    } else {
+      filteredTypes = filteredTypes.filter(
+        (type) =>
+          type.startsWith("2-Part") ||
+          type.startsWith("3-Part") ||
+          type.startsWith("4-Part")
+      );
+    }
   }
 
   return (
     <div className="navigationPanel">
       {selectedCategory === "Sliding Doors" && (
-        <div className="mountTypeToggle">
-          <button
-            className="toggleButton"
-            onClick={() =>
-              setSlidingMountType((prev) =>
-                prev === "On wall" ? "In wall" : "On wall"
-              )
-            }
-          >
-            {slidingMountType}
-          </button>
+        <div className="navigationPanelSelector">
+          <p className="navigationPanelText">Mounting Type</p>
+          <div>
+            <button onClick={() => setSlidingMountType("On wall")}>
+              On Wall
+            </button>
+            <button
+              onClick={() => {
+                setSlidingMountType("In wall"), setSlidingType("classic");
+              }}
+            >
+              Clasic
+            </button>
+            <button
+              onClick={() => {
+                setSlidingMountType("In wall"), setSlidingType("cascade");
+              }}
+            >
+              Cascade
+            </button>
+          </div>
         </div>
       )}
       <ul className="navigationPanelList">

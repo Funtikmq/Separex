@@ -1,4 +1,4 @@
-function TopBar({ category, mountType, scaledWidth, selectedType, borderPx }) {
+function TopBar({ category, mountType, selectedType, borderPx, profileColor }) {
   if (category === "Sliding Doors") {
     const isOnWall = mountType === "In wall";
 
@@ -14,9 +14,12 @@ function TopBar({ category, mountType, scaledWidth, selectedType, borderPx }) {
               ? "translateX(0%)"
               : "translateX(50%)",
           height: `${(2 * borderPx) / 16}rem`,
-          width: `${isOnWall ? scaledWidth / 15 : (scaledWidth * 2) / 15}rem`,
+          width: isOnWall ? `100%` : `200%`,
           background:
-            "linear-gradient(225deg, rgb(0, 0, 0) 20%, rgba(0, 0, 0, 0.66) 100%)",
+            profileColor === "#f4f4f4"
+              ? "linear-gradient(225deg, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0.66) 100%)"
+              : "linear-gradient(225deg, rgb(0, 0, 0) 20%, rgba(0, 0, 0, 0.66) 100%)",
+
           zIndex: 2,
         }}
       />

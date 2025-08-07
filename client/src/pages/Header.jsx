@@ -7,7 +7,7 @@ import { useState } from "react";
 function Header() {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const [imgFailed, setImgFailed] = useState(false); // 👈 fallback flag
+  const [imgFailed, setImgFailed] = useState(false);
 
   const handleLogOut = async () => {
     try {
@@ -24,7 +24,7 @@ function Header() {
           className="headerImg"
           src={logo}
           alt="Logo"
-          onClick={() => navigate("/Home")}
+          onClick={() => navigate("/Configurator")}
         />
       </div>
 

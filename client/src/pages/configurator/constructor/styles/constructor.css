@@ -28,6 +28,12 @@
   padding-bottom: 8vh;
 }
 
+.doorConture {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
 .constructorDoor {
   display: flex;
   margin: auto;

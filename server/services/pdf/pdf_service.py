@@ -1,6 +1,6 @@
 from reportlab.pdfgen import canvas
 from .constants import PAGE_SIZE
-from .sections import first_page, second_page, third_page, fourth_page
+from .pages import first_page, second_page, third_page, fourth_page
 
 
 def generate_pdf(data, filepath):
