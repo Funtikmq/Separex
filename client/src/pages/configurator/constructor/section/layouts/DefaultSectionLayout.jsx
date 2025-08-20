@@ -26,7 +26,6 @@ export function DefaultSectionLayout({
   selectedHandle,
   sectionTypes,
   slidingMountType,
-  slidingType,
   renderSectionTypeRadio = () => null,
 }) {
   const SLIDING_DOOR_GAP =
@@ -194,7 +193,15 @@ export function DefaultSectionLayout({
               sectionDimensions={sectionDimensions}
             >
               {getModelOverlay(sectionModels[i], scaled, dimensions)}
-              {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
+              {getHandleOverlay(
+                selectedHandle,
+                scaled,
+                i,
+                sectionTypes[i],
+                selectedCategory,
+                sectionCount,
+                slidingMountType
+              )}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
 
               {isSwingDoor &&

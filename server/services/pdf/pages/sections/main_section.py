@@ -38,7 +38,7 @@ def draw_main_content_section(c, start_y, title_y, data, MARGIN):
                 target_width = 8.5 * cm
             elif dimensions and dimensions.get("width", 0) >= 3000:
                 crop_margin_x = int(orig_width * 0.22)
-                if dimensions and dimensions.get("height", 0) <= 3000:
+                if dimensions and dimensions.get("height", 0) <= 2000:
                     crop_margin_y = int(orig_height * 0.2)
                 else:
                     crop_margin_y = 0

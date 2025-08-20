@@ -48,6 +48,7 @@ export const useDoorsLogic = () => {
   useEffect(() => {
     setSectionModels(Array(sectionCount).fill("Aero"));
     setSectionColors(Array(sectionCount).fill("Clear"));
+    setSelectedIndex(0);
   }, [sectionCount]);
 
   useEffect(() => {
@@ -105,6 +106,22 @@ export const useDoorsLogic = () => {
   }, [sectionTypes, selectedCategory]);
 
   useEffect(() => {
+    if (selectedCategory === "Sliding Doors") {
+      if (slidingMountType === "On wall") {
+        setSelectedType("1-Part Element");
+      } else if (slidingMountType === "In wall") {
+        if (slidingType === "classic") {
+          setSelectedType("3-Part Element");
+          setSectionCount(3);
+        } else if (slidingType === "cascade") {
+          setSelectedType("2-Part Element");
+          setSectionCount(2);
+        }
+      }
+    }
+  }, [slidingType, selectedCategory, slidingMountType]);
+
+  useEffect(() => {
     const handlesByCategory = {
       "Swing Doors": "Handle With Lock",
       "Sliding Doors": "Pull Handle 160",
@@ -158,25 +175,30 @@ export const useDoorsLogic = () => {
   }, [selectedCategory, sectionCount, slidingMountType, selectedType]);
 
   useEffect(() => {
-    setSectionTypes((prevTypes) => {
-      const newTypes = Array(sectionCount).fill("fixed");
+    setSectionTypes(() => {
+      const newTypes = Array(sectionCount);
 
-      // Dacă este "In wall", păstrăm toate secțiunile ca "fixed"
-      if (
-        slidingMountType === "In wall" || //
-        selectedCategory === "Fixed Walls"
-      ) {
-        return newTypes;
+      if (selectedCategory === "Fixed Walls") {
+        // Toate secțiunile sunt fixed
+        return newTypes.fill("fixed");
       }
 
-      if (selectedCategory !== "Fixed Walls") {
-        if (selectedCategory === "Sliding Doors") {
-          if (selectedType === "1-Part Element") {
-            newTypes[0] = "right";
-          } else if (selectedType === "2-Part Element") {
-            newTypes[0] = "left";
-            newTypes[1] = "right";
-          }
+      if (selectedCategory === "Sliding Doors") {
+        if (slidingMountType === "On wall") {
+          return newTypes.fill("mobile");
+        } else if (slidingMountType === "In wall") {
+          newTypes.fill("fixed");
+          newTypes[0] = "mobile";
+          return newTypes;
+        }
+      }
+
+      if (selectedCategory === "Swing Doors") {
+        if (selectedType === "1-Part Element") {
+          newTypes[0] = "right";
+        } else if (selectedType === "2-Part Element" && sectionCount === 2) {
+          newTypes[0] = "left";
+          newTypes[1] = "right";
         } else if (selectedType === "2-Part Element O" && sectionCount > 1) {
           newTypes.fill("fixed");
           newTypes[1] = "right";
@@ -194,9 +216,11 @@ export const useDoorsLogic = () => {
           newTypes.fill("fixed");
           newTypes[0] = "right";
         }
+        return newTypes;
       }
 
-      return newTypes;
+      // Default: toate fixed
+      return newTypes.fill("fixed");
     });
   }, [sectionCount, selectedType, selectedCategory, slidingMountType]);
 

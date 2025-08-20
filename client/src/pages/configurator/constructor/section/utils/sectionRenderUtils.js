@@ -115,7 +115,15 @@ export const handleComponents = {
 };
 
 // 9. Handle Utility Function
-export const getHandleOverlay = (handleType, scaled, index, sectionType) => {
+export const getHandleOverlay = (
+  handleType,
+  scaled,
+  index,
+  sectionType,
+  selectedCategory,
+  sectionCount,
+  slidingMountType
+) => {
   if (!handleType || (Array.isArray(handleType) && handleType.length === 0)) {
     return null;
   }
@@ -126,11 +134,33 @@ export const getHandleOverlay = (handleType, scaled, index, sectionType) => {
     return null;
   }
 
+  let position = "left"; // fallback default
+
+  // Logica suplimentara pentru Sliding Doors
+  if (selectedCategory === "Sliding Doors") {
+    if (slidingMountType === "On wall") {
+      if (index === sectionCount - 1) {
+        position = "left";
+      } else {
+        position = "right";
+      }
+    } else {
+      if (index === sectionCount - 1) {
+        position = "right";
+      } else {
+        position = "left";
+      }
+    }
+  } else {
+    // logica standard pentru Swing Doors etc
+    position = sectionType === "left" ? "right" : "left";
+  }
+
   const HandleComponent = handleComponents[handleName];
   if (HandleComponent) {
     return React.createElement(HandleComponent, {
       scaled,
-      position: sectionType === "left" ? "right" : "left",
+      position,
     });
   }
 

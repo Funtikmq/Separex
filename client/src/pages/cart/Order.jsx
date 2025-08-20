@@ -57,6 +57,7 @@ function Order({ data, quantity, price, onSave, onQuantityChange, user }) {
             if (val === "right") return "To Right";
             if (val === "left") return "To Left";
             if (val === "fixed") return "Fixed";
+            if (val === "mobile") return "Mobile";
             return val;
           }),
           "dir"
