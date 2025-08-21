@@ -1,11 +1,12 @@
-function NavigationItem({ children, isActive, onClick, img }) {
+function NavigationItem({ icon, label, isActive, onClick }) {
   return (
     <li
       className={`navigationItem ${isActive ? "active" : ""}`}
       onClick={onClick}
+      style={{ display: "flex", alignItems: "center", gap: "8px" }}
     >
-      <img width="25px" src={img} alt="icon" />
-      <h3>{children}</h3>
+      {icon}
+      <h4>{label}</h4>
     </li>
   );
 }

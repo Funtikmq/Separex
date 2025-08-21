@@ -36,6 +36,7 @@ function ColorPanel({
             Black
           </button>
         </div>
+        <p className="navigationPanelText">Glass Color</p>
         {COLORS.map((color, index) => {
           const image = ICON_COLORS[color];
           return (

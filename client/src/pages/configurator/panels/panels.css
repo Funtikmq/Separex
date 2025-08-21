@@ -1,6 +1,6 @@
 .navigationPanel {
   position: absolute;
-  left: 7.5%;
+  left: 6%;
   z-index: 3;
   border: 1px solid #ccc;
   background: #fff;
@@ -49,9 +49,9 @@
   align-items: center;
   width: 10vw;
   margin: 7vh auto;
-  background: linear-gradient(to left, #f4a621, #ffc45f);
-  border: 2px solid #f4a621;
-  border-radius: 12px;
+  background: linear-gradient(to left, #222, #444);
+  border: 2px solid #000;
+  border-radius: 4px;
   cursor: pointer;
   /* box-shadow: 0.1vh 0.1vh 10px #f4a621; */
   position: relative;
@@ -76,8 +76,8 @@
 .card {
   width: 100%;
   height: 19vh;
-  border: 2px solid #f4a621;
-  border-radius: 12px;
+  border: 2px solid #777;
+  border-radius: 4px;
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
 }
@@ -132,7 +132,7 @@
 }
 
 .navigationPanelText {
-  margin-bottom: 1rem;
+  margin: 1.5rem 0;
 }
 
 .toggleButton {
@@ -183,7 +183,7 @@
   padding: 0.5rem;
   font-size: 1rem;
   text-align: center;
-  border: 2px solid #f4a621;
+  border: 2px solid #333;
   border-radius: 8px;
   background-color: #ffffff;
   color: #333;
@@ -192,7 +192,7 @@
 
 .inputWithButtons input:focus {
   outline: none;
-  border-color: #d48806;
+  border-color: #333;
   box-shadow: 0 0 5px rgba(244, 166, 33, 0.5);
 }
 
@@ -201,22 +201,17 @@
   font-size: 1.2rem;
   font-weight: bold;
   color: #ffffff;
-  background-color: #f4a621;
+  background-color: #333;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-.inputWithButtons button:hover {
-  background-color: #d48806;
-  transform: scale(1.05);
-}
-
 .sectionDimensions {
   margin: 4vh auto;
   padding: 1rem 3vw;
-  border: #f4a621 1px solid;
+  border: #333 1px solid;
   border-radius: 2vh;
 }
 

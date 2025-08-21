@@ -1,7 +1,7 @@
 .navigationBar {
   margin: 0;
   padding: 0;
-  max-width: 6.77vw;
+  max-width: 7vw;
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
 }
@@ -9,19 +9,13 @@
 .navigationItem {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  padding: 1vh 0;
-  background-color: #ffffff;
-  color: #333333;
-  width: 7.5vw;
-  height: 13vh;
-  border-top: 1px solid #e0e0e0;
-  transition: background-color 0.2s ease;
+  height: calc(90vh / 6);
+  width: 100%;
   cursor: pointer;
 }
 
 .navigationItem:hover {
-  background-color: #f4a621;
+  background-color: #333;
   color: #ffffff;
 }

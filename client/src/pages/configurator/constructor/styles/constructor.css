@@ -1,9 +1,9 @@
 .constructor {
   position: absolute;
   top: 10%;
-  left: 7.5%;
+  left: 6%;
   z-index: 1;
-  width: 92.4%;
+  width: 93.9%;
   height: calc(100vh - 10.4vh);
   display: flex;
   flex-direction: column;
@@ -144,7 +144,7 @@
   background-color: #fff;
   color: #000;
   padding: 0.4rem 1.5rem;
-  border: 2px solid #f4a621;
+  border: 2px solid #222;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -152,7 +152,7 @@
 }
 
 .constructorButton:hover {
-  background-color: #f4a621;
+  background-color: #333;
   color: #fff;
   transform: scale(1.05);
 }

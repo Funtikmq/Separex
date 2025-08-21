@@ -42,7 +42,6 @@ export function DefaultSectionLayout({
       return dimensions.widths.map((width) => (width * availableWidth) / 100);
     }
 
-    // altfel, împărțim egal spațiul rămas
     const availableWidth = 100 - (isSlidingDoor ? totalGap : 0);
     const sectionWidth = availableWidth / sectionCount;
     return Array(sectionCount).fill(sectionWidth);
