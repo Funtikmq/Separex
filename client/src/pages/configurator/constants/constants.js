@@ -1,20 +1,15 @@
 export const MODELS = [
   "Aero",
   "Line",
-  "Line Inverted",
   "Double Line",
-  "Double Line Inverted",
   "Triple Line",
-  "Triple Line Inverted",
   "Simetry",
   "Trio",
   "Quatro",
   "Five",
   "Trend",
   "Nordic",
-  "Nordic Inverted",
   "Punto",
-  "Punto Inverted",
   "Geos",
   "Geometry",
   "Star",
@@ -24,7 +19,6 @@ export const MODELS = [
   "Modern",
   "Modern Inverted",
   "Altus",
-  "Altus Inverted",
 ];
 
 export const COLORS = [

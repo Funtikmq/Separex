@@ -5,20 +5,15 @@ import * as Handles from "../SectionHandles.jsx";
 // 1. Model Components Object
 export const modelComponents = {
   Line: Models.Line,
-  "Line Inverted": Models.LineInverted,
   "Double Line": Models.DoubleLine,
-  "Double Line Inverted": Models.DoubleLineInverted,
   "Triple Line": Models.TripleLine,
-  "Triple Line Inverted": Models.TripleLineInverted,
   Simetry: Models.Simetry,
   Trio: Models.Trio,
   Quatro: Models.Quatro,
   Five: Models.Five,
   Trend: Models.Trend,
   Nordic: Models.Nordic,
-  "Nordic Inverted": Models.NordicInverted,
   Punto: Models.Punto,
-  "Punto Inverted": Models.PuntoInverted,
   Geos: Models.Geos,
   Geometry: Models.Geometry,
   Star: Models.Star,
@@ -28,7 +23,6 @@ export const modelComponents = {
   Modern: Models.Modern,
   "Modern Inverted": Models.ModernInverted,
   Altus: Models.Altus,
-  "Altus Inverted": Models.AltusInverted,
 };
 
 // 2. Model Component Helper
@@ -122,7 +116,8 @@ export const getHandleOverlay = (
   sectionType,
   selectedCategory,
   sectionCount,
-  slidingMountType
+  slidingMountType,
+  slidingType
 ) => {
   if (!handleType || (Array.isArray(handleType) && handleType.length === 0)) {
     return null;
@@ -134,25 +129,26 @@ export const getHandleOverlay = (
     return null;
   }
 
+  // Logica suplimentara pentru Sliding Doors
+  if (
+    selectedCategory === "Sliding Doors" &&
+    slidingType === "cascade" &&
+    sectionType === "mobile" &&
+    index > 0 &&
+    index < sectionCount - 1
+  ) {
+    return null;
+  }
+
   let position = "left"; // fallback default
 
-  // Logica suplimentara pentru Sliding Doors
   if (selectedCategory === "Sliding Doors") {
     if (slidingMountType === "On wall") {
-      if (index === sectionCount - 1) {
-        position = "left";
-      } else {
-        position = "right";
-      }
+      position = index === sectionCount - 1 ? "left" : "right";
     } else {
-      if (index === sectionCount - 1) {
-        position = "right";
-      } else {
-        position = "left";
-      }
+      position = index === sectionCount - 1 ? "right" : "left";
     }
   } else {
-    // logica standard pentru Swing Doors etc
     position = sectionType === "left" ? "right" : "left";
   }
 

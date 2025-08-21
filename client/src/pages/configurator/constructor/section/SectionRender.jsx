@@ -83,6 +83,7 @@ function SectionRenderer({
       slidingMountType,
       isResizing,
       slidingMountType,
+      slidingType,
       resizingIndex: null,
       renderSectionTypeRadio: (idx) => {
         if (

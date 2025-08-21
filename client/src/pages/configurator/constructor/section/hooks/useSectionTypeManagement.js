@@ -28,7 +28,7 @@ export const useSectionTypeManagement = (
           ) {
             // Only allow changing first or last section
             if (idx === 0 || idx === sectionCount - 1) {
-              // If changing first section
+              // Prima și ultima pot fi mobile/fixed
               if (idx === 0) {
                 if (type === "mobile") {
                   newTypes[0] = "mobile";
@@ -37,9 +37,7 @@ export const useSectionTypeManagement = (
                   newTypes[0] = "fixed";
                   newTypes[sectionCount - 1] = "mobile";
                 }
-              }
-              // If changing last section
-              else if (idx === sectionCount - 1) {
+              } else if (idx === sectionCount - 1) {
                 if (type === "mobile") {
                   newTypes[sectionCount - 1] = "mobile";
                   newTypes[0] = "fixed";
@@ -48,6 +46,10 @@ export const useSectionTypeManagement = (
                   newTypes[0] = "mobile";
                 }
               }
+            }
+            // Secțiunile intermediare sunt mereu mobile
+            for (let i = 1; i < sectionCount - 1; i++) {
+              newTypes[i] = "mobile";
             }
           }
           // For regular Sliding Doors

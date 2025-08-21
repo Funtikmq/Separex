@@ -82,9 +82,7 @@ export const useDoorsLogic = () => {
   }, [slidingMountType, selectedCategory]);
 
   useEffect(() => {
-    setSelectedHandle((prevHandles) => {
-      if (!prevHandles || prevHandles.length === 0) return prevHandles;
-
+    setSelectedHandle(() => {
       const defaultHandle =
         selectedCategory === "Swing Doors"
           ? "Handle With Lock"
@@ -92,18 +90,23 @@ export const useDoorsLogic = () => {
           ? "Pull Handle 160"
           : null;
 
-      const newHandles = sectionTypes.map((type, idx) => {
-        if (type === "fixed") {
-          return null;
+      if (selectedCategory === "Sliding Doors" && slidingType === "cascade") {
+        // doar pe prima (sau ultima)
+        const handles = Array(sectionCount).fill(null);
+        if (sectionTypes[0] === "mobile") {
+          handles[0] = defaultHandle;
         } else {
-          return prevHandles[idx] ?? defaultHandle;
+          handles[sectionCount - 1] = defaultHandle;
         }
-      });
 
-      const isChanged = newHandles.some((h, i) => h !== prevHandles[i]);
-      return isChanged ? newHandles : prevHandles;
+        return handles;
+      }
+
+      return sectionTypes.map((type) =>
+        type === "fixed" ? null : defaultHandle
+      );
     });
-  }, [sectionTypes, selectedCategory]);
+  }, [sectionTypes, selectedCategory, slidingType, sectionCount]);
 
   useEffect(() => {
     if (selectedCategory === "Sliding Doors") {
@@ -187,9 +190,15 @@ export const useDoorsLogic = () => {
         if (slidingMountType === "On wall") {
           return newTypes.fill("mobile");
         } else if (slidingMountType === "In wall") {
-          newTypes.fill("fixed");
-          newTypes[0] = "mobile";
-          return newTypes;
+          if (slidingType === "classic") {
+            newTypes.fill("fixed");
+            newTypes[0] = "mobile";
+            return newTypes;
+          } else if (slidingType === "cascade") {
+            newTypes.fill("mobile");
+            newTypes[sectionCount - 1] = "fixed";
+            return newTypes;
+          }
         }
       }
 

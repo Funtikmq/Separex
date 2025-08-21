@@ -26,6 +26,7 @@ export function DefaultSectionLayout({
   selectedHandle,
   sectionTypes,
   slidingMountType,
+  slidingType,
   renderSectionTypeRadio = () => null,
 }) {
   const SLIDING_DOOR_GAP =
@@ -199,7 +200,8 @@ export function DefaultSectionLayout({
                 sectionTypes[i],
                 selectedCategory,
                 sectionCount,
-                slidingMountType
+                slidingMountType,
+                slidingType
               )}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
 
