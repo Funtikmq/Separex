@@ -1,29 +1,33 @@
 import React from "react";
 import DraggableLine from "./DraggableLine.jsx";
 
-export const Line = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Line = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     line1: 10,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Line || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Line", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Line", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="line1"
-        position={positions.line1}
+        position={localPositions.line1}
         onPositionChange={handlePositionChange}
         scaled={scaled}
         constraints={{ min: 0, max: 100 }}
@@ -32,117 +36,130 @@ export const Line = ({ scaled }) => {
   );
 };
 
-export const DoubleLine = ({ scaled }) => {
-  // State pentru pozițiile liniilor
-  const [positions, setPositions] = React.useState({
+export const DoubleLine = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     line1: 10,
     line2: 20,
-  });
+  };
 
-  // Handler pentru actualizarea pozițiilor
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.DoubleLine || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("DoubleLine", localPositions);
+  }, []);
+
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("DoubleLine", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="line1"
-        position={positions.line1}
+        position={localPositions.line1}
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.line2 - 5 }}
+        constraints={{ min: 0, max: localPositions.line2 - 5 }}
       />
       <DraggableLine
         id="line2"
-        position={positions.line2}
+        position={localPositions.line2}
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.line1 + 5, max: 100 }}
+        constraints={{ min: localPositions.line1 + 5, max: 100 }}
       />
     </div>
   );
 };
 
-export const TripleLine = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const TripleLine = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     line1: 10,
     line2: 20,
     line3: 30,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.TripleLine || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("TripleLine", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("TripleLine", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="line1"
-        position={positions.line1}
+        position={localPositions.line1}
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.line2 - 5 }}
+        constraints={{ min: 0, max: localPositions.line2 - 5 }}
       />
       <DraggableLine
         id="line2"
-        position={positions.line2}
+        position={localPositions.line2}
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.line1 + 5, max: positions.line3 - 5 }}
+        constraints={{
+          min: localPositions.line1 + 5,
+          max: localPositions.line3 - 5,
+        }}
       />
       <DraggableLine
         id="line3"
-        position={positions.line3}
+        position={localPositions.line3}
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.line2 + 5, max: 100 }}
+        constraints={{ min: localPositions.line2 + 5, max: 100 }}
       />
     </div>
   );
 };
 
-export const Simetry = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Simetry = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 50,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Simetry || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Simetry", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Simetry", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -152,176 +169,203 @@ export const Simetry = ({ scaled }) => {
   );
 };
 
-export const Trio = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Trio = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 33,
     horizontal2: 66,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Trio || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Trio", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Trio", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal1 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal1 + 5, max: 100 }}
       />
     </div>
   );
 };
 
-export const Quatro = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Quatro = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 25,
     horizontal2: 50,
     horizontal3: 75,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Quatro || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Quatro", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Quatro", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
         constraints={{
-          min: positions.horizontal1 + 5,
-          max: positions.horizontal3 - 5,
+          min: localPositions.horizontal1 + 5,
+          max: localPositions.horizontal3 - 5,
         }}
       />
       <DraggableLine
         id="horizontal3"
-        position={positions.horizontal3}
+        position={localPositions.horizontal3}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal2 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal2 + 5, max: 100 }}
       />
     </div>
   );
 };
 
-export const Five = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Five = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 20,
     horizontal2: 40,
     horizontal3: 60,
     horizontal4: 80,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Five || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Five", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Five", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
         constraints={{
-          min: positions.horizontal1 + 5,
-          max: positions.horizontal3 - 5,
+          min: localPositions.horizontal1 + 5,
+          max: localPositions.horizontal3 - 5,
         }}
       />
       <DraggableLine
         id="horizontal3"
-        position={positions.horizontal3}
+        position={localPositions.horizontal3}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
         constraints={{
-          min: positions.horizontal2 + 5,
-          max: positions.horizontal4 - 5,
+          min: localPositions.horizontal2 + 5,
+          max: localPositions.horizontal4 - 5,
         }}
       />
       <DraggableLine
         id="horizontal4"
-        position={positions.horizontal4}
+        position={localPositions.horizontal4}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal3 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal3 + 5, max: 100 }}
       />
     </div>
   );
 };
 
-export const Trend = ({ scaled, doorDimensions }) => {
-  const [positions, setPositions] = React.useState({
+export const Trend = ({
+  scaled,
+  onPositionChange,
+  positions,
+  doorDimensions,
+}) => {
+  const defaultPositions = {
     horizontal1: 70,
     horizontal2: 85,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Trend || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Trend", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Trend", newPositions);
   };
 
   if (doorDimensions.height < 1200) {
@@ -329,57 +373,55 @@ export const Trend = ({ scaled, doorDimensions }) => {
   }
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal1 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal1 + 5, max: 100 }}
       />
     </div>
   );
 };
 
-export const Nordic = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Nordic = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 50,
     vertical1: 15,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Nordic || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Nordic", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Nordic", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -387,7 +429,7 @@ export const Nordic = ({ scaled }) => {
       />
       <DraggableLine
         id="vertical1"
-        position={positions.vertical1}
+        position={localPositions.vertical1}
         orientation="vertical"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -397,47 +439,51 @@ export const Nordic = ({ scaled }) => {
   );
 };
 
-export const Punto = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Punto = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 40,
     horizontal2: 55,
     vertical1: 15,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Punto || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Punto", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Punto", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal1 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal1 + 5, max: 100 }}
       />
       <DraggableLine
         id="vertical1"
-        position={positions.vertical1}
+        position={localPositions.vertical1}
         orientation="vertical"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -447,30 +493,34 @@ export const Punto = ({ scaled }) => {
   );
 };
 
-export const Geos = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Geos = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 50,
     vertical1: 50,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Geos || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Geos", localPositions);
+  }, []);
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Geos", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -478,7 +528,7 @@ export const Geos = ({ scaled }) => {
       />
       <DraggableLine
         id="vertical1"
-        position={positions.vertical1}
+        position={localPositions.vertical1}
         orientation="vertical"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -488,49 +538,51 @@ export const Geos = ({ scaled }) => {
   );
 };
 
-export const Geometry = ({ scaled }) => {
-  // State pentru toate liniile
-  const [positions, setPositions] = React.useState({
+export const Geometry = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 33,
     horizontal2: 66,
     vertical1: 50,
-  });
+  };
 
-  // Handler pentru actualizarea pozițiilor
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Geometry || defaultPositions
+  );
+
+  React.useEffect(() => {
+    onPositionChange("Geometry", localPositions);
+  }, []);
+
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Geometry", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal1 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal1 + 5, max: 100 }}
       />
       <DraggableLine
         id="vertical1"
-        position={positions.vertical1}
+        position={localPositions.vertical1}
         orientation="vertical"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -540,59 +592,57 @@ export const Geometry = ({ scaled }) => {
   );
 };
 
-export const Star = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
-    horizontal1: 25,
-    horizontal2: 50,
-    horizontal3: 75,
-    vertical1: 50,
-  });
+export const Star = ({ scaled, onPositionChange, positions }) => {
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Star || {
+      horizontal1: 25,
+      horizontal2: 50,
+      horizontal3: 75,
+      vertical1: 50,
+    }
+  );
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Star", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
         constraints={{
-          min: positions.horizontal1 + 5,
-          max: positions.horizontal3 - 5,
+          min: localPositions.horizontal1 + 5,
+          max: localPositions.horizontal3 - 5,
         }}
       />
       <DraggableLine
         id="horizontal3"
-        position={positions.horizontal3}
+        position={localPositions.horizontal3}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal2 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal2 + 5, max: 100 }}
       />
       <DraggableLine
         id="vertical1"
-        position={positions.vertical1}
+        position={localPositions.vertical1}
         orientation="vertical"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -602,71 +652,69 @@ export const Star = ({ scaled }) => {
   );
 };
 
-export const Diez = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
-    horizontal1: 20,
-    horizontal2: 40,
-    horizontal3: 60,
-    horizontal4: 80,
-    vertical1: 50,
-  });
+export const Diez = ({ scaled, onPositionChange, positions }) => {
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Diez || {
+      horizontal1: 20,
+      horizontal2: 40,
+      horizontal3: 60,
+      horizontal4: 80,
+      vertical1: 50,
+    }
+  );
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Diez", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
         constraints={{
-          min: positions.horizontal1 + 5,
-          max: positions.horizontal3 - 5,
+          min: localPositions.horizontal1 + 5,
+          max: localPositions.horizontal3 - 5,
         }}
       />
       <DraggableLine
         id="horizontal3"
-        position={positions.horizontal3}
+        position={localPositions.horizontal3}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
         constraints={{
-          min: positions.horizontal2 + 5,
-          max: positions.horizontal4 - 5,
+          min: localPositions.horizontal2 + 5,
+          max: localPositions.horizontal4 - 5,
         }}
       />
       <DraggableLine
         id="horizontal4"
-        position={positions.horizontal4}
+        position={localPositions.horizontal4}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal3 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal3 + 5, max: 100 }}
       />
       <DraggableLine
         id="vertical1"
-        position={positions.vertical1}
+        position={localPositions.vertical1}
         orientation="vertical"
         onPositionChange={handlePositionChange}
         scaled={scaled}
@@ -676,60 +724,58 @@ export const Diez = ({ scaled }) => {
   );
 };
 
-export const Loft = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
-    horizontal1: 20,
-    horizontal2: 80,
-    vertical1: 15,
-    vertical2: 85,
-  });
+export const Loft = ({ scaled, onPositionChange, positions }) => {
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Loft || {
+      horizontal1: 20,
+      horizontal2: 80,
+      vertical1: 15,
+      vertical2: 85,
+    }
+  );
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Loft", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal1 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal1 + 5, max: 100 }}
       />
       <DraggableLine
         id="vertical1"
-        position={positions.vertical1}
+        position={localPositions.vertical1}
         orientation="vertical"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.vertical2 - 5 }}
+        constraints={{ min: 0, max: localPositions.vertical2 - 5 }}
       />
       <DraggableLine
         id="vertical2"
-        position={positions.vertical2}
+        position={localPositions.vertical2}
         orientation="vertical"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.vertical1 + 5, max: 100 }}
+        constraints={{ min: localPositions.vertical1 + 5, max: 100 }}
       />
     </div>
   );
@@ -925,49 +971,54 @@ export const ModernInverted = ({ scaled }) => (
   </div>
 );
 
-export const Altus = ({ scaled }) => {
-  const [positions, setPositions] = React.useState({
+export const Altus = ({ scaled, onPositionChange, positions }) => {
+  const defaultPositions = {
     horizontal1: 45,
     horizontal2: 55,
     vertical1: 25,
     vertical2: 75,
-  });
+  };
+
+  const [localPositions, setLocalPositions] = React.useState(
+    positions?.Altus || defaultPositions
+  );
+
+  // Trimite valorile default la montare
+  React.useEffect(() => {
+    onPositionChange("Altus", localPositions);
+  }, []); // Empty dependency array means it runs once on mount
 
   const handlePositionChange = (lineId, newPosition) => {
-    setPositions((prev) => ({
-      ...prev,
+    const newPositions = {
+      ...localPositions,
       [lineId]: newPosition,
-    }));
+    };
+    setLocalPositions(newPositions);
+    onPositionChange("Altus", newPositions);
   };
 
   return (
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <DraggableLine
         id="horizontal1"
-        position={positions.horizontal1}
+        position={localPositions.horizontal1}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: 0, max: positions.horizontal2 - 5 }}
+        constraints={{ min: 0, max: localPositions.horizontal2 - 5 }}
       />
       <DraggableLine
         id="horizontal2"
-        position={positions.horizontal2}
+        position={localPositions.horizontal2}
         orientation="horizontal"
         onPositionChange={handlePositionChange}
         scaled={scaled}
-        constraints={{ min: positions.horizontal1 + 5, max: 100 }}
+        constraints={{ min: localPositions.horizontal1 + 5, max: 100 }}
       />
       <div style={{ height: "45%", position: "relative" }}>
         <DraggableLine
           id="vertical1"
-          position={positions.vertical1}
+          position={localPositions.vertical1}
           orientation="vertical"
           onPositionChange={handlePositionChange}
           scaled={scaled}
@@ -984,7 +1035,7 @@ export const Altus = ({ scaled }) => {
       >
         <DraggableLine
           id="vertical2"
-          position={positions.vertical2}
+          position={localPositions.vertical2}
           orientation="vertical"
           onPositionChange={handlePositionChange}
           scaled={scaled}

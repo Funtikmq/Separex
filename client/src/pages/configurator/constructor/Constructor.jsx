@@ -31,6 +31,22 @@ function Constructor({
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [selectionVisible, setSelectionVisible] = useState(false);
 
+  // Pozitiile pentru modele
+  const [linePositions, setLinePositions] = useState({});
+
+  const handleLinePositionsUpdate = (sectionIndex, modelName, positions) => {
+    setLinePositions((prev) => {
+      const newPositions = { ...prev };
+
+      // Setăm direct valorile pentru secțiunea și modelul specific
+      newPositions[sectionIndex] = {
+        modelName, // salvăm numele modelului
+        positions, // salvăm pozițiile
+      };
+      return newPositions;
+    });
+  };
+
   useEffect(() => {
     if (containerRef.current) {
       const { offsetWidth, offsetHeight } = containerRef.current;
@@ -133,6 +149,8 @@ function Constructor({
           setSectionDimensions={setSectionDimensions}
           sectionTypes={sectionTypes}
           setSectionTypes={setSectionTypes}
+          onLinePositionsChange={handleLinePositionsUpdate}
+          linePositions={linePositions}
         />
       </div>
 
@@ -148,6 +166,7 @@ function Constructor({
         slidingMountType={slidingMountType}
         sectionDimensions={sectionDimensions}
         sectionTypes={sectionTypes}
+        linePositions={linePositions}
         doorRef={doorDrawingRef}
       />
     </div>

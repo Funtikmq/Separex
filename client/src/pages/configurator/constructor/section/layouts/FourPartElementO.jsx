@@ -22,6 +22,8 @@ export function FourPartElementO({
   doorDimensions,
   selectedHandle,
   sectionTypes,
+  onPositionChange,
+  currentPositions,
   renderSectionTypeRadio = () => null,
 }) {
   const isSlidingDoor = selectedCategory === "Sliding Doors";
@@ -140,7 +142,14 @@ export function FourPartElementO({
               sectionDimensions={sectionDimensions}
               doorDimensions={doorDimensions}
             >
-              {getModelOverlay(sectionModels[i], scaled, doorDimensions)}
+              {getModelOverlay(
+                sectionModels[i],
+                scaled,
+                dimensions,
+                (modelName, positions) =>
+                  onPositionChange(modelName, positions),
+                currentPositions?.[sectionModels[i]] || {}
+              )}
               {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
               {isSwingDoor &&

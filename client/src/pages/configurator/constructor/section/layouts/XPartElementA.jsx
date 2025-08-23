@@ -25,6 +25,8 @@ export function XPartElementA({
   doorDimensions,
   selectedHandle,
   sectionTypes,
+  onPositionChange,
+  currentPositions,
   renderSectionTypeRadio = () => null,
 }) {
   const isSlidingDoor = selectedCategory === "Sliding Doors";
@@ -114,7 +116,14 @@ export function XPartElementA({
               sectionDimensions={sectionDimensions}
               doorDimensions={doorDimensions}
             >
-              {getModelOverlay(sectionModels[i], scaled, doorDimensions)}
+              {getModelOverlay(
+                sectionModels[i],
+                scaled,
+                dimensions,
+                (modelName, positions) =>
+                  onPositionChange(modelName, positions),
+                currentPositions?.[sectionModels[i]] || {}
+              )}
               {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
 
@@ -260,7 +269,10 @@ export function XPartElementA({
               {getModelOverlay(
                 sectionModels[sectionIndex],
                 scaled,
-                doorDimensions
+                doorDimensions,
+                (modelName, positions) =>
+                  onPositionChange(modelName, positions),
+                currentPositions?.[sectionModels[i]] || {}
               )}
               {getHandleOverlay(
                 selectedHandle,

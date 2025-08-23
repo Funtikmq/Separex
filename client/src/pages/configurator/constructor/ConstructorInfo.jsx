@@ -12,6 +12,7 @@ function ConstructorInfo({
   selectedIndex,
   sectionDimensions,
   sectionTypes,
+  linePositions,
   doorRef,
 }) {
   const handleConfirm = async () => {
@@ -21,6 +22,8 @@ function ConstructorInfo({
       const canvas = await html2canvas(doorRef.current);
       image = canvas.toDataURL("image/png");
     }
+
+    console.log(linePositions);
 
     const data = {
       doorDimensions,

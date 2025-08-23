@@ -31,11 +31,23 @@ export const getModelComponent = (modelName) => {
 };
 
 // 3. Model Utility Function
-export function getModelOverlay(modelName, scaled, doorDimensions) {
+export function getModelOverlay(
+  modelName,
+  scaled,
+  doorDimensions,
+  onPositionChange,
+  positions // va primi positions direct pentru modelul curent
+) {
   if (!modelName || modelName === "Aero") return null;
+
   const Component = modelComponents[modelName];
   return Component
-    ? React.createElement(Component, { scaled, doorDimensions })
+    ? React.createElement(Component, {
+        scaled,
+        doorDimensions,
+        onPositionChange,
+        positions, // transmite positions direct
+      })
     : null;
 }
 
