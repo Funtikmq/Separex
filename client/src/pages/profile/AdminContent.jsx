@@ -16,6 +16,7 @@ function AdminContent() {
   const [expandedRows, setExpandedRows] = useState({});
   const { user, loading } = useAuth();
 
+  const typeMap = {};
   const db = getFirestore(app);
 
   useEffect(() => {

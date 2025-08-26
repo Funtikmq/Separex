@@ -35,18 +35,26 @@ export function getModelOverlay(
   modelName,
   scaled,
   doorDimensions,
-  onPositionChange,
-  positions // va primi positions direct pentru modelul curent
+  sectionIndex, // ✅ Adaugă sectionIndex
+  linePositions,
+  setLinePositions,
+  getLinePositionsForSection,
+  setLinePositionsForSection,
+  profileColor
 ) {
   if (!modelName || modelName === "Aero") return null;
 
   const Component = modelComponents[modelName];
   return Component
     ? React.createElement(Component, {
+        sectionIndex,
         scaled,
+        linePositions,
+        setLinePositions,
+        getLinePositionsForSection,
+        setLinePositionsForSection,
         doorDimensions,
-        onPositionChange,
-        positions, // transmite positions direct
+        profileColor,
       })
     : null;
 }
@@ -129,7 +137,8 @@ export const getHandleOverlay = (
   selectedCategory,
   sectionCount,
   slidingMountType,
-  slidingType
+  slidingType,
+  profileColor
 ) => {
   if (!handleType || (Array.isArray(handleType) && handleType.length === 0)) {
     return null;
@@ -155,7 +164,15 @@ export const getHandleOverlay = (
   let position = "left"; // fallback default
 
   if (selectedCategory === "Sliding Doors") {
-    if (slidingMountType === "On wall") {
+    if (
+      slidingMountType === "In wall" &&
+      slidingType === "classic" &&
+      sectionType === "mobile" &&
+      index === 1
+    ) {
+      // Secțiunea 1 mobilă la ușile glisante clasice are mânerul în dreapta
+      position = "right";
+    } else if (slidingMountType === "On wall") {
       position = index === sectionCount - 1 ? "left" : "right";
     } else {
       position = index === sectionCount - 1 ? "right" : "left";
@@ -169,6 +186,7 @@ export const getHandleOverlay = (
     return React.createElement(HandleComponent, {
       scaled,
       position,
+      profileColor,
     });
   }
 

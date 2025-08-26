@@ -25,8 +25,13 @@ export function XPartElementA({
   doorDimensions,
   selectedHandle,
   sectionTypes,
-  onPositionChange,
-  currentPositions,
+  slidingMountType,
+  slidingType,
+  linePositions,
+  setLinePositions,
+  getLinePositionsForSection,
+  setLinePositionsForSection,
+
   renderSectionTypeRadio = () => null,
 }) {
   const isSlidingDoor = selectedCategory === "Sliding Doors";
@@ -120,11 +125,24 @@ export function XPartElementA({
                 sectionModels[i],
                 scaled,
                 dimensions,
-                (modelName, positions) =>
-                  onPositionChange(modelName, positions),
-                currentPositions?.[sectionModels[i]] || {}
+                i,
+                linePositions,
+                setLinePositions,
+                getLinePositionsForSection,
+                setLinePositionsForSection,
+                profileColor
               )}
-              {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
+              {getHandleOverlay(
+                selectedHandle,
+                scaled,
+                i,
+                sectionTypes[i],
+                selectedCategory,
+                sectionCount,
+                slidingMountType,
+                slidingType,
+                profileColor
+              )}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
 
               {isSwingDoor &&
@@ -137,7 +155,7 @@ export function XPartElementA({
                           position: "absolute",
                           width: `${scaled.borderPx / 128}rem`,
                           height: `${scaled.borderPx / 4}rem`,
-                          backgroundColor: "#222",
+                          backgroundColor: profileColor,
                           top: `${20 + index * 30}%`,
                           [sectionTypes[i] === "left" ? "left" : "right"]: `${
                             -scaled.borderPx / 15
@@ -269,16 +287,24 @@ export function XPartElementA({
               {getModelOverlay(
                 sectionModels[sectionIndex],
                 scaled,
-                doorDimensions,
-                (modelName, positions) =>
-                  onPositionChange(modelName, positions),
-                currentPositions?.[sectionModels[i]] || {}
+                dimensions,
+                i,
+                linePositions,
+                setLinePositions,
+                getLinePositionsForSection,
+                setLinePositionsForSection,
+                profileColor
               )}
               {getHandleOverlay(
                 selectedHandle,
                 scaled,
-                sectionIndex,
-                sectionTypes[sectionIndex]
+                i,
+                sectionTypes[i],
+                selectedCategory,
+                sectionCount,
+                slidingMountType,
+                slidingType,
+                profileColor
               )}
               {renderSectionTypeRadio && renderSectionTypeRadio(sectionIndex)}
 
@@ -293,7 +319,7 @@ export function XPartElementA({
                           position: "absolute",
                           width: `${scaled.borderPx / 128}rem`,
                           height: `${scaled.borderPx / 4}rem`,
-                          backgroundColor: "#222",
+                          backgroundColor: profileColor,
                           top: `${20 + index * 30}%`,
                           [sectionTypes[sectionIndex] === "left"
                             ? "left"

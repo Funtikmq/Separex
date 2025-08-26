@@ -23,7 +23,7 @@ function ConstructorInfo({
       image = canvas.toDataURL("image/png");
     }
 
-    console.log(linePositions);
+    console.log("linePositions", linePositions);
 
     const data = {
       doorDimensions,

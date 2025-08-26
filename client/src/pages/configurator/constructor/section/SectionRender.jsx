@@ -27,8 +27,10 @@ function SectionRenderer({
   selectedHandle,
   slidingMountType,
   slidingType,
-  onLinePositionsChange,
   linePositions,
+  setLinePositions,
+  getLinePositionsForSection,
+  setLinePositionsForSection,
 }) {
   // useSectionDimensions hook
   const { dimensions, updateDimensions } = useSectionDimensions({
@@ -56,11 +58,6 @@ function SectionRenderer({
     slidingType,
     slidingMountType
   );
-
-  // Funcție pentru actualizarea pozițiilor
-  const handlePositionChange = (modelName, newPositions) => {
-    onLinePositionsChange(selectedIndex, modelName, newPositions);
-  };
 
   const layoutProps = React.useMemo(
     () => ({
@@ -92,11 +89,10 @@ function SectionRenderer({
       slidingMountType,
       slidingType,
       resizingIndex: null,
-      onPositionChange: (modelName, positions) => {
-        handlePositionChange(modelName, positions);
-      },
-      currentPositions:
-        linePositions[selectedIndex]?.[sectionModels[selectedIndex]] || {},
+      linePositions,
+      setLinePositions,
+      getLinePositionsForSection,
+      setLinePositionsForSection,
       renderSectionTypeRadio: (idx) => {
         if (
           !selectionVisible ||
@@ -173,8 +169,6 @@ function SectionRenderer({
       selectedHandle,
       sectionCount,
       isResizing,
-      linePositions,
-      handlePositionChange,
     ]
   );
 

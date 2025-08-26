@@ -1,11 +1,10 @@
 from flask import Blueprint, request, jsonify
 from config import db
-from services.bom_service import billOfMaterials
 from datetime import datetime, timezone
 import random
 
 from utils.auth_utils import require_auth
-
+from services.bom_service import billOfMaterials
 orders_bp = Blueprint("orders", __name__)
 
 @orders_bp.route("/calculate-order", methods=["POST"])

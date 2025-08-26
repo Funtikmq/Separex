@@ -14,16 +14,21 @@ export function FourPartElementO({
   isSelected,
   onClick,
   setSelectionVisible,
-  handleVerticalResizeStart,
+  sectionCount,
   handleHorizontalResizeStart,
-  selectedType,
+  handleVerticalResizeStart,
   selectedCategory,
+  selectedType,
   sectionDimensions,
   doorDimensions,
   selectedHandle,
   sectionTypes,
-  onPositionChange,
-  currentPositions,
+  slidingMountType,
+  slidingType,
+  linePositions,
+  setLinePositions,
+  getLinePositionsForSection,
+  setLinePositionsForSection,
   renderSectionTypeRadio = () => null,
 }) {
   const isSlidingDoor = selectedCategory === "Sliding Doors";
@@ -146,11 +151,24 @@ export function FourPartElementO({
                 sectionModels[i],
                 scaled,
                 dimensions,
-                (modelName, positions) =>
-                  onPositionChange(modelName, positions),
-                currentPositions?.[sectionModels[i]] || {}
+                i,
+                linePositions,
+                setLinePositions,
+                getLinePositionsForSection,
+                setLinePositionsForSection,
+                profileColor
               )}
-              {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
+              {getHandleOverlay(
+                selectedHandle,
+                scaled,
+                i,
+                sectionTypes[i],
+                selectedCategory,
+                sectionCount,
+                slidingMountType,
+                slidingType,
+                profileColor
+              )}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
               {isSwingDoor &&
                 (sectionTypes[i] === "left" || sectionTypes[i] === "right") && (

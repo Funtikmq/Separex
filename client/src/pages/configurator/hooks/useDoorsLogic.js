@@ -26,6 +26,47 @@ export const useDoorsLogic = () => {
     initialTypes[0] = "right";
     return initialTypes;
   });
+  const [linePositions, setLinePositions] = useState({});
+
+  // Funcție pentru a obține pozițiile pentru o secțiune specifică
+  const getLinePositionsForSection = (sectionIndex) => {
+    return linePositions[sectionIndex] || {};
+  };
+
+  // Funcție pentru a seta pozițiile pentru o secțiune specifică
+  const setLinePositionsForSection = (sectionIndex, newPositions) => {
+    setLinePositions((prev) => ({
+      ...prev,
+      [sectionIndex]: {
+        ...prev[sectionIndex],
+        ...newPositions,
+      },
+    }));
+  };
+
+  const [previousSectionModels, setPreviousSectionModels] = useState([]);
+
+  useEffect(() => {
+    if (previousSectionModels.length > 0) {
+      setLinePositions((prev) => {
+        const newLinePositions = { ...prev };
+
+        sectionModels.forEach((currentModel, index) => {
+          const previousModel = previousSectionModels[index];
+
+          if (previousModel && previousModel !== currentModel) {
+            // Modelul s-a schimbat pentru această secțiune, resetăm pozițiile
+            newLinePositions[index] = {};
+          }
+        });
+
+        return newLinePositions;
+      });
+    }
+
+    // Actualizăm modelul anterior
+    setPreviousSectionModels(sectionModels);
+  }, [sectionModels]);
 
   const validateHandleConfiguration = (category, mountType, handles) => {
     if (
@@ -299,5 +340,9 @@ export const useDoorsLogic = () => {
     setSectionDimensions,
     sectionTypes,
     setSectionTypes,
+    linePositions,
+    setLinePositions,
+    getLinePositionsForSection,
+    setLinePositionsForSection,
   };
 };

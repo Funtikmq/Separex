@@ -27,8 +27,10 @@ export function DefaultSectionLayout({
   sectionTypes,
   slidingMountType,
   slidingType,
-  onPositionChange,
-  currentPositions,
+  linePositions,
+  setLinePositions,
+  getLinePositionsForSection,
+  setLinePositionsForSection,
   renderSectionTypeRadio = () => null,
 }) {
   const SLIDING_DOOR_GAP =
@@ -198,9 +200,12 @@ export function DefaultSectionLayout({
                 sectionModels[i],
                 scaled,
                 dimensions,
-                (modelName, positions) =>
-                  onPositionChange(modelName, positions),
-                currentPositions?.[sectionModels[i]] || {}
+                i,
+                linePositions,
+                setLinePositions,
+                getLinePositionsForSection,
+                setLinePositionsForSection,
+                profileColor
               )}
               {getHandleOverlay(
                 selectedHandle,
@@ -210,7 +215,8 @@ export function DefaultSectionLayout({
                 selectedCategory,
                 sectionCount,
                 slidingMountType,
-                slidingType
+                slidingType,
+                profileColor
               )}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
 

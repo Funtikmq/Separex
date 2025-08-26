@@ -1,9 +1,9 @@
-export const HandleWithLock = ({ scaled, position }) => {
+export const HandleWithLock = ({ scaled, position, profileColor }) => {
   return (
     <div
       style={{
         position: "absolute",
-        bottom: "50%",
+        bottom: `${(scaled.borderPx * 43) / 16}rem`,
         ...(position === "right"
           ? { right: `${scaled.borderPx / 16}rem` }
           : { left: `${scaled.borderPx / 16}rem` }),
@@ -19,7 +19,7 @@ export const HandleWithLock = ({ scaled, position }) => {
           position: "relative",
           width: `${(scaled.borderPx * 2) / 16}rem`,
           height: `${(scaled.borderPx * 2) / 16}rem`,
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
           pointerEvents: "none",
         }}
       />
@@ -29,7 +29,7 @@ export const HandleWithLock = ({ scaled, position }) => {
           position: "absolute",
           width: `${(scaled.borderPx * 5) / 16}rem`,
           height: `${scaled.borderPx / 16}rem`,
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
           top: "50%",
           ...(position === "right" ? { right: "150%" } : { left: "150%" }),
           transform: `translateY(-50%) translateX(${
@@ -42,12 +42,12 @@ export const HandleWithLock = ({ scaled, position }) => {
   );
 };
 
-export const PullHandle160 = ({ scaled, position }) => {
+export const PullHandle160 = ({ scaled, position, profileColor }) => {
   return (
     <div
       style={{
         position: "absolute",
-        bottom: "50%",
+        bottom: `${(scaled.borderPx * 45) / 16}rem`,
         pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 7) / 16}rem`,
@@ -64,7 +64,7 @@ export const PullHandle160 = ({ scaled, position }) => {
           ...(position === "right" ? { right: "0" } : { left: "0" }),
           width: `${scaled.borderPx / 16}rem`,
           height: `${scaled.borderPx / 16}rem`,
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
         }}
       />
       {/*Bara verticala*/}
@@ -73,7 +73,7 @@ export const PullHandle160 = ({ scaled, position }) => {
           position: "absolute",
           width: `${scaled.borderPx / 16}rem`,
           height: "100%",
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
           bottom: "0",
           ...(position === "right" ? { right: "100%" } : { left: "100%" }),
         }}
@@ -86,19 +86,19 @@ export const PullHandle160 = ({ scaled, position }) => {
           ...(position === "right" ? { right: "0" } : { left: "0" }),
           width: `${scaled.borderPx / 16}rem`,
           height: `${scaled.borderPx / 16}rem`,
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
         }}
       />
     </div>
   );
 };
 
-export const PullHandle288 = ({ scaled, position }) => {
+export const PullHandle288 = ({ scaled, position, profileColor }) => {
   return (
     <div
       style={{
         position: "absolute",
-        bottom: "50%",
+        bottom: `${(scaled.borderPx * 49) / 16}rem`,
         pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 13) / 16}rem`,
@@ -115,7 +115,7 @@ export const PullHandle288 = ({ scaled, position }) => {
           ...(position === "right" ? { right: "0" } : { left: "0" }),
           width: `${scaled.borderPx / 16}rem`,
           height: `${scaled.borderPx / 16}rem`,
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
         }}
       />
       {/*Bara verticala*/}
@@ -124,7 +124,7 @@ export const PullHandle288 = ({ scaled, position }) => {
           position: "absolute",
           width: `${scaled.borderPx / 16}rem`,
           height: "100%",
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
           bottom: "0",
           ...(position === "right" ? { right: "100%" } : { left: "100%" }),
         }}
@@ -137,19 +137,19 @@ export const PullHandle288 = ({ scaled, position }) => {
           ...(position === "right" ? { right: "0" } : { left: "0" }),
           width: `${scaled.borderPx / 16}rem`,
           height: `${scaled.borderPx / 16}rem`,
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
         }}
       />
     </div>
   );
 };
 
-export const PullHandle448 = ({ scaled, position }) => {
+export const PullHandle448 = ({ scaled, position, profileColor }) => {
   return (
     <div
       style={{
         position: "absolute",
-        bottom: "50%",
+        bottom: `${(scaled.borderPx * 52) / 16}rem`,
         pointerEvents: "none",
         width: `${scaled.borderPx / 16}rem`,
         height: `${(scaled.borderPx * 20) / 16}rem`,
@@ -166,7 +166,7 @@ export const PullHandle448 = ({ scaled, position }) => {
           ...(position === "right" ? { right: "0" } : { left: "0" }),
           width: `${scaled.borderPx / 16}rem`,
           height: `${scaled.borderPx / 16}rem`,
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
         }}
       />
       {/*Bara verticala*/}
@@ -175,7 +175,7 @@ export const PullHandle448 = ({ scaled, position }) => {
           position: "absolute",
           width: `${scaled.borderPx / 16}rem`,
           height: "100%",
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
           bottom: "0",
           ...(position === "right" ? { right: "100%" } : { left: "100%" }),
         }}
@@ -188,7 +188,7 @@ export const PullHandle448 = ({ scaled, position }) => {
           ...(position === "right" ? { right: "0" } : { left: "0" }),
           width: `${scaled.borderPx / 16}rem`,
           height: `${scaled.borderPx / 16}rem`,
-          backgroundColor: "#333",
+          backgroundColor: profileColor,
         }}
       />
     </div>

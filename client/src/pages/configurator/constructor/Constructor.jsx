@@ -22,6 +22,10 @@ function Constructor({
   setSectionDimensions,
   sectionTypes,
   setSectionTypes,
+  linePositions,
+  setLinePositions,
+  getLinePositionsForSection,
+  setLinePositionsForSection,
 }) {
   const { height, width } = doorDimensions;
   const scaled = useScaledDimensions(height, width);
@@ -30,22 +34,6 @@ function Constructor({
   const containerRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const [selectionVisible, setSelectionVisible] = useState(false);
-
-  // Pozitiile pentru modele
-  const [linePositions, setLinePositions] = useState({});
-
-  const handleLinePositionsUpdate = (sectionIndex, modelName, positions) => {
-    setLinePositions((prev) => {
-      const newPositions = { ...prev };
-
-      // Setăm direct valorile pentru secțiunea și modelul specific
-      newPositions[sectionIndex] = {
-        modelName, // salvăm numele modelului
-        positions, // salvăm pozițiile
-      };
-      return newPositions;
-    });
-  };
 
   useEffect(() => {
     if (containerRef.current) {
@@ -111,7 +99,7 @@ function Constructor({
           <div
             style={{
               clipPath: wallClipPath,
-              background: "#f4f4f6", //  linear-gradient(135deg, #f4f4f6, #b8dcf5ff)
+              background: "linear-gradient(135deg, #f6f6f6, #bfc3c7)",
               backgroundSize: "cover",
               position: "absolute",
               width: "100%",
@@ -149,8 +137,10 @@ function Constructor({
           setSectionDimensions={setSectionDimensions}
           sectionTypes={sectionTypes}
           setSectionTypes={setSectionTypes}
-          onLinePositionsChange={handleLinePositionsUpdate}
           linePositions={linePositions}
+          setLinePositions={setLinePositions}
+          getLinePositionsForSection={getLinePositionsForSection}
+          setLinePositionsForSection={setLinePositionsForSection}
         />
       </div>
 

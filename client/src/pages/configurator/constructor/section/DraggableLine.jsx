@@ -1,22 +1,32 @@
 import React from "react";
 
 const DraggableLine = ({
+  sectionIndex,
   id,
   position,
+  setLinePositions,
   orientation = "vertical",
-  onPositionChange,
-  scaled, // proprietățile de scalare
+  scaled,
   constraints = { min: 0, max: 100 },
   thickness = 16,
+  profileColor,
 }) => {
   const [isDragging, setIsDragging] = React.useState(false);
   const [startPos, setStartPos] = React.useState(0);
+  const [startPositionValue, setStartPositionValue] = React.useState(0);
+  const [visualPosition, setVisualPosition] = React.useState(position);
+
+  // Sincronizăm visualPosition cu position din props
+  React.useEffect(() => {
+    setVisualPosition(position);
+  }, [position]);
 
   // Handler pentru începerea dragului
   const handleMouseDown = (e) => {
     setIsDragging(true);
     setStartPos(orientation === "vertical" ? e.clientX : e.clientY);
-    e.stopPropagation(); // Previne propagarea evenimentului
+    setStartPositionValue(visualPosition);
+    e.stopPropagation();
   };
 
   // Handler pentru mișcare
@@ -26,46 +36,51 @@ const DraggableLine = ({
 
       const currentPos = orientation === "vertical" ? e.clientX : e.clientY;
       const containerElement = document.getElementById("sections-container");
+
+      if (!containerElement) return;
+
       const containerSize =
         orientation === "vertical"
           ? containerElement.offsetWidth
           : containerElement.offsetHeight;
 
+      // Calculăm delta față de poziția inițială de drag
       const delta = ((currentPos - startPos) / containerSize) * 100;
-      const newPosition = Math.max(
+
+      // Calculăm noua poziție vizuală (pentru animație smooth)
+      const newVisualPosition = Math.max(
         constraints.min,
-        Math.min(constraints.max, position + delta)
+        Math.min(constraints.max, startPositionValue + delta)
       );
 
-      onPositionChange(id, newPosition);
-      setStartPos(currentPos);
+      // Actualizăm poziția vizuală imediat (fără re-render)
+      setVisualPosition(newVisualPosition);
     },
-    [
-      isDragging,
-      orientation,
-      position,
-      constraints,
-      onPositionChange,
-      startPos,
-      id,
-    ]
+    [isDragging, orientation, constraints, startPos, startPositionValue]
   );
 
-  // Handler pentru terminarea dragului
+  // Handler pentru terminarea dragului - actualizăm state-ul global
   const handleMouseUp = React.useCallback(() => {
-    setIsDragging(false);
-  }, []);
+    if (isDragging) {
+      setIsDragging(false);
+
+      setLinePositions(sectionIndex, {
+        [id]: visualPosition,
+      });
+    }
+  }, [visualPosition, id, setLinePositions, isDragging, sectionIndex]);
 
   // Event listeners
   React.useEffect(() => {
     if (isDragging) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
+
+      return () => {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
     }
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
   }, [isDragging, handleMouseMove, handleMouseUp]);
 
   return (
@@ -75,19 +90,21 @@ const DraggableLine = ({
         ...(orientation === "vertical"
           ? {
               top: 0,
-              left: `${position}%`,
+              left: `${visualPosition}%`,
               transform: "translateX(-50%)",
               width: `${scaled.borderPx / thickness}rem`,
               height: "100%",
+              transition: isDragging ? "none" : "left 0.2s ease",
             }
           : {
               left: 0,
-              top: `${position}%`,
+              top: `${visualPosition}%`,
               transform: "translateY(-50%)",
               height: `${scaled.borderPx / thickness}rem`,
               width: "100%",
+              transition: isDragging ? "none" : "top 0.2s ease",
             }),
-        backgroundColor: "#333",
+        backgroundColor: profileColor,
         cursor: orientation === "vertical" ? "ew-resize" : "ns-resize",
         zIndex: isDragging ? 1000 : 1,
       }}
@@ -110,7 +127,7 @@ const DraggableLine = ({
             whiteSpace: "nowrap",
           }}
         >
-          {Math.round(position)}%
+          {Math.round(visualPosition)}%
         </div>
       )}
     </div>

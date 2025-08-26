@@ -86,7 +86,7 @@
 
 .constructorFooter {
   width: 100%;
-  height: 14.1vh;
+  height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -135,7 +135,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 .constructorButton {
@@ -163,11 +163,11 @@
 
 .constructorFloor {
   position: absolute;
-  bottom: 0;
+  bottom: -1vh;
   left: 0;
   width: 100%;
   height: 15vh;
-  background-color: #ccc;
+  background-color: #848789;
   z-index: 0;
 }
 

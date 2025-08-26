@@ -14,6 +14,7 @@ export const TwoPartElementO = ({
   isSelected,
   onClick,
   setSelectionVisible,
+  sectionCount,
   handleVerticalResizeStart,
   selectedCategory,
   selectedType,
@@ -21,8 +22,12 @@ export const TwoPartElementO = ({
   doorDimensions,
   selectedHandle,
   sectionTypes,
-  onPositionChange,
-  currentPositions,
+  slidingMountType,
+  slidingType,
+  linePositions,
+  setLinePositions,
+  getLinePositionsForSection,
+  setLinePositionsForSection,
   renderSectionTypeRadio = () => null,
 }) => {
   const isSlidingDoor = selectedCategory === "Sliding Doors";
@@ -115,11 +120,24 @@ export const TwoPartElementO = ({
                 sectionModels[i],
                 scaled,
                 dimensions,
-                (modelName, positions) =>
-                  onPositionChange(modelName, positions),
-                currentPositions?.[sectionModels[i]] || {}
+                i,
+                linePositions,
+                setLinePositions,
+                getLinePositionsForSection,
+                setLinePositionsForSection,
+                profileColor
               )}
-              {getHandleOverlay(selectedHandle, scaled, i, sectionTypes[i])}
+              {getHandleOverlay(
+                selectedHandle,
+                scaled,
+                i,
+                sectionTypes[i],
+                selectedCategory,
+                sectionCount,
+                slidingMountType,
+                slidingType,
+                profileColor
+              )}
               {renderSectionTypeRadio && renderSectionTypeRadio(i)}
 
               {isSwingDoor &&

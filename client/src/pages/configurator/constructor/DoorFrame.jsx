@@ -28,8 +28,10 @@ const DoorFrame = forwardRef(
       setSectionDimensions,
       sectionTypes,
       setSectionTypes,
-      onLinePositionsChange,
       linePositions,
+      setLinePositions,
+      getLinePositionsForSection,
+      setLinePositionsForSection,
     },
     ref
   ) => {
@@ -114,8 +116,10 @@ const DoorFrame = forwardRef(
               setSectionTypes={setSectionTypes}
               slidingMountType={slidingMountType}
               slidingType={slidingType}
-              onLinePositionsChange={onLinePositionsChange}
               linePositions={linePositions}
+              setLinePositions={setLinePositions}
+              getLinePositionsForSection={getLinePositionsForSection}
+              setLinePositionsForSection={setLinePositionsForSection}
             />
             <Axis
               realWidth={width}
