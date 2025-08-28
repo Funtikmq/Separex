@@ -8,7 +8,7 @@ def billOfMaterials(order_data):
         return SlidingDoorsBOM(order_data)
     elif category == "Swing Doors":
         return SwingDoorsBOM(order_data)
-    elif category == "Fixed Walls":
+    elif category == "Fixed Wall":
         return FixedWallsBOM(order_data)
     else:
         raise ValueError(f"Unknown category: {category}")

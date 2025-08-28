@@ -150,7 +150,6 @@ export function FourPartElementO({
               {getModelOverlay(
                 sectionModels[i],
                 scaled,
-                dimensions,
                 i,
                 linePositions,
                 setLinePositions,

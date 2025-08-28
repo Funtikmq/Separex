@@ -299,21 +299,17 @@ export const Five = ({
 export const Trend = ({
   sectionIndex,
   scaled,
+
   getLinePositionsForSection,
   setLinePositionsForSection,
   profileColor,
-  doorDimensions,
 }) => {
   const sectionLinePositions = getLinePositionsForSection(sectionIndex);
 
   const positions = {
-    horizontal1: sectionLinePositions.horizontal1 ?? 70,
-    horizontal2: sectionLinePositions.horizontal2 ?? 85,
+    horizontal1: sectionLinePositions.horizontal1 ?? 55,
+    horizontal2: sectionLinePositions.horizontal2 ?? 65,
   };
-
-  if (doorDimensions.height < 1200) {
-    return null;
-  }
 
   return (
     <div style={{ height: "100%", width: "100%", position: "relative" }}>
@@ -326,6 +322,8 @@ export const Trend = ({
         scaled={scaled}
         constraints={{ min: 0, max: 100 }}
         profileColor={profileColor}
+        doorDimensions={doorDimensions}
+        sectionDimensions={sectionDimensions}
       />
       <DraggableLine
         sectionIndex={sectionIndex}
@@ -336,6 +334,8 @@ export const Trend = ({
         scaled={scaled}
         constraints={{ min: 0, max: 100 }}
         profileColor={profileColor}
+        doorDimensions={doorDimensions}
+        sectionDimensions={sectionDimensions}
       />
     </div>
   );
@@ -792,8 +792,8 @@ export const Altus = ({
   const sectionLinePositions = getLinePositionsForSection(sectionIndex);
 
   const positions = {
-    vertical1: sectionLinePositions.vertical1 ?? 75,
-    vertical2: sectionLinePositions.vertical2 ?? 25,
+    vertical1: sectionLinePositions.verticalTop ?? 75,
+    vertical2: sectionLinePositions.verticalBottom ?? 25,
   };
 
   return (
@@ -823,7 +823,7 @@ export const Altus = ({
       <div style={{ height: "45%", position: "relative" }}>
         <DraggableLine
           sectionIndex={sectionIndex}
-          id="vertical1"
+          id="verticalTop"
           position={positions.vertical1}
           setLinePositions={setLinePositionsForSection}
           orientation="vertical"
@@ -835,7 +835,7 @@ export const Altus = ({
       <div style={{ height: "45%", position: "relative", bottom: "-10%" }}>
         <DraggableLine
           sectionIndex={sectionIndex}
-          id="vertical2"
+          id="verticalBottom"
           position={positions.vertical2}
           setLinePositions={setLinePositionsForSection}
           orientation="vertical"

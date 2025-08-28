@@ -16,9 +16,9 @@ function Axis({ realWidth, realHeight, scaled, slidingMountType }) {
         className="axisX total"
         style={{
           width: `${totalWidth}`,
-          bottom: "-11%",
+          top: "-1.5rem",
           left: "0",
-          zIndex: "3",
+          zIndex: "2",
         }}
       >
         <p>
@@ -33,7 +33,7 @@ function Axis({ realWidth, realHeight, scaled, slidingMountType }) {
       </div>
       <div
         className="axisY total"
-        style={{ height: `${totalHeight}`, right: "-3rem", top: "0" }}
+        style={{ height: `${totalHeight}`, right: "-4rem", bottom: "0" }}
       >
         <p>
           Wall

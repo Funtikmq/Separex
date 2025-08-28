@@ -21,7 +21,7 @@ class BillOfMaterials(ABC):
         total = 0
         for component in bom:
             price_per_unit = price_table.get(component["item"], 0)
-            total += price_per_unit * component["qty"]
+            total += price_per_unit
 
         quantity = self.data.get("quantity", 1)
         total *= quantity

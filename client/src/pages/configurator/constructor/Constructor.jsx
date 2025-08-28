@@ -156,6 +156,7 @@ function Constructor({
         slidingMountType={slidingMountType}
         sectionDimensions={sectionDimensions}
         sectionTypes={sectionTypes}
+        slidingType={slidingType}
         linePositions={linePositions}
         doorRef={doorDrawingRef}
       />

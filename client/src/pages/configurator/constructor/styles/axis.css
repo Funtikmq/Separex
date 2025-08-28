@@ -9,7 +9,7 @@
   z-index: 2;
   width: 98%;
   position: absolute;
-  bottom: -7%;
+  bottom: -2rem;
   left: 1%;
 }
 
@@ -44,11 +44,11 @@
   height: 98%;
   position: absolute;
   right: -1.5rem;
-  bottom: 1%;
+  bottom: 0;
 }
 
 .axisY.total .axisLabel {
-  transform: translateY(-100%);
+  transform: translateY(-50%);
 }
 
 .axisY::before,
@@ -82,6 +82,10 @@
   background-color: #848789;
 }
 
+.axisX.total .axisLabel {
+  background-color: #dddbdb;
+}
+
 .axisY .axisLabel {
   background-color: #dad9d9;
 }
@@ -96,9 +100,6 @@
   max-width: 0px;
   opacity: 0;
   transition: opacity 0.3s ease;
-}
-
-.axisX.total {
 }
 
 .axisX.total p {
@@ -124,7 +125,7 @@
 /* Axele orizontale */
 .sectionAxisX {
   position: absolute;
-  bottom: -5%;
+  bottom: -1rem;
   left: 0;
   width: 100%;
   height: 0.1vh;

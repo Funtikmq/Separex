@@ -1,5 +1,4 @@
 export const handleGenerateAndDownloadPDF = async (productData) => {
-  console.log(productData);
   try {
     const response = await fetch("http://localhost:5000/generate/pdf", {
       method: "POST",

@@ -32,12 +32,15 @@ function CartContent() {
     const fetchInitialPrice = async () => {
       if (!orderData || !user) return;
 
+      console.log(orderData);
+
       const quantityInt = parseInt(quantity) || 1;
 
       const orderToSend = {
         category: orderData.selectedCategory,
         type: orderData.selectedType,
         mountType: orderData.slidingMountType,
+        slidingType: orderData.slidingType,
         dimensions: orderData.doorDimensions,
         sectionType: orderData.sectionTypes,
         sectionDimensions: orderData.sectionDimensions,
@@ -74,8 +77,44 @@ function CartContent() {
     fetchInitialPrice();
   }, [orderData, user, quantity]);
 
+  const compressImage = (base64Image, maxWidth = 1600, quality = 0.92) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = base64Image;
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+
+        // Redimensionare păstrând aspect ratio
+        const ratio = Math.min(maxWidth / img.width, 1);
+        canvas.width = img.width * ratio;
+        canvas.height = img.height * ratio;
+
+        const ctx = canvas.getContext("2d");
+
+        // Fundal alb pentru PNG-uri cu transparență
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Export ca base64 JPEG cu compresie ușoară
+        const compressedBase64 = canvas.toDataURL("image/jpeg", quality);
+        resolve(compressedBase64);
+
+        console.log(
+          "Compressed size:",
+          Math.round(compressedBase64.length / 1024),
+          "KB"
+        );
+      };
+
+      img.onerror = (err) => reject(err);
+    });
+  };
+
   // Adaugă în context
-  const handleSaveOrder = () => {
+  const handleSaveOrder = async () => {
     if (!user) {
       alert("To Save Your Order, Log In First");
       return;
@@ -88,10 +127,13 @@ function CartContent() {
 
     const quantityInt = parseInt(quantity) || 1;
 
+    const compressedImage = await compressImage(orderData.image, 1600, 0.92);
+
     const newOrder = {
       category: orderData.selectedCategory,
       type: orderData.selectedType,
       mountType: orderData.slidingMountType,
+      slidingType: orderData.slidingType,
       dimensions: orderData.doorDimensions,
       sectionType: orderData.sectionTypes,
       sectionDimensions: orderData.sectionDimensions,
@@ -101,7 +143,7 @@ function CartContent() {
       quantity: quantityInt,
       price: price.toFixed(2),
       product: orderData.selectedCategory,
-      image: orderData.image,
+      image: compressedImage,
     };
 
     addOrder(newOrder);

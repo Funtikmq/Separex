@@ -131,23 +131,33 @@ export const useDoorsLogic = () => {
           ? "Pull Handle 160"
           : null;
 
-      if (selectedCategory === "Sliding Doors" && slidingType === "cascade") {
-        // doar pe prima (sau ultima)
+      // Logica speciala doar pentru cascade + In wall
+      if (
+        selectedCategory === "Sliding Doors" &&
+        slidingType === "cascade" &&
+        slidingMountType === "In wall"
+      ) {
         const handles = Array(sectionCount).fill(null);
         if (sectionTypes[0] === "mobile") {
           handles[0] = defaultHandle;
         } else {
           handles[sectionCount - 1] = defaultHandle;
         }
-
         return handles;
       }
 
+      // Default: fiecare sectiune mobila are maner
       return sectionTypes.map((type) =>
         type === "fixed" ? null : defaultHandle
       );
     });
-  }, [sectionTypes, selectedCategory, slidingType, sectionCount]);
+  }, [
+    sectionTypes,
+    selectedCategory,
+    slidingType,
+    slidingMountType,
+    sectionCount,
+  ]);
 
   useEffect(() => {
     if (selectedCategory === "Sliding Doors") {

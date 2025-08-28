@@ -103,8 +103,8 @@ function CustomerContent() {
                           <ul>
                             {product.dimensions && (
                               <li>
-                                Dimensions: {product.dimensions.height} x{" "}
-                                {product.dimensions.width}
+                                Dimensions: {product.dimensions.width} x{" "}
+                                {product.dimensions.height}
                               </li>
                             )}
                             {Array.isArray(product.sectionType) &&

@@ -34,8 +34,7 @@ export const getModelComponent = (modelName) => {
 export function getModelOverlay(
   modelName,
   scaled,
-  doorDimensions,
-  sectionIndex, // ✅ Adaugă sectionIndex
+  sectionIndex,
   linePositions,
   setLinePositions,
   getLinePositionsForSection,
@@ -53,7 +52,6 @@ export function getModelOverlay(
         setLinePositions,
         getLinePositionsForSection,
         setLinePositionsForSection,
-        doorDimensions,
         profileColor,
       })
     : null;

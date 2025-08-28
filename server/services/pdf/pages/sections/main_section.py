@@ -36,16 +36,21 @@ def draw_main_content_section(c, start_y, title_y, data, MARGIN):
             if dimensions and dimensions.get("width", 0) <= 1000:
                 crop_margin_x = int(orig_width * 0.35)
                 target_width = 8.5 * cm
-            elif dimensions and dimensions.get("width", 0) >= 3000:
+            elif dimensions and dimensions.get("width", 0) >= 1000:
                 crop_margin_x = int(orig_width * 0.22)
+                target_width = 13 * cm
                 if dimensions and dimensions.get("height", 0) <= 2000:
-                    crop_margin_y = int(orig_height * 0.2)
-                else:
-                    crop_margin_y = 0
-                target_width = 13.5 * cm
-            else:
-                crop_margin_x = int(orig_width * 0.28)
-                target_width = 11.5 * cm
+                    crop_margin_y = int(orig_height * 0.15)
+                elif dimensions and dimensions.get("height", 0) >= 2000:
+                    crop_margin_y = int(orig_height * 0.05)
+            elif dimensions and dimensions.get("width", 0) >= 3000:
+                crop_margin_x = int(orig_width * 0.35)
+                if dimensions and dimensions.get("height", 0) <= 2000:
+                    crop_margin_y = int(orig_height * 0.15)
+                elif dimensions and dimensions.get("height", 0) >= 2000:
+                    crop_margin_y = int(orig_height * 0.05)
+                target_width = 13 * cm
+
 
             cropped = pil_image.crop((
                 crop_margin_x,

@@ -10,6 +10,8 @@ const DraggableLine = ({
   constraints = { min: 0, max: 100 },
   thickness = 16,
   profileColor,
+  doorDimensions,
+  sectionDimensions,
 }) => {
   const [isDragging, setIsDragging] = React.useState(false);
   const [startPos, setStartPos] = React.useState(0);

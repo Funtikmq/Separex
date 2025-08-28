@@ -124,7 +124,6 @@ export function XPartElementA({
               {getModelOverlay(
                 sectionModels[i],
                 scaled,
-                dimensions,
                 i,
                 linePositions,
                 setLinePositions,
@@ -287,8 +286,7 @@ export function XPartElementA({
               {getModelOverlay(
                 sectionModels[sectionIndex],
                 scaled,
-                dimensions,
-                i,
+                sectionIndex,
                 linePositions,
                 setLinePositions,
                 getLinePositionsForSection,
@@ -298,8 +296,8 @@ export function XPartElementA({
               {getHandleOverlay(
                 selectedHandle,
                 scaled,
-                i,
-                sectionTypes[i],
+                sectionIndex,
+                sectionTypes[sectionIndex],
                 selectedCategory,
                 sectionCount,
                 slidingMountType,

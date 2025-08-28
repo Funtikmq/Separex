@@ -199,7 +199,6 @@ export function DefaultSectionLayout({
               {getModelOverlay(
                 sectionModels[i],
                 scaled,
-                dimensions,
                 i,
                 linePositions,
                 setLinePositions,

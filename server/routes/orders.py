@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from config import db
-from datetime import datetime, timezone
+from google.cloud import firestore
 import random
 
 from utils.auth_utils import require_auth
@@ -39,7 +39,7 @@ def save_order():
     order_id = f"ORD-{random.randint(100000, 999999)}"
     order_doc = {
         "orderNumber": order_id,
-        "createdAt": datetime.now(timezone.utc),
+        "createdAt": firestore.SERVER_TIMESTAMP,
         "userEmail": data.get("userEmail"),
         "products": products,
         "total": total_price,

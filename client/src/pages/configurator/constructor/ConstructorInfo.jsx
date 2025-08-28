@@ -12,6 +12,7 @@ function ConstructorInfo({
   selectedIndex,
   sectionDimensions,
   sectionTypes,
+  slidingType,
   linePositions,
   doorRef,
 }) {
@@ -22,8 +23,6 @@ function ConstructorInfo({
       const canvas = await html2canvas(doorRef.current);
       image = canvas.toDataURL("image/png");
     }
-
-    console.log("linePositions", linePositions);
 
     const data = {
       doorDimensions,
@@ -37,6 +36,8 @@ function ConstructorInfo({
       selectedIndex,
       sectionDimensions,
       sectionTypes,
+      slidingType,
+      linePositions,
       image,
     };
 

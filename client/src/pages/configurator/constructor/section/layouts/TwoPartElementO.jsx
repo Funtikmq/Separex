@@ -119,7 +119,6 @@ export const TwoPartElementO = ({
               {getModelOverlay(
                 sectionModels[i],
                 scaled,
-                dimensions,
                 i,
                 linePositions,
                 setLinePositions,
